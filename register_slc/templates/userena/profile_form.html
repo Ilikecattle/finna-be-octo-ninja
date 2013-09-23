@@ -1,0 +1,79 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Account setup" %}{% endblock %}
+
+{% block content_title %}<h2 class="content-title">Account &raquo; {{ account.user.username }}</h2>{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+       if(!options.crossDomain) {
+         if(options.data) {
+           options.data += "&";
+         } else {$
+           options.data = "";
+         }$
+           options.data += "csrfmiddlewaretoken={{csrf_token}}";
+         }
+       });
+    $(document).ready(function() {
+      $("#notready").click(function () {
+        alert('Please complete Profile and click "Save changes" to enable payment');
+      });
+    });
+  </script>
+{% endblock %}
+
+
+{% block content %}
+
+
+  <ul id="profile-nav">
+      <li><a href="{% url "userena_profile_detail" user.username %}">{% trans "Overview" %}</a></li>
+      <li class="selected"><a href="{% url "userena_profile_edit" user.username %}">{% trans "Register and Pay" %}</a></li>
+      <li><a href="{% url "userena_password_change" user.username %}">{% trans "Change password" %}</a></li>
+      <li><a href="{% url "userena_email_change" user.username %}">{% trans "Change email" %}</a></li>
+  </ul>
+
+
+   <form action="" enctype="multipart/form-data" method="post">
+       {% if user.username == account.user.username %}
+          <ul id="box-nav">
+              <li class="first"><a href="{% url "userena_detail" user.username %}"><span>{% trans 'Overview' %}</span></a></li>
+              <li class="selected"><a href="{% url "userena_edit" account.user.username %}">{% trans "Register and Pay" %}</a></li>
+              <li><a href="{% url "userena_password_change" account.user.username %}">{% trans "Change password" %}</a></li>
+              <li class="last"><a href="{% url "userena_email_change" account.user.username %}">{% trans "Change email" %}</a></li>
+          </ul>
+          {% endif %}
+       {% csrf_token %}
+        <fieldset>
+        <legend>{% trans "Register" %}</legend>
+        {{ form.as_p }}
+        </fieldset>
+        <input type="submit" value="{% trans "Save changes" %}" />
+    </form>
+    {% if profile.unpaid %}
+      {% if profile.readyForPayment %}
+          {% if profile.has_group %}
+            <center>
+              <a href="{% url "group_payment" %}" class='btn btn-primary register'>Group Payment</a>
+            </center>
+          {% else %}
+            <form action='https://secure.students.ubc.ca/leadership/payment.cfm' method='post' name='frm'>
+              <input type='hidden' name='cf_field_6' value={{ profile.is_ubc }}>
+              <input type='hidden' name='cf_field_9' value={{ user.email }}>
+              <input type='hidden' name='cf_field_3' value={{ user.first_name }}>
+              <input type='hidden' name='cf_field_5' value={{ user.last_name }}>
+              <input type='hidden' name='cf_field_7' value="{{ profile.studentnum }}">
+              <input type='hidden' name='cf_field_8' value="{{ profile.phonenum }}">
+              <input type='submit' class='btn btn-primary register' name='submit' value='Pay Now'/>
+            </form>
+          {% endif %}
+      {% else %}
+          <center>
+            <a id='notready' class='btn btn-primary register'>Pay Now</a>
+          </center>
+      {% endif %}
+    {% endif %}
+{% endblock %}

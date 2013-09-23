@@ -1,0 +1,20 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block content_title %}<h2 class="content-title">Account &raquo; {{ account.user.username }}</h2>{% endblock %}
+
+{% block content %}
+<form action="{% url "update_primary" %}" method="post">
+{% csrf_token %}
+<legend>{% trans "Primary Group" %}</legend>
+<p>If your primary group has a morning meeting location, your nametag will be delivered to your group coordinator the night before the SLC.</p>
+<select name = "groups">
+<p>
+{% for g in user.get_profile.groups %}
+  <option value="{{ g.pk }}">{{ g.payment_group }}</option>
+{% endfor %}
+</select>
+</p>
+<input type="submit" value="{% trans "Continue" %}" />
+</form>
+{% endblock %}

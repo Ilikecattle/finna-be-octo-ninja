@@ -1,0 +1,104 @@
+{% extends 'confsessions/base_session.html' %}
+{% load i18n %}
+
+{% block title %}
+{% if user.is_authenticated %}
+{{ user.username }}'s {% trans "sessions" %}.
+{% else %}
+{% trans "Sessions" %}.
+{% endif %}
+{% endblock %}
+
+{% block content_title %}<h2 class="content-title">Sessions</h2>{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+      if(!options.crossDomain) {
+        if(options.data) {
+          options.data += "&";
+        } else {
+          options.data = "";
+        }
+        options.data += "csrfmiddlewaretoken={{csrf_token}}";
+      }
+    });
+    $(document).ready(function() {
+        {% if user.is_authenticated %}
+          {% for obj in user.session_set.all %}
+            $('#btn_{{ obj.pk }}').html("Registered");
+            $('#{{ obj.sessiontype.time.affixlink }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ obj.sessiontype.time.name }}</a>');
+          {% endfor %}
+        {% endif %}
+    {% for sessiontime in sessiontimes %}$
+    {% for sessiontype in sessiontime.sessiontype_set.all %}
+         {% for obj in sessiontype.session_set.all %}
+          //click
+          $('#btn_{{ obj.pk }}').live('click', function() {
+              $.ajax({
+                type: "POST",
+                url: "/sessions/register_session/{{ obj.pk }}/{{ user.pk }}/",
+                success: function(response) {
+                    {% for st in sessiontime.sessiontype_set.all %}
+                      {% for sobj in st.session_set.all %}
+                        $('#btn_{{ sobj.pk }}').html("<div id='btn_{{ session.pk }}'><a class='btn btn-primary register'>Register</a></div>");
+                      {% endfor %}
+                    {% endfor %}
+                    $('#btn_{{ obj.pk }}').html("Registered");
+                    $('#{{ sessiontime.affixlink }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ sessiontime.name }}</a>');
+                }
+              });
+          });
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+    });
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+
+  <!-- Session nav
+  ================================================== -->
+  <div class="row">
+    <div class="span3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav">
+      {% for sessiontime in sessiontimes %}
+        <li id="{{ sessiontime.affixlink }}"><a class="register" href="#{{ sessiontime.affixlink }}">{{ sessiontime.name }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+
+    <div class="span9">
+       {% for sessiontime in sessiontimes %}
+         <section id="{{ sessiontime.affixlink }}">
+         {% for sessiontype in sessiontime.sessiontype_set.all %}
+           <div class="page-header">
+             <h1> {{ sessiontype.name }} </h1>
+           </div>
+           {% for session in sessiontype.session_set.all %}
+             <div class="modal" style="position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
+               <div id="affix_{{ session.pk }}" class="modal-header">
+                 <h2>{{ session.name }}<h2>
+               </div>
+               <div class="modal-body">
+                 <h3>{{ session.presenter}} </h3>
+                 <p>{{ session.description }}</p>
+               </div>
+               <div class="modal-footer">
+                 <p>Location:{{ session.location }}       Capacity: {{ session.capacity }} 
+                 {% if user.is_authenticated %}
+                   <div id='btn_{{ session.pk }}'><a class='btn btn-primary register'>Register</a></div>
+                 {% else %}
+                   <div><a href="{% url "userena_signin" %}" class="btn btn-primary">Sign In</a></div>
+                 {% endif %} 
+                 </p>
+               </div>
+              </div>
+           {% endfor %}
+         {% endfor %}
+         </section>
+       {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

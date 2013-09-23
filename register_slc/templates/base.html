@@ -1,0 +1,71 @@
+{% load i18n static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title>{% block title %}Student Leadership Conference Registration{% endblock %}</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Register for the Student Leadership Conference" />
+    <meta name="keywords" content="slc, student leadership conference, registration" />
+    <meta name="author" content="Michael Muthukrishna" />
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-responsive.css" %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/master.css" %}" />
+    <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.tablesorter.js" %}" %}"></script>
+    {% block scripts %}{% endblock %}
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36441810-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+  </head>
+  <body>
+    <div id="container">	
+      <div id="header">
+
+        <h1><a href="{% url "promo" %}">slc-registration</a></h1>
+
+
+        {% block nav %}
+        <ul id="nav">
+          <li><a href="{% url "promo" %}"><span>{% trans 'Home' %}</span></a></li>
+          <li><a href="{% url "confsessions.views.index" %}"><span>{% trans 'Sessions' %}</span></a></li>
+          {% if user.is_authenticated %}
+          <!--<li><a href="{% url "userena_profile_list" %}"><span>{% trans 'All profiles' %}</span></a></li>
+          <li><a href="{% url "userena_umessages_list" %}"><span>{% trans 'Messages' %}</span></a></li>
+          --><li><a href="{% url "userena_profile_detail" user.username %}"><span>{% trans 'Account' %} ({{ user.username }})</span></a></li>
+          <li><a href="{% url "userena_signout" %}"><span>{% trans 'Log Out' %}</span></a></li>
+          {% else %}
+          <li><a href="{% url "userena_signin" %}"><span>{% trans 'Log In' %}</span></a></li>
+          <li><a href="{% url "userena_signup" %}"><span>{% trans 'Register' %}</span></a></li>
+          {% endif %}
+        </ul>
+        {% endblock %}
+        {% if not user.is_authenticated %}
+        <div id="try"></div>
+        {% endif %}
+
+      </div><!-- /header-->
+      {% block content_title %}{% endblock %}
+      <div id="content-container">
+        {% block content %}{% endblock %}
+      </div><!-- /content-container-->
+      <div id="footer"><p>{% trans 'Made by' %} <a href="http://slc.ubc.ca">Student Leadership Conference</a> | Hosting by <a href="https://www.ubc.ca">UBC</a></p></div>
+    </div><!-- /container-->
+   </body>
+ </html>

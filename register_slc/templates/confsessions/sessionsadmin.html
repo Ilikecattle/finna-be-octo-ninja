@@ -1,0 +1,60 @@
+{% extends 'confsessions/base_session.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Sessions" %}.
+{% endblock %}
+
+{% block content_title %}<h2 class="content-title">Sessions</h2>{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+      if(!options.crossDomain) {
+        if(options.data) {
+          options.data += "&";
+        } else {
+          options.data = "";
+        }
+        options.data += "csrfmiddlewaretoken={{csrf_token}}";
+      }
+    });
+    $(document).ready(function() {
+      { 
+        $("#myTable").tablesorter({sortList: [[4,1]]} ); 
+      } 
+    });
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+{% if user.is_authenticated %}
+{% if user.profile.is_slc_email %}
+<table id="myTable" class="tablesorter"> 
+<thead> 
+<tr> 
+<th>Name</th> 
+<th>Presenter</th> 
+<th>Capacity</th> 
+<th>Delegates</th> 
+<th>Percentage Left</th> 
+</tr> 
+</thead> 
+<tbody> 
+{% for sessiontime in sessiontimes %}
+{% for sessiontype in sessiontime.sessiontype_set.all %}
+{% for session in sessiontype.session_set.all %}
+<tr> 
+<td><a href="{% url "concurrent_delegates" session.pk %}">{{ session.name }}</a></td> 
+<td>{{ session.presenter }}</td> 
+<td>{{ session.capacity }}</td> 
+<td>{{ session.registered_delegates }}</td> 
+<td>{{ session.percent_spaces }}</td> 
+</tr> 
+{% endfor %}
+{% endfor %}
+{% endfor %}
+</tbody> 
+</table> 
+{% endif %}
+{% endif %}
+{% endblock %}

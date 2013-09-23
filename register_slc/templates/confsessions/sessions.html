@@ -1,0 +1,136 @@
+{% extends 'confsessions/base_session.html' %}
+{% load i18n %}
+
+{% block title %}
+{% if user.is_authenticated %}
+{{ user.username }}'s {% trans "sessions" %}.
+{% else %}
+{% trans "Sessions" %}.
+{% endif %}
+{% endblock %}
+
+{% block content_title %}<h2 class="content-title">Sessions</h2>{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+      if(!options.crossDomain) {
+        if(options.data) {
+          options.data += "&";
+        } else {
+          options.data = "";
+        }
+        options.data += "csrfmiddlewaretoken={{csrf_token}}";
+      }
+    });
+    $(document).ready(function() {
+        {% if user.is_authenticated %}
+          {% for obj in user.session_set.all %}
+            $('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
+            $('#li_{{ obj.sessiontype.time.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ obj.sessiontype.time.name }}</a>');
+          {% endfor %}
+        {% endif %}
+    {% for sessiontime in sessiontimes %}$
+         $("#sesstimeheader_{{ sessiontime.pk }}").click(function () {
+            $("#sesstime_{{ sessiontime.pk }}").slideToggle("fast");
+         });
+    {% for sessiontype in sessiontime.sessiontype_set.all %}
+         $("#sessheader_{{ sessiontype.pk }}").click(function () {
+            $("#sesstype_{{ sessiontype.pk }}").slideToggle("fast");
+         });
+         {% for obj in sessiontype.session_set.all %}
+           $("#tease_{{ obj.pk }}").click(function () {
+              $("#desc_{{ obj.pk }}").show();
+              $('#tease_{{ obj.pk }}').hide();
+              $('#clickread_{{ obj.pk }}').hide();
+           });
+           $("#clickread_{{ obj.pk }}").click(function () {
+              $("#desc_{{ obj.pk }}").show();
+              $('#tease_{{ obj.pk }}').hide();
+              $('#clickread_{{ obj.pk }}').hide();
+           });
+          //click
+          $('#btn_{{ obj.pk }}').live('click', function() {
+              $.ajax({
+                type: "POST",
+                url: "/sessions/register_session/{{ obj.pk }}/{{ user.pk }}/",
+                success: function(response) {
+                    {% for st in sessiontime.sessiontype_set.all %}
+                      {% for sobj in st.session_set.all %}
+                        $('#btn_{{ sobj.pk }}').replaceWith("<a id='btn_{{ sobj.pk }}' class='btn btn-primary register'>Register</a>");
+                      {% endfor %}
+                    {% endfor %}
+                    $('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
+                    $('#li_{{ sessiontime.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ sessiontime.name }}</a>');
+                }
+              });
+          });
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+    });
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+
+  <!-- Session nav
+  ================================================== -->
+  <div class="row">
+    <div class="span3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav">
+      {% for sessiontime in sessiontimes %}
+        <li id="li_{{ sessiontime.pk }}"><a class="register" href="#{{ sessiontime.affixlink }}">{{ sessiontime.name }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+
+    <div class="span6">
+       {% for sessiontime in sessiontimes %}
+         <section id="{{ sessiontime.affixlink }}">
+         <h1 class="sessions" id="sesstimeheader_{{ sessiontime.pk }}">{{ sessiontime.name }}</h1>
+         <div id="sesstime_{{ sessiontime.pk }}" style="display:none">
+         {% for sessiontype in sessiontime.sessiontype_set.all %}
+           <div class="page-header">
+             <h2 class="sessions" id="sessheader_{{ sessiontype.pk }}"> {{ sessiontype.name }} </h2>
+           </div>
+         <div id="sesstype_{{ sessiontype.pk }}" style="display:none">
+           {% for session in sessiontype.session_set.all %}
+             <div id="sess" class="modal" style="position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
+               <div id="affix_{{ session.pk }}" class="modal-header">
+                 <h3 id="h2_{{ session.pk }}">{{ session.name }}<h3>
+               </div>
+               <div class="modal-body">
+                 <h4>{{ session.presenter}} </h4>
+                 <p id="tease_{{ session.pk }}">{{ session.teaser }} <div id="clickread_{{ session.pk }}">Click to read full description...</div></p> 
+                 <p id="desc_{{ session.pk }}" style="display:none">{{ session.description }}</p>
+               </div>
+               <div class="modal-footer">
+                 <p>Location:{{ session.location }} 
+                 {% if session.has_spaces %}
+                   <span class={{ session.capacity_color }}></span> &nbsp &nbsp 
+                   {% if user.is_authenticated %}
+                     {% if user.get_profile.unpaid %}
+                       <a href="{% url "userena_profile_edit" user.username %}" class='btn btn-primary register'>Pay Now</a>
+                     {% else %}
+                         <a id='btn_{{ session.pk }}' class='btn btn-primary register'>Register</a>
+                     {% endif %}
+                   {% else %}
+                     <a href="{% url "userena_signin" %}" class="btn btn-primary register">Sign In</a>
+                   {% endif %} 
+                 {% else %}
+                   <span class="full" /> &nbsp &nbsp 
+                   <span id='btn_{{ session.pk }}' />
+                 {% endif %}
+                 </p>
+               </div>
+              </div>
+           {% endfor %}
+           </div>
+         {% endfor %}
+         </div>
+         </section>
+       {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block content_title %}<h2 class="content-title">Account &raquo; {{ account.user.username }}</h2>{% endblock %}
+
+{% block content %}
+<center>
+{% if user.get_profile.readyForPayment %}
+<a href="/accounts/payment/{{ user.pk }}/6792469/" class='btn btn-primary register'>Click to complete payment</a>
+{% endif %}
+</center>
+{% endblock %}
