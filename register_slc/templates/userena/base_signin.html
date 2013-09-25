@@ -1,0 +1,11 @@
+{% load i18n static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>{% block title %}Student Leadership Conference Registration{% endblock %}</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}" />
+		<div id="fullscreen_post_bg" class="fullscreen_post_bg" style="background-image:url('/static/img/background.jpg');"></div>
+		{% block form %}{% endblock %}
+	</head>
+</html>
