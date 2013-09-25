@@ -128,7 +128,7 @@ def identification_field_factory(label, error_required):
 
     """
     return forms.CharField(label=label,
-                           widget=forms.TextInput(attrs=attrs_dict),
+                           widget=forms.TextInput(attrs=dict(attrs_dict, placeholder=label)),
                            max_length=75,
                            error_messages={'required': _("%(error)s") % {'error': error_required}})
 
@@ -140,8 +140,8 @@ class AuthenticationForm(forms.Form):
     identification = identification_field_factory(_(u"Email or username"),
                                                   _(u"Either supply us with your email or username."))
     password = forms.CharField(label=_("Password"),
-                               widget=forms.PasswordInput(attrs=attrs_dict, render_value=False))
-    remember_me = forms.BooleanField(widget=forms.CheckboxInput(),
+                               widget=forms.PasswordInput(attrs=dict(attrs_dict, placeholder="Password"), render_value=False))
+    remember_me = forms.BooleanField(widget=forms.HiddenInput(),
                                      required=False,
                                      label=_(u'Remember me for %(days)s') % {'days': _(userena_settings.USERENA_REMEMBER_ME_DAYS[0])})
 
