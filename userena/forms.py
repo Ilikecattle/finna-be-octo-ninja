@@ -25,17 +25,16 @@ class SignupForm(forms.Form):
     """
     username = forms.RegexField(regex=USERNAME_RE,
                                 max_length=30,
-                                widget=forms.TextInput(attrs=attrs_dict),
+                                widget=forms.TextInput(attrs=dict(attrs_dict, placeholder='Username')),
                                 label=_("Username"),
                                 error_messages={'invalid': _('Username must contain only letters, numbers, dots and underscores.')})
-    email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
-                                                               maxlength=75)),
-                             label=_("Email"))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict,
-                                                           render_value=False),
+    email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict, maxlength=75, placeholder='Email')),
+                                label=_("Email"))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(attrs_dict, placeholder='Create Password'),
+                                render_value=False),
                                 label=_("Create password"))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict,
-                                                           render_value=False),
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(attrs_dict, placeholder='Repeat Password'),
+                                render_value=False),
                                 label=_("Repeat password"))
 
     def clean_username(self):
