@@ -8,7 +8,7 @@ class SessionType(models.Model):
         return self.name
 
 class Session(models.Model):
-    sessiontype = models.ManyToManyField(SessionType)
+    sessiontype = models.ForeignKey(SessionType)
     name = models.CharField(max_length=200)
     affixlink = models.CharField(max_length=10)
     presenter = models.CharField(max_length=200)
@@ -18,9 +18,8 @@ class Session(models.Model):
     description = models.CharField(max_length=5000)
     participants = models.ManyToManyField(User)
     def add_participant(self,User):
-        for sesstype in self.sessiontype_set.all():
-            for sess in sesstype.session_set.all():
-                sess.participants.remove(User)
+        for sess in self.sessiontype.session_set.all():
+            sess.participants.remove(User)
         self.participants.add(User)
 
     def has_spaces(self):

@@ -37,9 +37,7 @@
 					url: "/sessions/register_session/{{ obj.pk }}/{{ user.pk }}/",
 					success: function(response) {
 						{% for sess in sessiontype.session_set.all %}
-							{% for sobj in sess.session_set.all %}
-								$('#btn_{{ sobj.pk }}').replaceWith("<a id='btn_{{ sobj.pk }}' class='btn btn-primary register'>Register</a>");
-							{% endfor %}
+							$('#btn_{{ sess.pk }}').replaceWith("<a id='btn_{{ sess.pk }}' class='btn btn-primary register'>Register</a>");
 						{% endfor %}
 						$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
 						$('#li_{{ sessiontime.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ sessiontime.name }}</a>');

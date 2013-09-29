@@ -10,9 +10,9 @@ def index(request):
     return render(request, 'confsessions/sessions.html', context)
 
 def sessiontype(request, sessiontype_pk):
-	sessiontype = SessionType.objects.get(pk=sessiontype_pk)
-	context = {'sessiontype' : sessiontype}
-	return render(request, 'confsessions/sessiontype.html', context)
+    sessiontype = SessionType.objects.get(pk=sessiontype_pk)
+    context = {'sessiontype' : sessiontype}
+    return render(request, 'confsessions/sessiontype.html', context)
 
 def concurrent(request):
     sessiontimes = SessionType.objects.all()
