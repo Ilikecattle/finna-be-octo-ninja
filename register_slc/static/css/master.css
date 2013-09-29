@@ -27,6 +27,26 @@ html, body{
     background: #eae5e1 url(../img/bg-container.png) repeat-y center top;
 }
 
+.clearfix:after {
+	content: " ";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+.clearfix {
+	display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	display: block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
 #container{
     width: 1008px;
     margin: 30px auto 50px;
@@ -246,12 +266,6 @@ p.intro{
 h1{
     margin: 25px 0 0 ;
     font-size: 2.2em;
-}
-
-h1.sessions:hover{
-  color: #005580;
-  cursor: hand;
-  cursor: pointer;
 }
 
 h2.content-title{
@@ -635,6 +649,54 @@ ul#profile-nav li a{
 
 ul#profile-nav li a:hover{
     text-decoration: underline;
+}
+
+/*  sessions
+................................... */
+
+.modal-header {
+	text-align: left;
+	padding: 10px 15px;
+	border-bottom: 1px solid #EEE;
+	line-height: 30px;
+}
+
+.modal {
+	position: relative;
+	width: 32%;
+	float: left;
+	text-align: center;
+	background-color: #FFF;
+	margin: 0.5%;
+	border: 1px solid #999;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+.modal-body {
+	padding: 5% 15px;
+	min-height: 200px;
+	font-size: 13px;
+	text-align: justify;
+}
+
+.modal-footer {
+	padding: 14px 15px 15px;
+	text-align: right;
+	background-color: #F5F5F5;
+	border-top: 1px solid #DDD;
+	-webkit-border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	border-radius: 0 0 6px 6px;
+	*zoom: 1;
+	-webkit-box-shadow: inset 0 1px 0 #FFFFFF;
+	-moz-box-shadow: inset 0 1px 0 #FFFFFF;
+	box-shadow: inset 0 1px 0 #FFFFFF;
 }
 
 /*	features
