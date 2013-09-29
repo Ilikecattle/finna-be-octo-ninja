@@ -766,6 +766,9 @@ ul.blocks li{
     margin: 20px auto;
 }      
 
+.bottom-buttons {
+	clear: both;
+}
 
 /*	footer
 ................................... */ 

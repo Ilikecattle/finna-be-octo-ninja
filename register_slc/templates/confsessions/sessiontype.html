@@ -23,6 +23,7 @@
 	});
 
 	$(document).ready(function() {
+		console.log("TEST: {{ prev_sessiontype.name }} {{ next_sessiontype.name }}");
 		{% if user.is_authenticated %}
 			{% for obj in user.session_set.all %}
 				$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
@@ -96,5 +97,14 @@
 		</div>
 	{% endfor %}
 	</ul>
+	
+	<div class="bottom-buttons">
+		{% if prev_sessiontype %}
+		<a class="prev-button" href="/sessions/sessiontype/{{ prev_sessiontype.pk }}">back</a>
+		{% endif %}
+		{% if next_sessiontype %}
+		<a class="next-button" href="/sessions/sessiontype/{{ next_sessiontype.pk }}">next</a>
+		{% endif %}
+	</div>
 </div>
 {% endblock %}

@@ -10,9 +10,20 @@ def index(request):
     return render(request, 'confsessions/sessions.html', context)
 
 def sessiontype(request, sessiontype_pk):
-    sessiontype = SessionType.objects.get(pk=sessiontype_pk)
+    cur_session_type = SessionType.objects.get(pk=sessiontype_pk)
     sessiontypes = SessionType.objects.filter(include_in_nav=True).order_by('time')
-    context = {'sessiontypes' : sessiontypes, 'sessiontype' : sessiontype}
+    prev_sessiontype = None
+    next_sessiontype = None
+    save_next = False
+    for s in sessiontypes:
+        if save_next:
+            next_sessiontype = s
+            break
+        if s == cur_session_type:
+            save_next = True
+        else:
+            prev_sessiontype = s
+    context = {'sessiontypes' : sessiontypes, 'sessiontype' : cur_session_type, 'next_sessiontype' : next_sessiontype, 'prev_sessiontype' : prev_sessiontype}
     return render(request, 'confsessions/sessiontype.html', context)
 
 def concurrent(request):

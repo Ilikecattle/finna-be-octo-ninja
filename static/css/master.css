@@ -586,7 +586,7 @@ p.forgot-password{
 /*REBRAND*/
 #header h1 a{
 	width: 980px;
-    height: 149px;
+	height: 149px;
     display: block;
     text-indent: -9999px;
     background: url(../img/websitebanner.png);
@@ -766,6 +766,9 @@ ul.blocks li{
     margin: 20px auto;
 }      
 
+.bottom-buttons {
+	clear: both;
+}
 
 /*	footer
 ................................... */ 
