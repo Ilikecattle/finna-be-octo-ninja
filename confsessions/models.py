@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class SessionType(models.Model):
     time = models.DateTimeField()
     name = models.CharField(max_length=100)
+    include_in_nav = models.BooleanField()
     def __unicode__(self):
         return self.name
 

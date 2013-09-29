@@ -11,7 +11,8 @@ def index(request):
 
 def sessiontype(request, sessiontype_pk):
     sessiontype = SessionType.objects.get(pk=sessiontype_pk)
-    context = {'sessiontype' : sessiontype}
+    sessiontypes = SessionType.objects.filter(include_in_nav=True).order_by('time')
+    context = {'sessiontypes' : sessiontypes, 'sessiontype' : sessiontype}
     return render(request, 'confsessions/sessiontype.html', context)
 
 def concurrent(request):

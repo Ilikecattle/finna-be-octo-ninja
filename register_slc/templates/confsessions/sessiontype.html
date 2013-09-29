@@ -51,6 +51,15 @@
 
 {% block content %}
 <div class="container clearfix">
+
+	<div class="span3 bs-docs-sidebar">
+		<ul class="nav nav-list bs-docs-sidenav">
+			{% for sesstype in sessiontypes %}
+				<li id="li_{{ sessiontime.pk }}"><a class="register" href="/sessions/sessiontype/{{ sesstype.pk }}">{{ sesstype.name }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+
 	<ul class ="sessions">
 	{% for session in sessiontype.session_set.all %}
 		<div class="modal">
