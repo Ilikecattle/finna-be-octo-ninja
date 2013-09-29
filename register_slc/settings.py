@@ -4,8 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Michael Muthukrishna', 'michael@muthukrishna.com'),
-    ('Kingsley Shih', 'kingsley_shih@slc.ubc.ca'),
+    ('Adam Berg', 'adam.berg@slc.ubc.ca'),
 )
 
 MANAGERS = ADMINS
@@ -62,7 +61,7 @@ STATIC_ROOT = '/home/adam/webdev/register_slc/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://slc/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
