@@ -9,6 +9,48 @@
 	<h2 class="content-title">{{ sessiontype.name }}</h2>
 {% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+	$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+		if(!options.crossDomain) {
+			if(options.data) {
+				options.data += "&";
+			} else {
+				options.data = "";
+			}
+			options.data += "csrfmiddlewaretoken={{csrf_token}}";
+		}
+	});
+
+	$(document).ready(function() {
+		{% if user.is_authenticated %}
+			{% for obj in user.session_set.all %}
+				$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
+				$('#li_{{ obj.sessiontype.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ obj.sessiontype.name }}</a>');
+			{% endfor %}
+		{% endif %}
+		{% for obj in sessiontype.session_set.all %}
+			$('#btn_{{ obj.pk }}').live('click', function() {
+				console.log("clicked");
+				$.ajax({
+					type: "POST",
+					url: "/sessions/register_session/{{ obj.pk }}/{{ user.pk }}/",
+					success: function(response) {
+						{% for sess in sessiontype.session_set.all %}
+							{% for sobj in sess.session_set.all %}
+								$('#btn_{{ sobj.pk }}').replaceWith("<a id='btn_{{ sobj.pk }}' class='btn btn-primary register'>Register</a>");
+							{% endfor %}
+						{% endfor %}
+						$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
+						$('#li_{{ sessiontime.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ sessiontime.name }}</a>');
+					}
+				});
+			});
+		{% endfor %}
+	});
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container clearfix">
 	<ul class ="sessions">
