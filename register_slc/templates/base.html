@@ -8,16 +8,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="description" content="Register for the Student Leadership Conference" />
     <meta name="keywords" content="slc, student leadership conference, registration" />
-    <meta name="author" content="Michael Muthukrishna" />
+    <meta name="author" content="Adam Berg" />
 
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-responsive.css" %}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/master.css" %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/master.css' %}" />
     <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/jquery.tablesorter.js" %}" %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.tablesorter.js' %}" %}></script>
     {% block scripts %}{% endblock %}
 
     <script type="text/javascript">
@@ -64,7 +61,7 @@
       <div id="content-container">
         {% block content %}{% endblock %}
       </div><!-- /content-container-->
-      <div id="footer"><p>{% trans 'Made by' %} <a href="http://slc.ubc.ca">Student Leadership Conference</a> | Hosting by <a href="https://www.ubc.ca">UBC</a></p></div>
+      <div class="clearfix" id="footer"><p>{% trans 'Made by' %} <a href="http://slc.ubc.ca">Student Leadership Conference</a> | Hosting by <a href="https://www.ubc.ca">UBC</a></p></div>
     </div><!-- /container-->
    </body>
  </html>

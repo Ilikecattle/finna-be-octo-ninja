@@ -1,16 +1,21 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from confsessions.models import SessionTime, SessionType, Session
+from confsessions.models import SessionType, Session
 from django.contrib.auth.models import User
 
 def index(request):
-    sessiontimes = SessionTime.objects.all()
+    sessiontimes = SessionType.objects.all()
     context = {'sessiontimes': sessiontimes}
     return render(request, 'confsessions/sessions.html', context)
 
+def sessiontype(request, sessiontype_pk):
+	sessiontype = SessionType.objects.get(pk=sessiontype_pk)
+	context = {'sessiontype' : sessiontype}
+	return render(request, 'confsessions/sessiontype.html', context)
+
 def concurrent(request):
-    sessiontimes = SessionTime.objects.all()
+    sessiontimes = SessionType.objects.all()
     context = {'sessiontimes': sessiontimes}
     return render(request, 'confsessions/sessionsadmin.html', context)
 

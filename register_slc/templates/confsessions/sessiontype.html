@@ -1,0 +1,51 @@
+{% extends 'confsessions/base_session.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans sessiontype.name %}.
+{% endblock %}
+
+{% block content_title %}
+	<h2 class="content-title">{{ sessiontype.name }}</h2>
+{% endblock %}
+
+{% block content %}
+<div class="container clearfix">
+	<ul class ="sessions">
+	{% for session in sessiontype.session_set.all %}
+		<div class="modal">
+			<div class="modal-header">
+				<h3>{{ session.name }}<h3>
+			</div>
+			<div class="modal-body">
+				<h4>{{ session.presenter}} </h4>
+				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
+					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
+				</p> 
+				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+			</div>
+
+			<div class="modal-footer">
+				<p>Location:{{ session.location }} 
+					{% if session.has_spaces %}
+					<span class={{ session.capacity_color }}></span> &nbsp &nbsp 
+					{% if user.is_authenticated %}
+					{% if user.get_profile.unpaid %}
+					<a href="{% url 'userena_profile_edit' user.username %}" class='btn btn-primary register'>Pay Now</a>
+					{% else %}
+					<a id='btn_{{ session.pk }}' class='btn btn-primary register'>Register</a>
+					{% endif %}
+					{% else %}
+					<a href="{% url "userena_signin" %}" class="btn btn-primary register">Sign In</a>
+					{% endif %} 
+					{% else %}
+					<span class="full" /> &nbsp &nbsp 
+					<span id='btn_{{ session.pk }}' />
+					{% endif %}
+				</p>
+			</div>
+		</div>
+	{% endfor %}
+	</ul>
+</div>
+{% endblock %}

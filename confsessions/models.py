@@ -1,21 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class SessionTime(models.Model):
-    time = models.IntegerField()
-    name = models.CharField(max_length=20)
-    affixlink = models.CharField(max_length=10)
-    def __unicode__(self):
-        return str(self.time)
-
 class SessionType(models.Model):
-    time = models.ForeignKey(SessionTime)
+    time = models.DateTimeField()
     name = models.CharField(max_length=100)
     def __unicode__(self):
         return self.name
 
 class Session(models.Model):
-    sessiontype = models.ForeignKey(SessionType)
+    sessiontype = models.ManyToManyField(SessionType)
     name = models.CharField(max_length=200)
     affixlink = models.CharField(max_length=10)
     presenter = models.CharField(max_length=200)
@@ -25,7 +18,7 @@ class Session(models.Model):
     description = models.CharField(max_length=5000)
     participants = models.ManyToManyField(User)
     def add_participant(self,User):
-        for sesstype in self.sessiontype.time.sessiontype_set.all():
+        for sesstype in self.sessiontype_set.all():
             for sess in sesstype.session_set.all():
                 sess.participants.remove(User)
         self.participants.add(User)

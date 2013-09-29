@@ -8,19 +8,10 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'SessionTime'
-        db.create_table(u'confsessions_sessiontime', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('time', self.gf('django.db.models.fields.IntegerField')()),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('affixlink', self.gf('django.db.models.fields.CharField')(max_length=10)),
-        ))
-        db.send_create_signal(u'confsessions', ['SessionTime'])
-
         # Adding model 'SessionType'
         db.create_table(u'confsessions_sessiontype', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('time', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['confsessions.SessionTime'])),
+            ('time', self.gf('django.db.models.fields.DateTimeField')()),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
         ))
         db.send_create_signal(u'confsessions', ['SessionType'])
@@ -28,7 +19,6 @@ class Migration(SchemaMigration):
         # Adding model 'Session'
         db.create_table(u'confsessions_session', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('sessiontype', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['confsessions.SessionType'])),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('affixlink', self.gf('django.db.models.fields.CharField')(max_length=10)),
             ('presenter', self.gf('django.db.models.fields.CharField')(max_length=200)),
@@ -38,6 +28,15 @@ class Migration(SchemaMigration):
             ('description', self.gf('django.db.models.fields.CharField')(max_length=5000)),
         ))
         db.send_create_signal(u'confsessions', ['Session'])
+
+        # Adding M2M table for field sessiontype on 'Session'
+        m2m_table_name = db.shorten_name(u'confsessions_session_sessiontype')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('session', models.ForeignKey(orm[u'confsessions.session'], null=False)),
+            ('sessiontype', models.ForeignKey(orm[u'confsessions.sessiontype'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['session_id', 'sessiontype_id'])
 
         # Adding M2M table for field participants on 'Session'
         m2m_table_name = db.shorten_name(u'confsessions_session_participants')
@@ -50,14 +49,14 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        # Deleting model 'SessionTime'
-        db.delete_table(u'confsessions_sessiontime')
-
         # Deleting model 'SessionType'
         db.delete_table(u'confsessions_sessiontype')
 
         # Deleting model 'Session'
         db.delete_table(u'confsessions_session')
+
+        # Removing M2M table for field sessiontype on 'Session'
+        db.delete_table(db.shorten_name(u'confsessions_session_sessiontype'))
 
         # Removing M2M table for field participants on 'Session'
         db.delete_table(db.shorten_name(u'confsessions_session_participants'))
@@ -103,21 +102,14 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'participants': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.User']", 'symmetrical': 'False'}),
             'presenter': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'sessiontype': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['confsessions.SessionType']"}),
+            'sessiontype': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['confsessions.SessionType']", 'symmetrical': 'False'}),
             'teaser': ('django.db.models.fields.CharField', [], {'max_length': '2000'})
-        },
-        u'confsessions.sessiontime': {
-            'Meta': {'object_name': 'SessionTime'},
-            'affixlink': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'time': ('django.db.models.fields.IntegerField', [], {})
         },
         u'confsessions.sessiontype': {
             'Meta': {'object_name': 'SessionType'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'time': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['confsessions.SessionTime']"})
+            'time': ('django.db.models.fields.DateTimeField', [], {})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
