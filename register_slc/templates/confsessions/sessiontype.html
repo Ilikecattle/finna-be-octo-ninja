@@ -5,10 +5,6 @@
 {% trans sessiontype.name %}.
 {% endblock %}
 
-{% block content_title %}
-	<h2 class="content-title">{{ sessiontype.name }}</h2>
-{% endblock %}
-
 {% block scripts %}
 <script type="text/javascript">
 	$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
@@ -53,13 +49,11 @@
 {% block content %}
 <div class="container clearfix">
 
-	<div class="span3 bs-docs-sidebar">
-		<ul class="nav nav-list bs-docs-sidenav">
-			{% for sesstype in sessiontypes %}
-				<li id="li_{{ sessiontime.pk }}"><a class="register" href="/sessions/sessiontype/{{ sesstype.pk }}">{{ sesstype.name }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
+    <ul id="reg-nav" class="clearfix">
+        {% for sesstype in sessiontypes %}
+            <li id="li_{{ sessiontime.pk }}" class="sessiontime"><a href="/sessions/sessiontype/{{ sesstype.pk }}">{{ sesstype.name }}</a></li>
+        {% endfor %}
+    </ul>
 
 	<ul class ="sessions">
 	{% for session in sessiontype.session_set.all %}

@@ -88,6 +88,17 @@ html[xmlns] .clearfix {
     margin: 0 0 0 10px ;
 }
 
+#reg-nav {
+    width: 700px;
+    margin: 10px auto;
+}
+
+.sessiontime {
+    text-align: center;
+    float: left;
+    width: 100px;
+}
+
 #footer{
     background: url(../img/stripe.png) repeat-x center top;
     margin: 40px 12px 0;
