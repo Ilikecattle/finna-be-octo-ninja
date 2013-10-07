@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
+from django.views.generic.base import TemplateView
 
 from profiles.forms import SignupFormExtra
 
@@ -9,25 +10,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # url(r'^$', 'register_slc.views.home', name='home'),
-    #url(r'^accounts/', include('registration.backends.default.urls')),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
-
-    # Demo Override the signup form with our own, which includes a
-    # first and last name.
-    #(r'^accounts/signup/$',
-    #  'userena.views.signup',
-    #{'signup_form': SignupFormExtra}),
-    #url(r'^sessions/$', 'confsessions.views.index',
-    #    name='sessions'),
     (r'^sessions/', include('confsessions.urls')),
     (r'^accounts/', include('userena.urls')),
     (r'^messages/', include('userena.contrib.umessages.urls')),
-    #url(r'^$',
-    #    direct_to_template,
-    #    {'template': 'static/promo.html'},
-    #    name='promo'),
+    url(r'^$', TemplateView.as_view(template_name='static/promo.html')),
     (r'^i18n/', include('django.conf.urls.i18n')),
 )
 

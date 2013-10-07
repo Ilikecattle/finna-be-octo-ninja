@@ -49,16 +49,7 @@ html[xmlns] .clearfix {
 
 #container{
     width: 1008px;
-    margin: 30px auto 50px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-     -moz-box-shadow: 0 0 3px #999;
-    -webkit-box-shadow: 0 0 3px #999;
-    box-shadow: 0 0 3px #999;
-	background-color: #f6f4f2;
-	border: 1px solid #fff;
-	padding: 0 10px;
+    margin: auto;
 }
 
 #top{
