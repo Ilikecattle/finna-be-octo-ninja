@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-  <head>
+    <head>
     <title>{% block title %}Student Leadership Conference Registration{% endblock %}</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -18,44 +18,49 @@
     {% block scripts %}{% endblock %}
 
     <script type="text/javascript">
-
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-36441810-1']);
         _gaq.push(['_trackPageview']);
 
         (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
     </script>
 
-  </head>
-  <body>
-    <div id="container">	
-      <div id="header">
+    </head>
+    <body>
+        <div id="navmenu">
+            <div id="navmenu-content">
+                <div class="navmenu-left">
+                    <h1>Student Leadership Conference</h1>
+                </div>
+                <div class="navmenu-right">
+                    {% block nav %}
+                    <ul id="nav">
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'userena_profile_detail' user.username %}"><span>{% trans 'Account' %} ({{ user.username }})</span></a></li>
+                        <li><a href="{% url 'userena_signout' %}"><span>{% trans 'Log Out' %}</span></a></li>
+                        {% else %}
+                        <li><a href="{% url 'userena_signin' %}"><span>{% trans 'Log In' %}</span></a></li>
+                        <li><a href="{% url 'userena_signup' %}"><span>{% trans 'Sign Up' %}</span></a></li>
+                        {% endif %}
+                    </ul>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="container">
+            <div id="header">
+                slc-registration
+            </div><!-- /header-->
 
-        <h1><a href="/">slc-registration</a></h1>
-
-
-        {% block nav %}
-        <ul id="nav">
-          {% if user.is_authenticated %}
-          <li><a href="{% url 'userena_profile_detail' user.username %}"><span>{% trans 'Account' %} ({{ user.username }})</span></a></li>
-          <li><a href="{% url 'userena_signout' %}"><span>{% trans 'Log Out' %}</span></a></li>
-          {% else %}
-          <li><a href="{% url 'userena_signin' %}"><span>{% trans 'Log In' %}</span></a></li>
-          <li><a href="{% url 'userena_signup' %}"><span>{% trans 'Sign Up' %}</span></a></li>
-          {% endif %}
-        </ul>
-        {% endblock %}
-
-      </div><!-- /header-->
-      {% block content_title %}{% endblock %}
-      <div id="content-container">
-        {% block content %}{% endblock %}
-      </div><!-- /content-container-->
-      <div class="clearfix" id="footer"><p>{% trans 'Made by' %} <a href="http://slc.ubc.ca">Student Leadership Conference</a> | Hosting by <a href="https://www.ubc.ca">UBC</a></p></div>
-    </div><!-- /container-->
-   </body>
- </html>
+        {% block content_title %}{% endblock %}
+            <div id="content-container">
+                {% block content %}{% endblock %}
+            </div><!-- /content-container-->
+            <div class="clearfix" id="footer"><p>{% trans 'Made by' %} <a href="http://slc.ubc.ca">Student Leadership Conference</a> | Hosting by <a href="https://www.ubc.ca">UBC</a></p></div>
+        </div><!-- /container-->
+    </body>
+</html>
