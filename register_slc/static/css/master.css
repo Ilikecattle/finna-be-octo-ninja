@@ -512,11 +512,11 @@ ul#profile-nav li a:hover{
 
 .modal {
 	position: relative;
-	width: 32%;
+	width: 30.5%;
 	float: left;
 	text-align: center;
 	background-color: #FFF;
-	margin: 0.5%;
+	margin-left: 2%;
 	border: 1px solid #999;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	-webkit-border-radius: 6px;
