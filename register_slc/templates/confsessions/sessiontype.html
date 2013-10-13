@@ -19,7 +19,6 @@
 	});
 
 	$(document).ready(function() {
-		console.log("TEST: {{ prev_sessiontype.name }} {{ next_sessiontype.name }}");
 		{% if user.is_authenticated %}
 			{% for obj in user.session_set.all %}
 				$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
@@ -28,13 +27,12 @@
 		{% endif %}
 		{% for obj in sessiontype.session_set.all %}
 			$('#btn_{{ obj.pk }}').live('click', function() {
-				console.log("clicked");
 				$.ajax({
 					type: "POST",
 					url: "/sessions/register_session/{{ obj.pk }}/{{ user.pk }}/",
 					success: function(response) {
 						{% for sess in sessiontype.session_set.all %}
-							$('#btn_{{ sess.pk }}').replaceWith("<a id='btn_{{ sess.pk }}' class='btn btn-primary register'>Register</a>");
+							$('#btn_{{ sess.pk }}').replaceWith("<a id='btn_{{ sess.pk }}' class='button'>Register</a>");
 						{% endfor %}
 						$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
 						$('#li_{{ sessiontime.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ sessiontime.name }}</a>');
@@ -49,20 +47,20 @@
 {% block content %}
 <div class="container clearfix">
 
-    <ul id="reg-nav" class="clearfix">
-        {% for sesstype in sessiontypes %}
-            <li id="li_{{ sessiontime.pk }}" class="sessiontime"><a href="/sessions/sessiontype/{{ sesstype.pk }}">{{ sesstype.name }}</a></li>
-        {% endfor %}
-    </ul>
+	<ul id="reg-nav" class="clearfix">
+		{% for sesstype in sessiontypes %}
+			<li class="sessiontime"><a href="/sessions/sessiontype/{{ sesstype.pk }}">{{ sesstype.name }}</a></li>
+		{% endfor %}
+	</ul>
 
 	<ul class ="sessions">
 	{% for session in sessiontype.session_set.all %}
 		<div class="modal">
 			<div class="modal-header">
-				<h3>{{ session.name }}<h3>
+				<h3>{{ session.name }}</h3>
+				<h4>{{ session.presenter}}</h4>
 			</div>
 			<div class="modal-body">
-				<h4>{{ session.presenter}} </h4>
 				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
 					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
 				</p> 
@@ -70,23 +68,20 @@
 			</div>
 
 			<div class="modal-footer">
-				<p>Location:{{ session.location }} 
-					{% if session.has_spaces %}
-					<span class={{ session.capacity_color }}></span> &nbsp &nbsp 
-					{% if user.is_authenticated %}
+			{% if session.has_spaces %}
+				{% if user.is_authenticated %}
 					{% if user.get_profile.unpaid %}
-					<a href="{% url 'userena_profile_edit' user.username %}" class='btn btn-primary register'>Pay Now</a>
+						<a href="{% url 'userena_profile_edit' user.username %}" class='button'>Pay Now</a>
 					{% else %}
-					<a id='btn_{{ session.pk }}' class='btn btn-primary register'>Register</a>
+						<a id='btn_{{ session.pk }}' class='button'>Register</a>
 					{% endif %}
-					{% else %}
-					<a href="{% url "userena_signin" %}" class="btn btn-primary register">Sign In</a>
-					{% endif %} 
-					{% else %}
-					<span class="full" /> &nbsp &nbsp 
-					<span id='btn_{{ session.pk }}' />
-					{% endif %}
-				</p>
+				{% else %}
+					<a href="{% url 'userena_signin' %}" class="button">Sign In</a>
+				{% endif %} 
+			{% else %}
+				<span class="full" />
+				<span id='btn_{{ session.pk }}' />
+			{% endif %}
 			</div>
 		</div>
 	{% endfor %}
@@ -94,10 +89,10 @@
 	
 	<div class="bottom-buttons">
 		{% if prev_sessiontype %}
-		<a class="prev-button" href="/sessions/sessiontype/{{ prev_sessiontype.pk }}">back</a>
+		<a href="/sessions/sessiontype/{{ prev_sessiontype.pk }}"><div class="button prev-button" >back</div></a>
 		{% endif %}
 		{% if next_sessiontype %}
-		<a class="next-button" href="/sessions/sessiontype/{{ next_sessiontype.pk }}">next</a>
+		<a href="/sessions/sessiontype/{{ next_sessiontype.pk }}"><div class="button next-button">next</div></a>
 		{% endif %}
 	</div>
 </div>
