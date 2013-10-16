@@ -8,6 +8,7 @@ from confsessions import views
 
 urlpatterns = patterns('',
         url(r'^$', views.index, name='sessions'),
+        url(r'^sessiontime/(\d*)', views.sessiontime),
         url(r'^sessiontype/(\d*)', views.sessiontype),
         url(r'^concurrent/$', views.concurrent, name='concurrent'),
         url(r'^concurrent_delegates/(\d*)/$', views.concurrent_delegates, name='concurrent_delegates'),

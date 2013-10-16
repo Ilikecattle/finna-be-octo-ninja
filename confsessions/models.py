@@ -1,17 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class SessionType(models.Model):
+class SessionTime(models.Model):
     time = models.DateTimeField()
+    name = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.name
+
+class SessionType(models.Model):
+    session_time = models.ForeignKey(SessionTime)
     name = models.CharField(max_length=100)
-    include_in_nav = models.BooleanField()
     def __unicode__(self):
         return self.name
 
 class Session(models.Model):
     sessiontype = models.ForeignKey(SessionType)
     name = models.CharField(max_length=200)
-    affixlink = models.CharField(max_length=10)
     presenter = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     capacity = models.IntegerField()
@@ -19,8 +23,9 @@ class Session(models.Model):
     description = models.CharField(max_length=5000)
     participants = models.ManyToManyField(User)
     def add_participant(self,User):
-        for sess in self.sessiontype.session_set.all():
-            sess.participants.remove(User)
+        for sess_time in self.sessiontype.sessiontime_set.all():
+            for sess in sess_time.session_set.all():
+                sess.participants.remove(User)
         self.participants.add(User)
 
     def has_spaces(self):

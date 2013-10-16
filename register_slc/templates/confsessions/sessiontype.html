@@ -48,8 +48,8 @@
 <div class="container clearfix">
 
 	<ul id="reg-nav" class="clearfix">
-		{% for sesstype in sessiontypes %}
-			<li class="sessiontime"><a href="/sessions/sessiontype/{{ sesstype.pk }}">{{ sesstype.name }}</a></li>
+		{% for sesstime in session_times %}
+			<li class="sessiontime"><a href="/sessions/sessiontime/{{ sesstime.pk }}">{{ sesstime.name }}</a></li>
 		{% endfor %}
 	</ul>
 
@@ -88,11 +88,11 @@
 	</ul>
 	
 	<div class="bottom-buttons">
-		{% if prev_sessiontype %}
-		<a href="/sessions/sessiontype/{{ prev_sessiontype.pk }}"><div class="button prev-button" >back</div></a>
+		{% if prev_sessiontime %}
+		<a href="/sessions/sessiontime/{{ prev_sessiontime.pk }}"><div class="button prev-button" >back</div></a>
 		{% endif %}
-		{% if next_sessiontype %}
-		<a href="/sessions/sessiontype/{{ next_sessiontype.pk }}"><div class="button next-button">next</div></a>
+		{% if next_sessiontime %}
+		<a href="/sessions/sessiontime/{{ next_sessiontime.pk }}"><div class="button next-button">next</div></a>
 		{% endif %}
 	</div>
 </div>

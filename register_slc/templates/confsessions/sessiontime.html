@@ -1,0 +1,39 @@
+{% extends 'confsessions/base_session.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans sessiontime.name %}.
+{% endblock %}
+
+{% block content %}
+<div class="container clearfix">
+
+	<ul id="reg-nav" class="clearfix">
+		{% for sesstime in session_times %}
+			<li class="sessiontime"><a href="/sessions/sessiontime/{{ sesstime.pk }}">{{ sesstime.name }}</a></li>
+		{% endfor %}
+	</ul>
+
+	<ul class ="sessions">
+	{% for session_type in session_types %}
+		<div class="modal">
+			<div class="modal-header">
+				<h3>{{ session_type.name }}</h3>
+			</div>
+			<div class="modal-body">
+				There would be a description here!
+			</div>
+			<div class="modal-footer">
+				<a href="/sessions/sessiontype/{{ session_type.pk }}"><div class="button">Select</div></a>
+			</div>
+		</div>
+	{% endfor %}
+	</ul>
+	
+	<div class="bottom-buttons">
+		{% if prev_session_time %}
+		<a href="/sessions/sessiontime/{{ prev_session_time.pk }}"><div class="button prev-button" >back</div></a>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
