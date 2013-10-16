@@ -23,8 +23,8 @@ class Session(models.Model):
     description = models.CharField(max_length=5000)
     participants = models.ManyToManyField(User)
     def add_participant(self,User):
-        for sess_time in self.sessiontype.sessiontime_set.all():
-            for sess in sess_time.session_set.all():
+        for sess_type in self.sessiontype.session_time.sessiontype_set.all():
+            for sess in sess_type.session_set.all():
                 sess.participants.remove(User)
         self.participants.add(User)
 

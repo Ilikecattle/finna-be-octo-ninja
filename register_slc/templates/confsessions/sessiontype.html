@@ -27,6 +27,7 @@
 		{% endif %}
 		{% for obj in sessiontype.session_set.all %}
 			$('#btn_{{ obj.pk }}').live('click', function() {
+				console.log("CLICK");
 				$.ajax({
 					type: "POST",
 					url: "/sessions/register_session/{{ obj.pk }}/{{ user.pk }}/",
