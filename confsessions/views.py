@@ -5,9 +5,8 @@ from confsessions.models import SessionTime, SessionType, Session
 from django.contrib.auth.models import User
 
 def index(request):
-    sessiontimes = SessionTime.objects.all()
-    context = {'sessiontimes': sessiontimes}
-    return render(request, 'confsessions/sessions.html', context)
+    sessiontimes = get_session_times_ordered()
+    return redirect('/sessions/sessiontime/' + str(sessiontimes[0].pk))
 
 def sessiontime(request, session_time_pk):
     session_time = SessionTime.objects.get(pk=session_time_pk)
@@ -47,16 +46,6 @@ def sessiontype(request, sessiontype_pk):
         'prev_sessiontime' : prev_session_time \
     }
     return render(request, 'confsessions/sessiontype.html', context)
-
-def concurrent(request):
-    sessiontimes = SessionTime.objects.all()
-    context = {'sessiontimes': sessiontimes}
-    return render(request, 'confsessions/sessionsadmin.html', context)
-
-def concurrent_delegates(request, session_pk):
-    sess = Session.objects.get(pk=session_pk)
-    context = {'sessionparticipants': sess.participants.all()}
-    return render(request, 'confsessions/sessiondelegates.html', context)
 
 def register_session(request, session_pk, user_pk):
     '''Register user in session'''
