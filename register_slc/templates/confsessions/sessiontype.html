@@ -18,29 +18,49 @@
 		}
 	});
 
-	$(document).ready(function() {
+	function resetSessionButtons()
+	{
 		{% if user.is_authenticated %}
-			{% for obj in user.session_set.all %}
-				$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
-				$('#li_{{ obj.sessiontype.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ obj.sessiontype.name }}</a>');
+			{% for sess in sessiontype.session_set.all %}
+				session_button = $('#btn_{{ sess.pk }}');
+				$(session_button).addClass('button');
+				{% if user.get_profile.unpaid %}
+					$(session_button).text("Save");
+				{% else %}
+					$(session_button).text("Register");
+				{% endif %}
 			{% endfor %}
 		{% endif %}
-		{% for obj in sessiontype.session_set.all %}
-			$('#btn_{{ obj.pk }}').live('click', function() {
-				$.ajax({
-					type: "POST",
-					url: "/sessions/register_session/{{ obj.pk }}/{{ user.pk }}/",
-					success: function(response) {
-						{% for sess in sessiontype.session_set.all %}
-							$('#btn_{{ sess.pk }}').replaceWith("<a id='btn_{{ sess.pk }}' class='button'>Register</a>");
-						{% endfor %}
-						$('#btn_{{ obj.pk }}').replaceWith("<div id='btn_{{ obj.pk }}'>Registered</div>");
-						$('#li_{{ sessiontime.pk }}').html('<a class="registered" href="#affix_{{ obj.pk }}">{{ sessiontime.name }}</a>');
-					}
-				});
-			});
-		{% endfor %}
+	}
+
+	function sessionClicked(session_pk)
+	{
+		{% if user.get_profile.unpaid %}
+			urlToCall = "/profiles/save_session/" + session_pk + "/{{ user.pk }}/";
+		{% else %}
+			urlToCall = "/sessions/register_session/" + session_pk +  "/{{ user.pk }}/"
+		{% endif %}
+
+		$.ajax({
+			type: "POST",
+			url: urlToCall,
+			success: function(response) {
+				resetSessionButtons();
+				session_button = $('#btn_' + session_pk);
+				$(session_button).removeClass("button");
+				{% if user.get_profile.unpaid %}
+					$(session_button).text("Saved");
+				{% else %}
+					$(session_button).text("Registered");
+				{% endif %}
+			}
+		});
+	}
+
+	$(document).ready(function() {
+		resetSessionButtons();
 	});
+
 </script>
 {% endblock %}
 
@@ -71,9 +91,9 @@
 			{% if session.has_spaces %}
 				{% if user.is_authenticated %}
 					{% if user.get_profile.unpaid %}
-						<a href="{% url 'userena_profile_edit' user.username %}" class='button'>Pay Now</a>
+						<a id='btn_{{ session.pk }}' class='button' onclick="sessionClicked({{ session.pk }})">Save</a>
 					{% else %}
-						<a id='btn_{{ session.pk }}' class='button'>Register</a>
+						<a id='btn_{{ session.pk }}' class='button' onclick="sessionClicked({{ session.pk }})">Register</a>
 					{% endif %}
 				{% else %}
 					<a href="{% url 'userena_signin' %}" class="button">Sign In</a>
