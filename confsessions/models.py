@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 class SessionTime(models.Model):
     time = models.DateTimeField()
     name = models.CharField(max_length=30)
+    
+    def has_multiple_session_types(self):
+        return self.sessiontype_set.all().count() > 1
+
     def __unicode__(self):
         return self.name
 
