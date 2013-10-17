@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
+from confsessions.models import Session
+
 from userena.models import UserenaBaseProfile
 from userena.models import UserenaSignup
 import datetime
@@ -127,7 +129,13 @@ class Profile(UserenaBaseProfile):
     #hear_about = models.CharField(_('how did you hear about the SLC?'), blank=True, null=True, max_length=25,
     #        choices=HEAR_ABOUT_CHOICES)
     hear = models.ManyToManyField(HearAbout, blank=True, null=True)
-    other = models.TextField(_('dear future self...'), blank=True, default='Maybe try setting a goal...')
+    saved_sessions = models.ManyToManyField(Session)
+
+    def save_session(self, session):
+        for sess_type in session.sessiontype.session_time.sessiontype_set.all():
+            for sess in sess_type.session_set.all():
+                self.saved_sessions.remove(sess)
+        self.saved_sessions.add(session)
 
     def readyForPayment(self):
         '''Checks all compulsory fields are filled for payment'''
