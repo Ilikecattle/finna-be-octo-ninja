@@ -38,21 +38,6 @@ class Session(models.Model):
     def registered_delegates(self):
         return str(self.participants.count())
 
-    def percent_spaces(self):
-        percent = 1-float(self.participants.count())/self.capacity
-        return str(percent*100) + "%"
-
-
-    def capacity_color(self):
-        percent = 1-float(self.participants.count())/self.capacity
-        if percent <= 0:
-            return "full" 
-        if percent <= .15:
-            return "redbar"
-        if percent <= .5:
-            return "yellowbar"
-        return "greenbar" 
-
     def __unicode__(self):
         return self.name
 
