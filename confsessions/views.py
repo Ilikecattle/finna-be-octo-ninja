@@ -20,6 +20,7 @@ def sessiontime(request, session_time_pk):
         { \
         'prev_sessiontime' : get_prev_session_time(session_time), \
         'next_sessiontime' : get_next_session_time(session_time), \
+        'completed_session_times' : get_completed_session_times(request.user), \
         'session_times' : session_times, \
         'session_types' : session_types, \
         'session_time' : session_time \
@@ -42,7 +43,9 @@ def sessiontype(request, sessiontype_pk):
     context = { \
         'session_times' : session_times, \
         'sessiontype' : cur_session_type, \
+        'session_time' : cur_session_time, \
         'next_sessiontime' : next_session_time, \
+        'completed_session_times' : get_completed_session_times(request.user), \
         'prev_sessiontime' : prev_session_time \
     }
     return render(request, 'confsessions/sessiontype.html', context)
@@ -53,6 +56,13 @@ def register_session(request, session_pk, user_pk):
     sess.add_participant(User.objects.get(pk=user_pk))
     sess.save()
     return HttpResponse('Success')
+
+def get_completed_session_times(user):
+    session_time_list = get_session_times_ordered()
+    for sess_time in session_time_list:
+        if not sess_time.is_user_registered(user):
+            session_time_list.remove(sess_time)
+    return session_time_list
 
 def get_session_times_ordered():
     return list(SessionTime.objects.order_by('time'))

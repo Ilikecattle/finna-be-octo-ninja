@@ -5,15 +5,7 @@
 {% trans sessiontime.name %}.
 {% endblock %}
 
-{% block content %}
-<div class="container clearfix">
-
-	<ul id="reg-nav" class="clearfix">
-		{% for sesstime in session_times %}
-			<li class="sessiontime"><a href="/sessions/sessiontime/{{ sesstime.pk }}">{{ sesstime.name }}</a></li>
-		{% endfor %}
-	</ul>
-
+{% block sessions %}
 	<ul class ="sessions">
 	{% for session_type in session_types %}
 		<div class="modal">
@@ -29,7 +21,7 @@
 		</div>
 	{% endfor %}
 	</ul>
-	
+
 	<div class="bottom-buttons">
 		{% if prev_sessiontime %}
 		<a href="/sessions/sessiontime/{{ prev_sessiontime.pk }}"><div class="button prev-button" >back</div></a>

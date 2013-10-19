@@ -64,15 +64,7 @@
 </script>
 {% endblock %}
 
-{% block content %}
-<div class="container clearfix">
-
-	<ul id="reg-nav" class="clearfix">
-		{% for sesstime in session_times %}
-			<li class="sessiontime"><a href="/sessions/sessiontime/{{ sesstime.pk }}">{{ sesstime.name }}</a></li>
-		{% endfor %}
-	</ul>
-
+{% block sessions %}
 	<ul class ="sessions">
 	{% for session in sessiontype.session_set.all %}
 		<div class="modal">
