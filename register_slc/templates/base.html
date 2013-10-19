@@ -31,33 +31,33 @@
 
     </head>
     <body>
-        <div id="navmenu">
-            <div id="navmenu-content">
-                <div class="navmenu-left">
-                    <h1>Student Leadership Conference</h1>
-                </div>
-                <div class="navmenu-right">
+        <div id="container">
+        {% block content_title %}{% endblock %}
+            <div id="content-container">
+                <ul id="UbcHeader" class="UbcContainer">
+                    <li><a id="UbcLogo" href="http://www.ubc.ca/">The University of British Columbia</a></li>
+                    <li class="UbcMindLink"><a href="http://www.aplaceofmind.ubc.ca/" id="UbcMindLink">a place of mind</a></li>
+                    <li id="UbcHeaderLine"><a href="http://ubc.ca" id="UbcHeaderLink"><span>The University of British Columbia</span></a></li>
+                    <li id="UbcSubUnitLine"><a href="http://slc.sites.olt.ubc.ca/" id="UbcSubUnitLink"><span>Student Leadership Conference</span></a></li>
+                </ul>
+                <div id="navigation">
+                <div id="menu-top-menu" class="page-nav pipes single-dropdown">
                     {% block nav %}
-                    <ul id="nav">
+                    <ul id="menu-standard-menu" class="menu">
+                        <li class="page-nav"><a href="{% url 'sessions' %}"><span>{% trans 'Sessions' %}</span></a></li>
                         {% if user.is_authenticated %}
-                        <li><a href="{% url 'userena_profile_detail' user.username %}"><span>{% trans 'Account' %} ({{ user.username }})</span></a></li>
-                        <li><a href="{% url 'userena_signout' %}"><span>{% trans 'Log Out' %}</span></a></li>
+                        <li class="page-nav"><a href="{% url 'userena_profile_detail' user.username %}"><span>{% trans 'Account' %} ({{ user.username }})</span></a></li>
+                        <li class="page-nav"><a href="{% url 'userena_signout' %}"><span>{% trans 'Log Out' %}</span></a></li>
                         {% else %}
-                        <li><a href="{% url 'userena_signin' %}"><span>{% trans 'Log In' %}</span></a></li>
-                        <li><a href="{% url 'userena_signup' %}"><span>{% trans 'Sign Up' %}</span></a></li>
+                        <li class="page-nav"><a href="{% url 'userena_signin' %}"><span>{% trans 'Log In' %}</span></a></li>
+                        <li class="page-nav"><a href="{% url 'userena_signup' %}"><span>{% trans 'Sign Up' %}</span></a></li>
                         {% endif %}
                     </ul>
                     {% endblock %}
                 </div>
-            </div>
-        </div>
-        <div id="container">
-            <div id="header">
-                slc-registration
-            </div><!-- /header-->
-
-        {% block content_title %}{% endblock %}
-            <div id="content-container">
+                <div id="header">
+                    slc-registration
+                </div><!-- /header-->
                 {% block content %}{% endblock %}
             </div><!-- /content-container-->
             <div class="clearfix" id="footer"><p>{% trans 'Made by' %} <a href="http://slc.ubc.ca">Student Leadership Conference</a> | Hosting by <a href="https://www.ubc.ca">UBC</a></p></div>
