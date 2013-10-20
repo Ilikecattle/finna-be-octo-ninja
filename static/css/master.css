@@ -423,8 +423,10 @@ p.forgot-password{
 #progressbar {
 	margin-bottom: 30px;
 	overflow: hidden;
+	counter-reset: step;
 }
 #progressbar li {
+	counter-increment: step;
 	list-style-type: none;
 	color: #EEE;
 	text-transform: uppercase;
@@ -434,8 +436,9 @@ p.forgot-password{
 	position: relative;
 }
 #progressbar li:before {
-	content: '.';
-	color: transparent;
+	
+	content: counter(step);
+	color: #FFF;
 	width: 40px;
 	line-height: 40px;
 	border-radius: 20px;
