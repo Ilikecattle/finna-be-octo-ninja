@@ -8,7 +8,7 @@
 			<a href="/sessions/sessiontime/{{ sesstime.pk }}">{{ sesstime.name }}</a></li>
 		{% endfor %}
 			<li class="sessiontime">
-			<a href="/sessions/sessiontime/{{ sesstime.pk }}">Review</a></li>
+			<a href="{% url 'profiles_review' %}">Review</a></li>
 	</ul>
 	{% block sessions %}{% endblock %}
 </div>

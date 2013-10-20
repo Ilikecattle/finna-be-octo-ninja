@@ -247,6 +247,12 @@ h6{
 	top:1px;
 }
 
+.button.pay_now {
+	width: 100px;
+	display: block;
+	margin: 20px auto;
+}
+
 .white-box img{
     float: right;
     border: 3px double #f1edeb;
@@ -425,7 +431,7 @@ p.forgot-password{
 
 /*progressbar*/
 #progressbar {
-	margin-bottom: 30px;
+	margin: 30px 0;
 	overflow: hidden;
 	counter-reset: step;
 }
@@ -601,7 +607,7 @@ ul#profile-nav li a:hover{
 .bottom-buttons {
     clear: both;
     width: 200px;
-    margin: auto;
+    margin: 20px auto;
 }
 
 .prev-button {

@@ -147,6 +147,8 @@
 		{% endif %}
 		{% if next_sessiontime %}
 		<a href="/sessions/sessiontime/{{ next_sessiontime.pk }}"><div class="button next-button">next</div></a>
+		{% else %}
+		<a href="{% url 'profiles_review' %}"><div class="button next-button">next</div></a>
 		{% endif %}
 	</div>
 </div>
