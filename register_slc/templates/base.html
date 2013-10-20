@@ -32,7 +32,6 @@
     </head>
     <body>
         <div id="container">
-        {% block content_title %}{% endblock %}
 			<div id="UbcHeaderWrapper">
 			<!-- BEGIN: UBC CLF VISUAL IDENTITY HEADER -->
 			  <ul id="UbcHeader" class="UbcContainer">
@@ -46,28 +45,85 @@
 			Conference</span></a></li>
 			  </ul>
 			</div>
-            <div id="body-container">
-                <div id="navigation">
-                <div id="menu-top-menu" class="page-nav pipes single-dropdown">
-                    {% block nav %}
-                    <ul id="menu-standard-menu" class="menu">
-                        <li class="page-nav"><a href="{% url 'sessions' %}">{% trans 'Sessions' %}</a></li>
-                        {% if user.is_authenticated %}
-                        <li class="page-nav"><a href="{% url 'userena_profile_detail' user.username %}">{% trans 'Account' %} ({{ user.username }})</span></a></li>
-                        <li class="page-nav"><a href="{% url 'userena_signout' %}">{% trans 'Log Out' %}</span></a></li>
-                        {% else %}
-                        <li class="page-nav"><a href="{% url 'userena_signin' %}">{% trans 'Log In' %}</a></li>
-                        <li class="page-nav"><a href="{% url 'userena_signup' %}">{% trans 'Sign Up' %}</a></li>
-                        {% endif %}
-                    </ul>
-                    {% endblock %}
-                </div>
-                <div id="header">
-                    slc-registration
-                </div><!-- /header-->
-                {% block content %}{% endblock %}
+			<div id="body-container">
+				<div id="navigation">
+					<div id="menu-top-menu" class="page-nav pipes single-dropdown">
+						{% block nav %}
+						<ul id="menu-standard-menu" class="menu">
+							<li class="page-nav"><a href="{% url 'sessions' %}">{% trans 'Sessions' %}</a></li>
+							{% if user.is_authenticated %}
+							<li class="page-nav"><a href="{% url 'userena_profile_detail' user.username %}">{% trans 'Account' %} ({{ user.username }})</span></a></li>
+							<li class="page-nav"><a href="{% url 'userena_signout' %}">{% trans 'Log Out' %}</span></a></li>
+							{% else %}
+							<li class="page-nav"><a href="{% url 'userena_signin' %}">{% trans 'Log In' %}</a></li>
+							<li class="page-nav"><a href="{% url 'userena_signup' %}">{% trans 'Sign Up' %}</a></li>
+							{% endif %}
+						</ul>
+						{% endblock %}
+					</div>
+				</div>
+				<div class="header-widget utility">
+					<div id="text-5" class="widget widget_text widget-widget_text">
+						<div class="widget-inside">
+							<div class="textwidget"><br><br></div>
+						</div>
+					</div>
+				</div>
+
+				<div id="header">
+					slc-registration
+				</div><!-- /header-->
+
+				{% block content_title %}{% endblock %}
+
+				{% block content %}{% endblock %}
+
+				<div id="UbcBottomInfoWrapper" class="clearfix">
+					<div id="UbcBottomInfo" class="UbcContainer">
+					<div id="UbcBottomLeft">
+						<p><a href="http://www.ubc.ca/"><img src="http://slc.ubc.ca/wp-content/themes/clf-base/library/clf/img/footer/logo.gif" alt="a place of mind, The University of British Columbia"></a></p>
+					</div><!-- End UbcBottomLeft -->
+
+					<div id="UbcBottomCenter" class="vcard">
+						<a class="url fn n" href="www.involvement.ubc.ca">
+						<span class="org">Centre for Student Involvement</span>
+						</a>
+
+						<div class="adr">
+							<div class="street-address">
+							1002-1874 East Mall,
+							</div> 
+							<span class="locality">Vancouver</span>, 
+							<span class="region">BC</span>, 
+							<span class="postal-code">V6T 1Z1</span>, 
+							<span class="country-name">Canada</span>
+						</div>
+
+						Tel: <span class="tel">604-822-9805</span><br>
+						Email: <a class="email" href="mailto:get.involved@ubc.ca">get.involved@ubc.ca</a>
+					</div><!-- End UbcBottomCenter -->
+
+					<div id="UbcBottomRight" class="vcard">
+						<a class="url fn n" href="http://www.slc.ubc.ca">
+						<span class="org">Student Leadership Conference</span>
+						</a>
+
+						<div class="adr">
+							<div class="street-address">
+							1002-1874 East Mall<br>Brock Hall,
+							</div> 
+							<span class="locality">Vancouver</span>, 
+							<span class="region">BC</span>, 
+							<span class="postal-code">V6T 1Z1</span>, 
+
+							<span class="country-name">Canada</span>
+						</div>
+
+						Tel: <span class="tel">604-822-9805</span><br>
+						<div class="clf-unit-textarea">Please refer to our "contact us" page for more information</div>
+					</div><!-- End UbcBottomRight -->
+				</div>
             </div><!-- /content-container-->
-            <div class="clearfix" id="footer"><p>{% trans 'Made by' %} <a href="http://slc.ubc.ca">Student Leadership Conference</a> | Hosting by <a href="https://www.ubc.ca">UBC</a></p></div>
         </div><!-- /container-->
     </body>
 </html>

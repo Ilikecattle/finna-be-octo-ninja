@@ -129,7 +129,10 @@ class Profile(UserenaBaseProfile):
     #hear_about = models.CharField(_('how did you hear about the SLC?'), blank=True, null=True, max_length=25,
     #        choices=HEAR_ABOUT_CHOICES)
     hear = models.ManyToManyField(HearAbout, blank=True, null=True)
-    saved_sessions = models.ManyToManyField(Session)
+    saved_sessions = models.ManyToManyField(Session, editable=False)
+
+    def get_registered_sessions(self):
+        return Session.objects.filter(participants__pk=self.user.pk).order_by('sessiontype__session_time__time')
 
     def save_session(self, session):
         for sess_type in session.sessiontype.session_time.sessiontype_set.all():

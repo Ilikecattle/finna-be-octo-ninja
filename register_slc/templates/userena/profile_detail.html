@@ -1,23 +1,63 @@
-{% extends 'userena/base_userena.html' %}
+{% extends 'userena/base_profile.html' %}
 {% load i18n %}
 
-{% block title %}{{ profile.user.username }}'s {% trans "profile" %}.{% endblock %}
+{% block title %}{{ profile.user.username }}'s {% trans "schedule" %}.{% endblock %}
 {% block content_title %}<h2 class="content-title">{{ profile.user.username }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}</h2>{% endblock %}
 
-{% block content %}
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#my_schedule").addClass("selected");
+    });
+  </script>
+{% endblock %}
 
+{% block inner_content %}
 
-    {% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
-    {% if user.username == profile.user.username %}
-    <ul id="profile-nav">
-        <li class="selected"><a href="{% url "userena_profile_detail" user.username %}">{% trans "Overview" %}</a></li>
-        <li><a href="{% url "userena_profile_edit" user.username %}">{% trans "Register and Pay" %}</a></li>
-        <li><a href="{% url "userena_password_change" user.username %}">{% trans "Change password" %}</a></li>
-        <li><a href="{% url "userena_email_change" user.username %}">{% trans "Change email" %}</a></li>
-    </ul>
-    {% endif %}
+<ul class ="sessions clearfix">
+{% if user.is_authenticated %}
+	{% if user.get_profile.unpaid %}
+		{% for session in profile.saved_sessions.all %}
+			<h1>{{session.get_time}}</h1>
+			<li class="modal one-column">
+			<div class="modal-header">
+				<h3>{{ session.name }}</h3>
+				<h4>{{ session.presenter}}</h4>
+			</div>
+			<div class="modal-body">
+				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
+					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
+				</p> 
+				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+			</div>
 
-<h3>How to register</h3>
-<p> <img class="howto"></p>
+			<div class="modal-footer">
+				<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+			</div>
+		</li>
+		{% endfor %}
+	{% else %}
+		{% for session in profile.get_registered_sessions %}
+			<h1 class="sessiontime-header">{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
+			<li class="modal one-column">
+			<div class="modal-header">
+				<h3>{{ session.name }}</h3>
+				<h4>{{ session.presenter}}</h4>
+			</div>
+			<div class="modal-body">
+				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
+					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
+				</p> 
+				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+			</div>
+
+			<div class="modal-footer">
+				<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+			</div>
+		</li>
+		{% endfor %}
+	{% endif %}
+{% endif %}
+</ul>
 
 {% endblock %}

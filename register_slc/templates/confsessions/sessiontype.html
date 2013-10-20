@@ -18,18 +18,66 @@
 		}
 	});
 
+	function set_full(session_button)
+	{
+		set_footer(session_button, 'full');
+		$(session_button).text("Full");
+	}
+
+	function set_save(session_button)
+	{
+		set_footer(session_button, 'register');
+		$(session_button).text("Save");
+	}
+
+	function set_register(session_button)
+	{
+		set_footer(session_button, 'register');
+		$(session_button).text("Register");
+	}
+
+	function set_registered(session_button)
+	{
+		set_footer(session_button, 'registered');
+		$(session_button).text("Registered");
+	}
+
+	function set_saved(session_button)
+	{
+		set_footer(session_button, 'registered');
+		$(session_button).text("Saved");
+	}
+
+	function set_footer(session_button, classes_to_add)
+	{
+		modal_footer = $(session_button).parent();
+		modal_footer.attr('class', 'modal-footer ' + classes_to_add);
+	}
+
 	function resetSessionButtons()
 	{
 		{% if user.is_authenticated %}
 			{% for sess in sessiontype.session_set.all %}
 				session_button = $('#btn_{{ sess.pk }}');
-				$(session_button).addClass('button');
 				{% if user.get_profile.unpaid %}
-					$(session_button).text("Save");
+					set_save(session_button);
 				{% else %}
-					$(session_button).text("Register");
+					set_register(session_button);
 				{% endif %}
+				{% if not sess.has_spaces %}
+					set_full(session_button);
+				{% endif %}
+
 			{% endfor %}
+			{% if user.get_profile.unpaid %}
+				{% for sess in user.get_profile.saved_sessions.all %}
+					set_saved($('#btn_{{ sess.pk }}'));
+				{% endfor %}
+			{% else %}
+				{% for sess in user.get_profile.get_registered_sessions %}
+					set_registered($('#btn_{{ sess.pk }}'));
+				{% endfor %}
+			{% endif %}
 		{% endif %}
 	}
 
@@ -47,11 +95,10 @@
 			success: function(response) {
 				resetSessionButtons();
 				session_button = $('#btn_' + session_pk);
-				$(session_button).removeClass("button");
 				{% if user.get_profile.unpaid %}
-					$(session_button).text("Saved");
+					set_saved(session_button);
 				{% else %}
-					$(session_button).text("Registered");
+					set_registered(session_button);
 				{% endif %}
 			}
 		});
@@ -80,20 +127,15 @@
 			</div>
 
 			<div class="modal-footer">
-			{% if session.has_spaces %}
 				{% if user.is_authenticated %}
 					{% if user.get_profile.unpaid %}
-						<a id='btn_{{ session.pk }}' class='button' onclick="sessionClicked({{ session.pk }})">Save</a>
+						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
 					{% else %}
-						<a id='btn_{{ session.pk }}' class='button' onclick="sessionClicked({{ session.pk }})">Register</a>
+						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Register</div>
 					{% endif %}
 				{% else %}
-					<a href="{% url 'userena_signin' %}" class="button">Sign In</a>
+					<div href="{% url 'userena_signin' %}" class="button">Sign In</div>
 				{% endif %} 
-			{% else %}
-				<span class="full" />
-				<span id='btn_{{ session.pk }}' />
-			{% endif %}
 			</div>
 		</div>
 	{% endfor %}
