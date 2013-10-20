@@ -14,41 +14,41 @@ def sessiontime(request, session_time_pk):
     
     # If there is only 1 session type immediately go to it
     if session_time.has_multiple_session_types():
-        session_times = get_session_times_ordered()
-        index = session_times.index(session_time)
-        context = \
-        { \
-        'prev_sessiontime' : get_prev_session_time(session_time), \
-        'next_sessiontime' : get_next_session_time(session_time), \
-        'completed_session_times' : get_completed_session_times(request.user), \
-        'session_times' : session_times, \
-        'session_types' : session_types, \
-        'session_time' : session_time \
-        }
-        return render(request, 'confsessions/sessiontime.html', context)
+        return render(request, 'confsessions/sessiontime.html', get_context_for_session_time(request, session_time_pk))
     else:
         return redirect('/sessions/sessiontype/' + str(session_types[0].pk))
 
-def sessiontype(request, sessiontype_pk):
-    cur_session_type = SessionType.objects.get(pk=sessiontype_pk)
-    cur_session_time = cur_session_type.session_time
+def sessiontype(request, session_type_pk):
+    return render(request, 'confsessions/sessiontype.html', get_context_for_session_type(request, session_type_pk))
+
+def get_context_for_session_time(request, session_time_pk):
+    cur_session_time = SessionTime.objects.get(pk=session_time_pk)
 
     if cur_session_time.has_multiple_session_types():
         prev_session_time = cur_session_time
     else:
         prev_session_time = get_prev_session_time(cur_session_time)
-        
+
     next_session_time = get_next_session_time(cur_session_time)
     session_times = get_session_times_ordered()
+    session_types = cur_session_time.sessiontype_set.all()
+
     context = { \
         'session_times' : session_times, \
-        'sessiontype' : cur_session_type, \
+        'session_types' : session_types, \
         'session_time' : cur_session_time, \
         'next_sessiontime' : next_session_time, \
         'completed_session_times' : get_completed_session_times(request.user), \
         'prev_sessiontime' : prev_session_time \
     }
-    return render(request, 'confsessions/sessiontype.html', context)
+    return context
+
+def get_context_for_session_type(request, session_type_pk):
+    cur_session_type = SessionType.objects.get(pk=session_type_pk)
+    context = get_context_for_session_time(request, cur_session_type.session_time.pk)
+    context['sessiontype'] = cur_session_type
+    return context
+
 
 def register_session(request, session_pk, user_pk):
     '''Register user in session'''
