@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class SessionTime(models.Model):
-    time = models.DateTimeField()
+    time = models.TimeField()
     name = models.CharField(max_length=30)
     
     def is_user_registered(self,User):
@@ -48,6 +48,9 @@ class Session(models.Model):
     
     def registered_delegates(self):
         return str(self.participants.count())
+
+    def get_time(self):
+        return self.sessiontype.session_time.time.strftime('%l:%M %p')
 
     def __unicode__(self):
         return self.name
