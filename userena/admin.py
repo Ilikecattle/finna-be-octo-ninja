@@ -6,7 +6,6 @@ from guardian.admin import GuardedModelAdmin
 
 from userena.models import UserenaSignup
 from userena.utils import get_profile_model
-from profiles.models import HearAbout, PaymentGroups
 
 class UserenaSignupInline(admin.StackedInline):
     model = UserenaSignup
@@ -20,5 +19,3 @@ class UserenaAdmin(UserAdmin, GuardedModelAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserenaAdmin)
 admin.site.register(get_profile_model())
-admin.site.register(HearAbout)
-admin.site.register(PaymentGroups)

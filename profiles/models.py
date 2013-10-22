@@ -22,12 +22,17 @@ class HearAbout(models.Model):
     def __unicode__(self):
         return self.description
 
-class PaymentGroups(models.Model):
-    payment_group = models.CharField(max_length=200)
-    email = models.CharField(max_length=250)
+class PaymentGroupEmail(models.Model):
+    email = models.EmailField(max_length=250)
+    def __unicode__(self):
+        return self.email
+
+class PaymentGroup(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.ManyToManyField(PaymentGroupEmail)
     primary_group = models.BooleanField()
     def __unicode__(self):
-        return self.payment_group + ":" + self.email
+        return self.name
 
 
 class Profile(UserenaBaseProfile):

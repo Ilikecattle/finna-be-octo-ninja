@@ -25,7 +25,7 @@ from userena import settings as userena_settings
 
 from guardian.decorators import permission_required_or_403
 
-from profiles.models import PaymentGroups
+from profiles.models import PaymentGroup
 
 import warnings, random
 
@@ -641,7 +641,7 @@ def group_payment(request):
 
 def update_primary_group(request):
     '''Update the primary group'''
-    g = get_object_or_404(PaymentGroups, pk=request.POST['groups'])
+    g = get_object_or_404(PaymentGroup, pk=request.POST['groups'])
     g.primary_group = True
     g.save()
     return redirect('payment_success')

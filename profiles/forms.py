@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from userena.forms import SignupForm
-from profiles.models import PaymentGroups
+from profiles.models import PaymentGroup
 
 class SignupFormExtra(SignupForm):
     """ 
@@ -52,8 +52,8 @@ class SignupFormExtra(SignupForm):
 
 
 class GroupForm(forms.Form):
-    group_field = forms.ModelChoiceField(queryset=PaymentGroups.objects.none(), required=True)
+    group_field = forms.ModelChoiceField(queryset=PaymentGroup.objects.none(), required=True)
 
     def __init__(self, email_id):
         super(GroupForm, self).__init__()
-        self.fields['group_field'].queryset = PaymentGroups.objects.filter(email=email_id)
+        self.fields['group_field'].queryset = PaymentGroup.objects.filter(email=email_id)
