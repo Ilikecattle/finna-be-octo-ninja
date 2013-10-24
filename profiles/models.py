@@ -155,7 +155,26 @@ class Profile(UserenaBaseProfile):
             if len(self.student_num) < 8:
                 return False
         return True
-        
+
+    def get_user(self):
+        return UserenaSignup.objects.get(user=self.user)
+
+    def first_name(self):
+        '''Getter for the first name for django admin'''
+        return self.user.first_name
+    first_name.admin_order_field = 'user__first_name'
+
+    def last_name(self):
+        '''Getter for the last name for django admin'''
+        return self.user.last_name
+    last_name.admin_order_field = 'user__last_name'
+
+    def email(self):
+        return self.user.email
+
+    def paid(self):
+        return UserenaSignup.objects.get(user=self.user).is_paid()
+
     def unpaid(self):
         '''Checks if user is unpaid'''
         u = User.objects.get(pk=self.user.pk)
@@ -196,14 +215,14 @@ class Profile(UserenaBaseProfile):
 
     def has_group(self):
         u = User.objects.get(pk=self.user.pk)
-        groups = PaymentGroups.objects.filter(email=u.email)
+        groups = PaymentGroup.objects.filter(email=u.email)
         if groups.count() > 0:
             return True
         return False
 
     def groups(self):
         u = User.objects.get(pk=self.user.pk)
-        groups = PaymentGroups.objects.filter(email=u.email)
+        groups = PaymentGroup.objects.filter(email=u.email)
         return groups
 
     @property
