@@ -5,7 +5,7 @@ from confsessions.models import SessionTime, SessionType, Session
 from django.contrib.auth.models import User
 
 def index(request):
-    sessiontimes = get_session_times_ordered()
+    sessiontimes = get_session_times()
     return redirect('/sessions/sessiontime/' + str(sessiontimes[0].pk))
 
 def sessiontime(request, session_time_pk):
@@ -30,7 +30,7 @@ def get_context_for_session_time(request, session_time_pk):
         prev_session_time = get_prev_session_time(cur_session_time)
 
     next_session_time = get_next_session_time(cur_session_time)
-    session_times = get_session_times_ordered()
+    session_times = get_session_times()
     session_types = cur_session_time.sessiontype_set.all()
 
     context = { \
@@ -58,17 +58,17 @@ def register_session(request, session_pk, user_pk):
     return HttpResponse('Success')
 
 def get_completed_session_times(user):
-    session_time_list = get_session_times_ordered()
+    session_time_list = get_session_times()
     for sess_time in session_time_list:
         if not sess_time.is_user_registered(user):
             session_time_list.remove(sess_time)
     return session_time_list
 
-def get_session_times_ordered():
-    return list(SessionTime.objects.order_by('time'))
+def get_session_times():
+    return list(SessionTime.objects.all())
 
 def get_prev_session_time(cur_sess_time):
-    session_times = get_session_times_ordered()
+    session_times = get_session_times()
     
     cur_index = session_times.index(cur_sess_time)
     if cur_index == 0:
@@ -76,7 +76,7 @@ def get_prev_session_time(cur_sess_time):
     return session_times[cur_index-1]
 
 def get_next_session_time(cur_sess_time):
-    session_times = get_session_times_ordered()
+    session_times = get_session_times()
     cur_index = session_times.index(cur_sess_time)
     if cur_index >= len(session_times) - 1:
         return

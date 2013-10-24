@@ -5,6 +5,9 @@ class SessionTime(models.Model):
     time = models.TimeField()
     name = models.CharField(max_length=30)
     
+    class Meta:
+        ordering = ('time',)
+    
     def is_user_registered(self,User):
         for sess_type in self.sessiontype_set.all():
             for sess in sess_type.session_set.all():
