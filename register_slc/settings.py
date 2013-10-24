@@ -129,8 +129,6 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'south',
     'csvimport',
-    'django_tablib',
-    'tablib',
     'profiles',
     'confsessions',
 )

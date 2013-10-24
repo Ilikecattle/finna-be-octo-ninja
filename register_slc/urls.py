@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     (r'^sessions/', include('confsessions.urls')),
     (r'^accounts/', include('userena.urls')),
     (r'^profiles/', include('profiles.urls')),
-    url(r'^$', TemplateView.as_view(template_name='static/promo.html')),
+    url(r'^$', TemplateView.as_view(template_name='static/index.html')),
     (r'^i18n/', include('django.conf.urls.i18n')),
 )
 
