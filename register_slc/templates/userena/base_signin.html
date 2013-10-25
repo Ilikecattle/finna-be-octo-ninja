@@ -4,11 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 	<head>
 		<title>{% block title %}Student Leadership Conference Registration{% endblock %}</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/static/css/master.css" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}" />
+	</head>
+	<body>
 		{% block form %}{% endblock %}
 		<div id="bg">
 			<img src="{% static 'img/background.jpg' %}" alt="">
 		</div>
-	</head>
+	</body>
 </html>
