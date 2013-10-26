@@ -13,13 +13,18 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acron
 ................................... */
 
 @font-face {
-  font-family: whitneyBold;
+  font-family: whitneyBook;
   src: url(../Whitney-Book-Pro.otf);
 }
 
 @font-face {
   font-family: whitneyBold;
   src: url(../Whitney-Bold-Pro.otf);
+}
+
+@font-face {
+  font-family: fragmentCore;
+  src: url(../FragmentCore.otf);
 }
 
 html, body{
@@ -44,6 +49,40 @@ html[xmlns] .clearfix {
 
 * html .clearfix {
     height: 1%;
+}
+
+.promo-box {
+	position: absolute;
+	background: #6aa37e;
+	background: rgba(106, 163, 126, 0.8);
+	margin: auto;
+	top: 0;
+	left: 8%;
+	width: 300px;
+}
+
+.promo-box .inner {
+	margin: 20px;
+}
+
+.promo-box h1, .promo-box h2 {
+	margin: 0;
+	color: white;
+}
+
+.promo-box h1 {
+	font-size: 3em;
+}
+
+.promo-box h2 {
+	font-size: 1.6em;
+	font-family: fragmentCore;
+}
+
+.promo-box p {
+	color: white;
+	font-size: 1.6em;
+	font-family: fragmentCore;
 }
 
 #body-container {
