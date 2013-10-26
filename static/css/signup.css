@@ -2,6 +2,80 @@ body {
 	background: 0;
 }
 
+#login-form-container {
+	position: fixed;
+	background: #E5EEFA;
+	width: 50%;
+	left: 50%;
+	margin: 0 0 0 -25%;
+}
+
+#login-form {
+	width: 90%;
+	margin: 35px auto;
+}
+
+#login-form h1 {
+	display: block;
+	color: #0B2244;
+	font-size: 50px;
+	text-align: center;
+}
+
+#login-form h2 {
+	font-family: fragmentCore;
+	line-height: 1.2;
+	position: relative;
+	left: 50%;
+	margin: 8px 0 18px -225px;
+	width: 450px;
+	font-size: 20px;
+	color: #0B2244;
+	text-align: center;
+	text-transform: none;
+}
+
+#login-form .form_row {
+	float: none;
+	width: 90%;
+	margin: 0 auto;
+	border-bottom: 1px solid #CCC;
+	height: 80px;
+	background: #EEE;
+}
+
+#login-form input {
+	float: none;
+	border: none;
+	border-radius: 0;
+	-webkit-border-radius: 0;
+	background: transparent;
+	line-height: 80px;
+	margin: 0 auto;
+	width: 90%;
+	padding: 0;
+	float: right;
+}
+
+#login-form button {
+	display: block;
+	margin: 30px auto;
+	width: 90%;
+	height: 75px;
+	padding: 0;
+}
+
+#id_username {
+}
+
+#id_password1, #id_password2 {
+
+}
+
+#id_email {
+
+}
+
 .submit_button {
 	width: 100%;
 	border-color: #4a7c9f;
@@ -30,93 +104,6 @@ body {
 	box-shadow: inset 0 1px 0 0 rgba(255,255,255,.6),0 1px 0 0 rgba(255,255,255,0.14902);
 }
 
-.subheading {
-	line-height: 1.2;
-	position: relative;
-	left: 50%;
-	margin: 8px 0 18px -225px;
-	width: 450px;
-	font-size: 20px;
-	color: #fff;
-	text-align: center;
-	text-shadow: 0 2px 2px rgba(0,0,0,0.5);
-	-webkit-font-smoothing: antialiased;
-	font-smoothing: antialiased;
-}
-
-.form_header {
-	color: #FFFFFF;
-	text-shadow: 0 2px 2px rgba(0,0,0,0.5);
-	font-size: 50px;
-	text-align: center;
-}
-
-.signup_form {
-	background: #e5eefa;
-	margin: 50px auto;
-	width: 475px;
-	height: 475px;
-	z-index: 5;
-}
-
-.signup_form .form_row {
-	position: relative;
-	border-top: 1px solid #ccc;
-}
-
-.signup_view {
-	margin: 0 auto;
-	position: relative;
-	float: left;
-	width: 245px;
-	overflow: hidden;
-	padding-right: 245px;
-	-webkit-transition-property: max-height,opacity;
-	-webkit-transition-duration: .5s;
-	-webkit-transition-timing-function: ease;
-	-moz-transition-property: max-height,opacity;
-	-moz-transition-duration: .5s;
-	-moz-transition-timing-function: ease;
-	transition-property: max-height,opacity;
-	transition-duration: .5s;
-	transition-timing-function: ease;
-}
-
-.signup_form label {
-	display: none
-}
-
-.signup_form .signup_form_container {
-	padding: 20px 30px 30px;
-	position: relative;
-	top: 50%;
-	margin: 0 auto;
-	width: 245px;
-}
-
-.signup_form .signup_form_container {
-	position: relative;
-	margin: 0;
-	padding: 0;
-	border: 1px solid #ccc;
-	border: 1px solid rgba(0,0,0,0.8);
-	overflow: hidden;
-	background: #dde5ed;
-	background: -moz-linear-gradient(top,rgba(221,229,237,1) 0,rgba(242,243,244,1) 100%);
-	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(221,229,237,1)),color-stop(100%,rgba(242,243,244,1)));
-	background: -webkit-linear-gradient(top,rgba(221,229,237,1) 0,rgba(242,243,244,1) 100%);
-	background: -o-linear-gradient(top,rgba(221,229,237,1) 0,rgba(242,243,244,1) 100%);
-	background: -ms-linear-gradient(top,rgba(221,229,237,1) 0,rgba(242,243,244,1) 100%);
-	background: linear-gradient(top,rgba(221,229,237,1) 0,rgba(242,243,244,1) 100%);
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.36),0 1px 0 rgba(255,255,255,0.15);
-	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.36),0 1px 0 rgba(255,255,255,0.15);
-	box-shadow: inset 0 1px 3px rgba(0,0,0,0.36),0 1px 0 rgba(255,255,255,0.15);
-	-webkit-background-clip: padding-box;
-}
-
 .fullscreen_post_bg {
 	position: fixed;
 	top: 0;
@@ -128,19 +115,7 @@ body {
 	z-index: -1;
 }
 
-.signup_form_container input, .signup_form_container select {
-	width: 100%;
-	padding: 11px 10px 9px 10px;
-	display: block;
-	margin: 0;
-	border: 0;
-	background: 0;
-	font: bold 14px/1.4 "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
 .login_link, .forgot_password_link {
+	font-size: 1em;
 	text-align: center;
 }

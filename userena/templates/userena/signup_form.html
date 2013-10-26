@@ -2,25 +2,22 @@
 {% load i18n %}
 
 {% block form %}
-<div class='signup_form'>
-	<h1 class="form_header">UBC SLC</h1>
-	<h2 class='subheading'>Sign up to register for the 2014 Student Leadership Conference</h2>
-	<form action="" method="post">
-	<div class='signup_form_container'>
-		<div class='signup_view'>
-			{% csrf_token %}
-			{{ form.non_field_errors }}
-			{% for field in form %}
-			<div class='form_row'>
-				{{ field.label_tag }}
-				{{ field }}
-				{{ field.errors }}
-			</div>
-			{% endfor %}
+<form action="" method="post">
+<div id='login-form-container'>
+	<div id='login-form'>
+		<h1 class="form_header">UBC SLC</h1>
+		<h2 class='subheading'>Sign up to register for the 2014 Student Leadership Conference</h2>
+		{% csrf_token %}
+		{{ form.non_field_errors }}
+		{% for field in form %}
+		<div class='form_row'>
+			{{ field }}
+			{{ field.errors }}
 		</div>
-	</div>
-	<button class='submit_button' type="submit" value={% trans 'SignUp' %}>{% trans 'Sign up' %}</button>
-	</form>
+		{% endfor %}
+	<button class='button' type="submit" value={% trans 'SignUp' %}>{% trans 'Sign up' %}</button>
 	<p class="login_link"><a href="{% url 'userena.views.signin' %}"><strong>Log in</strong> to your account</a></p>
+	</div>
+	</form>
 </div>
 {% endblock %}
