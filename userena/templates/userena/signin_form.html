@@ -2,27 +2,24 @@
 {% load i18n %}
 
 {% block form %}
-<div class='signup_form'>
-	<h1 class="form_header">UBC SLC</h1>
-	<h2 class='subheading'>Sign up to register for the 2014 Student Leadership Conference</h2>
-	<form action="" method="post">
-		<div class='signup_form_container'>
-			<div class='signup_view'>
-				{% csrf_token %}
-				{{ form.non_field_errors }}
-				{% for field in form %}
-				<div class='form_row'>
-					{{ field.label_tag }}
-					{{ field }}
-					{{ field.errors }}
-				</div>
-				{% endfor %}
-			</div>
+<form action="" method="post">
+<div id='login-form-container'>
+	<div id='login-form'>
+		<h1 class="form_header">UBC SLC</h1>
+		<h2 class='subheading'>Sign up to register for the 2014 Student Leadership Conference</h2>
+		{% csrf_token %}
+		{{ form.non_field_errors }}
+		{% for field in form %}
+		{% if not field.is_hidden %}
+		<div class='form_row'>
+			{{ field }}
+			{{ field.errors }}
 		</div>
-		<button class='submit_button' type="submit" value="Signup">Submit</button>
+		{% endif %}
+		{% endfor %}
+	<button class='button' type="submit" value="{% trans 'SignUp' %}">{% trans 'Login' %}</button>
+	<p class="login_link">Don't have an account? <a href="{% url 'userena.views.signup' %}"><strong>Sign up</strong></a></p>
+	</div>
 	</form>
-	<p class="login_link"><a href="{% url 'userena.views.signin' %}">Don't have an account? <strong>Sign Up</strong></a></p>
-	<p class="forgot_password_link"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
-	{% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </div>
 {% endblock %}

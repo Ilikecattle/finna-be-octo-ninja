@@ -17,6 +17,6 @@ def review(request):
     context = { \
         'session_times' : session_times, \
         'completed_session_times' : get_completed_session_times(request.user), \
-        'prev_sessiontime' : session_times[-1] \
+        'prev_sessiontime' : session_times[0] \
     }
     return render(request, 'profiles/review.html', context)

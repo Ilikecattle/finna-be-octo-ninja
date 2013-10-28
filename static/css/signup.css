@@ -11,11 +11,12 @@ body {
 }
 
 #login-form {
-	width: 90%;
+	width: 80%;
 	margin: 35px auto;
 }
 
 #login-form h1 {
+	font-weight: bold;
 	display: block;
 	color: #0B2244;
 	font-size: 50px;
@@ -25,11 +26,8 @@ body {
 #login-form h2 {
 	font-family: fragmentCore;
 	line-height: 1.2;
-	position: relative;
-	left: 50%;
-	margin: 8px 0 18px -225px;
-	width: 450px;
-	font-size: 20px;
+	margin: 10px auto;
+	font-size: 1.5em;
 	color: #0B2244;
 	text-align: center;
 	text-transform: none;
@@ -37,71 +35,50 @@ body {
 
 #login-form .form_row {
 	float: none;
-	width: 90%;
 	margin: 0 auto;
 	border-bottom: 1px solid #CCC;
 	height: 80px;
 	background: #EEE;
 }
 
+::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
+	color:    #888;
+}
+
 #login-form input {
+	font-family: whitneyBook;
+	font-size: 1.8em;
 	float: none;
 	border: none;
 	border-radius: 0;
 	-webkit-border-radius: 0;
 	background: transparent;
-	line-height: 80px;
-	margin: 0 auto;
+	margin: 20px auto;
 	width: 90%;
 	padding: 0;
 	float: right;
+	line-height: 40px;
 }
 
 #login-form button {
+	font-family: whitneyBook;
 	display: block;
 	margin: 30px auto;
 	width: 90%;
 	height: 75px;
 	padding: 0;
+	font-size: 2em;
 }
 
 #id_username {
 }
 
 #id_password1, #id_password2 {
-
+	
 }
 
 #id_email {
 
-}
-
-.submit_button {
-	width: 100%;
-	border-color: #4a7c9f;
-	background: #6aa5cf;
-	background: -moz-linear-gradient(top,#6aa5cf 0,#5791bb 100%);
-	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#6aa5cf),color-stop(100%,#5791bb));
-	background: -webkit-linear-gradient(top,#6aa5cf 0,#5791bb 100%);
-	background: -o-linear-gradient(top,#6aa5cf 0,#5791bb 100%);
-	background: #6aa5cf -ms-linear-gradient(top,#6aa5cf 0,#5791bb 100%);
-	background: linear-gradient(top,#6aa5cf 0,#5791bb 100%);
-	border-color: rgba(0,0,0,0.65);
-	text-align: center;
-	font-size: 14px;
-	font-weight: bold;
-	padding: 0;
-	line-height: 34px;
-	margin: 18px 0;
-	float: none;
-	display: inline-block;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-	height: 39px;
-	-webkit-box-shadow: inset 0 1px 0 0 rgba(255,255,255,.6),0 1px 0 0 rgba(255,255,255,0.14902);
-	-moz-box-shadow: inset 0 1px 0 0 rgba(255,255,255,.6),0 1px 0 0 rgba(255,255,255,0.14902);
-	box-shadow: inset 0 1px 0 0 rgba(255,255,255,.6),0 1px 0 0 rgba(255,255,255,0.14902);
 }
 
 .fullscreen_post_bg {
