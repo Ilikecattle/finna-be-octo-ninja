@@ -1,19 +1,21 @@
 from django.contrib import admin
+from csvexport.admin import CSVAdmin
 from confsessions.models import SessionTime, SessionType, Session
 
-class SessionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'sessiontype', 'presenter', 'location', 'registered_delegates', 'capacity']
+class SessionAdmin(CSVAdmin):
+    list_display = ['name', 'sessiontype', 'presenter', 'location', 'capacity']
     search_fields = ['name', 'presenter', 'location']
     ordering = ['name']
     list_filter = ['sessiontype']
+    extra_csv_fields = ['teaser', 'description']
 
-class SessionTypeAdmin(admin.ModelAdmin):
+class SessionTypeAdmin(CSVAdmin):
     list_display = ['name', 'session_time']
     search_fields = ['name']
     ordering = ['name']
     list_filter = ['session_time']
 
-class SessionTimeAdmin(admin.ModelAdmin):
+class SessionTimeAdmin(CSVAdmin):
     list_display = ['name', 'time']
     ordering = ['time', 'name']
     search_fields = ['name']
