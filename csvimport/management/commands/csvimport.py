@@ -297,7 +297,7 @@ class Command(LabelCommand):
                 if error_number != 1062:
 
                     loglist.append(
-                        'Database Error: %s, Number:' % (error_message,
+                        'Database Error: %s, Number:%d' % (error_message,
                                                          error_number))
             except OverflowError:
                 pass 

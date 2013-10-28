@@ -1,8 +1,9 @@
+from datetime import datetime 
 from django.db import models
 from django.contrib.auth.models import User
 
 class SessionTime(models.Model):
-    time = models.TimeField()
+    time = models.TimeField(default=datetime.now(), null=True)
     name = models.CharField(max_length=30)
     
     class Meta:
@@ -22,7 +23,7 @@ class SessionTime(models.Model):
         return self.name
 
 class SessionType(models.Model):
-    session_time = models.ForeignKey(SessionTime)
+    session_time = models.ForeignKey(SessionTime, blank=True, null=True)
     name = models.CharField(max_length=100)
     def __unicode__(self):
         return self.name
