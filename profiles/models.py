@@ -22,14 +22,9 @@ class HearAbout(models.Model):
     def __unicode__(self):
         return self.description
 
-class PaymentGroupEmail(models.Model):
-    email = models.EmailField(max_length=250)
-    def __unicode__(self):
-        return self.email
-
 class PaymentGroup(models.Model):
     name = models.CharField(max_length=200)
-    email = models.ManyToManyField(PaymentGroupEmail)
+    email = models.EmailField(max_length=250)
     primary_group = models.BooleanField()
     def __unicode__(self):
         return self.name
