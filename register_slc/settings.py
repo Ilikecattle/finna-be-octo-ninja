@@ -46,7 +46,7 @@ USE_TZ = True
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 #MEDIA_ROOT = '/usr/local/www/media/'
-MEDIA_ROOT = 'home/adam/webdev/register_slc/media/'
+MEDIA_ROOT = '/home/adam/webdev/register_slc/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
