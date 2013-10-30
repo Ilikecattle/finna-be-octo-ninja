@@ -8,23 +8,38 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'HearAbout'
+        db.create_table(u'profiles_hearabout', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=300)),
+        ))
+        db.send_create_signal(u'profiles', ['HearAbout'])
+
+        # Adding model 'PaymentGroup'
+        db.create_table(u'profiles_paymentgroup', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=250)),
+            ('primary_group', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal(u'profiles', ['PaymentGroup'])
+
         # Adding model 'Profile'
-        db.create_table('profiles_profile', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'profiles_profile', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('mugshot', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
             ('privacy', self.gf('django.db.models.fields.CharField')(default='registered', max_length=15)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True, to=orm['auth.User'])),
-            ('prefName', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
             ('gender', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True, blank=True)),
             ('birth_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('affiliation', self.gf('django.db.models.fields.CharField')(default='UBCStudent', max_length=15, null=True, blank=True)),
+            ('affiliation', self.gf('django.db.models.fields.CharField')(default='UBCStudent', max_length=25, null=True, blank=True)),
+            ('affil_other', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('student_num', self.gf('django.db.models.fields.CharField')(max_length=8, null=True, blank=True)),
             ('phone_num', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('address', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('year_of_study', self.gf('django.db.models.fields.CharField')(default='U1', max_length=2, null=True, blank=True)),
             ('faculty', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('other_faculty', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('major', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
+            ('other_faculty', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('major', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('graduating', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('nut_allergy', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('vegan', self.gf('django.db.models.fields.BooleanField')(default=False)),
@@ -33,78 +48,141 @@ class Migration(SchemaMigration):
             ('lactose', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('diet', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
             ('times_participation', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('hear_about', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('other', self.gf('django.db.models.fields.TextField')(blank=True)),
         ))
-        db.send_create_signal('profiles', ['Profile'])
+        db.send_create_signal(u'profiles', ['Profile'])
+
+        # Adding M2M table for field hear on 'Profile'
+        m2m_table_name = db.shorten_name(u'profiles_profile_hear')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('profile', models.ForeignKey(orm[u'profiles.profile'], null=False)),
+            ('hearabout', models.ForeignKey(orm[u'profiles.hearabout'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['profile_id', 'hearabout_id'])
+
+        # Adding M2M table for field saved_sessions on 'Profile'
+        m2m_table_name = db.shorten_name(u'profiles_profile_saved_sessions')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('profile', models.ForeignKey(orm[u'profiles.profile'], null=False)),
+            ('session', models.ForeignKey(orm[u'confsessions.session'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['profile_id', 'session_id'])
 
 
     def backwards(self, orm):
+        # Deleting model 'HearAbout'
+        db.delete_table(u'profiles_hearabout')
+
+        # Deleting model 'PaymentGroup'
+        db.delete_table(u'profiles_paymentgroup')
+
         # Deleting model 'Profile'
-        db.delete_table('profiles_profile')
+        db.delete_table(u'profiles_profile')
+
+        # Removing M2M table for field hear on 'Profile'
+        db.delete_table(db.shorten_name(u'profiles_profile_hear'))
+
+        # Removing M2M table for field saved_sessions on 'Profile'
+        db.delete_table(db.shorten_name(u'profiles_profile_saved_sessions'))
 
 
     models = {
-        'auth.group': {
+        u'auth.group': {
             'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
+            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
         },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
+        u'auth.permission': {
+            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
             'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        'auth.user': {
+        u'auth.user': {
             'Meta': {'object_name': 'User'},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
+            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        'contenttypes.contenttype': {
+        u'confsessions.session': {
+            'Meta': {'object_name': 'Session'},
+            'capacity': ('django.db.models.fields.IntegerField', [], {}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '5000'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'participants': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.User']", 'symmetrical': 'False'}),
+            'presenter': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'sessiontype': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['confsessions.SessionType']"}),
+            'teaser': ('django.db.models.fields.CharField', [], {'max_length': '2000'})
+        },
+        u'confsessions.sessiontime': {
+            'Meta': {'ordering': "('time',)", 'object_name': 'SessionTime'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'time': ('django.db.models.fields.TimeField', [], {'default': 'datetime.datetime(2013, 10, 30, 0, 0)', 'null': 'True'})
+        },
+        u'confsessions.sessiontype': {
+            'Meta': {'object_name': 'SessionType'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'session_time': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['confsessions.SessionTime']", 'null': 'True', 'blank': 'True'})
+        },
+        u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'profiles.profile': {
+        u'profiles.hearabout': {
+            'Meta': {'object_name': 'HearAbout'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        u'profiles.paymentgroup': {
+            'Meta': {'object_name': 'PaymentGroup'},
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '250'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'primary_group': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+        },
+        u'profiles.profile': {
             'Meta': {'object_name': 'Profile'},
-            'address': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'affiliation': ('django.db.models.fields.CharField', [], {'default': "'UBCStudent'", 'max_length': '15', 'null': 'True', 'blank': 'True'}),
+            'affil_other': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'affiliation': ('django.db.models.fields.CharField', [], {'default': "'UBCStudent'", 'max_length': '25', 'null': 'True', 'blank': 'True'}),
             'birth_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'diet': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
             'faculty': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'gender': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'gluten': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'graduating': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'hear_about': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'hear': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['profiles.HearAbout']", 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'lactose': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'major': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'major': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'mugshot': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'}),
             'nut_allergy': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'other': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'other_faculty': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'other_faculty': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'phone_num': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
-            'prefName': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
             'privacy': ('django.db.models.fields.CharField', [], {'default': "'registered'", 'max_length': '15'}),
+            'saved_sessions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['confsessions.Session']", 'symmetrical': 'False'}),
             'student_num': ('django.db.models.fields.CharField', [], {'max_length': '8', 'null': 'True', 'blank': 'True'}),
             'times_participation': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': "orm['auth.User']"}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"}),
             'vegan': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'vegetarian': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'year_of_study': ('django.db.models.fields.CharField', [], {'default': "'U1'", 'max_length': '2', 'null': 'True', 'blank': 'True'})

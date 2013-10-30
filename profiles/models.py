@@ -168,10 +168,12 @@ class Profile(UserenaBaseProfile):
         return self.user.email
 
     def paid(self):
+        return False
         return UserenaSignup.objects.get(user=self.user).is_paid()
 
     def unpaid(self):
         '''Checks if user is unpaid'''
+        return True
         u = User.objects.get(pk=self.user.pk)
         user = UserenaSignup.objects.get(user=u)
         if user.is_paid():
