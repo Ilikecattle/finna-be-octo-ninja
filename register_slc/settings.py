@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'south',
     'csvimport',
+    'crispy_forms',
     'profiles',
     'confsessions',
 )
