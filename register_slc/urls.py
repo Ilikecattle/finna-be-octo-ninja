@@ -4,8 +4,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
 
-from profiles.forms import SignupFormExtra
-
 from django.contrib import admin
 admin.autodiscover()
 
@@ -13,8 +11,7 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^sessions/', include('confsessions.urls')),
-    (r'^accounts/', include('userena.urls')),
-    (r'^profiles/', include('profiles.urls')),
+    (r'^accounts/', include('profiles.urls')),
     url(r'^$', TemplateView.as_view(template_name='static/index.html')),
     (r'^i18n/', include('django.conf.urls.i18n')),
 )
