@@ -114,19 +114,19 @@
 {% block sessions %}
 	<ul class ="sessions">
 	{% for session in sessiontype.session_set.all %}
-		<div class="modal">
-			<div class="modal-header">
+		<div class="session">
+			<div class="session-header">
 				<h3>{{ session.name }}</h3>
 				<h4>{{ session.presenter}}</h4>
 			</div>
-			<div class="modal-body">
+			<div class="session-body">
 				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
 					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
 				</p> 
 				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
 			</div>
 
-			<div class="modal-footer">
+			<div class="session-footer">
 				{% if user.is_authenticated %}
 					{% if user.get_profile.unpaid %}
 						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>

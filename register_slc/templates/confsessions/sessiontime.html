@@ -8,14 +8,14 @@
 {% block sessions %}
 	<ul class ="sessions">
 	{% for session_type in session_types %}
-		<div class="modal">
-			<div class="modal-header">
+		<div class="session">
+			<div class="session-header">
 				<h3>{{ session_type.name }}</h3>
 			</div>
-			<div class="modal-body">
+			<div class="session-body">
 				There would be a description here!
 			</div>
-			<a href="/sessions/sessiontype/{{ session_type.pk }}" class="modal-footer">Select</a>
+			<a href="/sessions/sessiontype/{{ session_type.pk }}" class="session-footer">Select</a>
 		</div>
 	{% endfor %}
 	</ul>
