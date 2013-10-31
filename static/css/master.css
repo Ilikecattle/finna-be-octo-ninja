@@ -28,6 +28,10 @@ html, body{
     font-family: whitneyBold, helvetica, arial, Geneva, sans-serif;
 }
 
+#content {
+	padding-top: 40px;
+}
+
 .promo-box {
 	position: absolute;
 	background: #6aa37e;
@@ -383,7 +387,8 @@ ul#profile-nav li a:hover{
 ................................... */
 
 .sessions {
-	padding: none;
+	padding: 0;
+	margin: 0;
 	list-style-type: none;
 }
 
@@ -391,13 +396,13 @@ ul#profile-nav li a:hover{
 	text-align: center;
 }
 
-.modal-header {
+.session-header {
 	text-align: left;
 	padding: 10px 15px;
 	border-bottom: 1px solid #EEE;
 }
 
-.modal {
+.session {
 	position: relative;
 	width: 30.5%;
 	float: left;
@@ -412,18 +417,13 @@ ul#profile-nav li a:hover{
 	margin-bottom: 30px;
 }
 
-.modal.one-column {
-	margin-left: 0;
-	width: 100%;
-}
-
-.modal-body {
+.session-body {
 	padding: 10px 15px;
 	font-size: 13px;
 	text-align: justify;
 }
 
-.modal-footer {
+.session-footer {
 	display: block;
 	padding: 10px 15px 10px;
 	*zoom: 1;
@@ -432,19 +432,19 @@ ul#profile-nav li a:hover{
 	cursor: pointer;
 }
 
-.modal-footer:hover {
+.session-footer:hover {
 	color: #002145;
 }
 
-.modal-footer.full {
+.session-footer.full {
 	background: #eff2a9;
 }
 
-.modal-footer.register {
+.session-footer.register {
 	
 }
 
-.modal-footer.registered {
+.session-footer.registered {
 	background: #6aa37e;
 }
 

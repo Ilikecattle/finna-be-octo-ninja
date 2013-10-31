@@ -28,6 +28,10 @@ html, body{
     font-family: whitneyBold, helvetica, arial, Geneva, sans-serif;
 }
 
+#content {
+	padding-top: 40px;
+}
+
 .promo-box {
 	position: absolute;
 	background: #6aa37e;
@@ -383,7 +387,8 @@ ul#profile-nav li a:hover{
 ................................... */
 
 .sessions {
-	padding: none;
+	padding: 0;
+	margin: 0;
 	list-style-type: none;
 }
 

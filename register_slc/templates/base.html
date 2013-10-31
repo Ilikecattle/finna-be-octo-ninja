@@ -33,6 +33,8 @@
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
+                  <li><a href="{% url 'userena_profile_detail' user.username %}">{% trans 'My Schedule' %}</a></li>
+                  <li class="divider"></li>
                   <li><a href="{% url 'userena_profile_edit' user.username %}">{% trans 'Edit Profile' %}</a></li>
                   <li><a href="{% url 'userena_email_change' user.username %}">{% trans 'Change Email' %}</a></li>
                   <li><a href="{% url 'userena_password_change' user.username %}">{% trans 'Change Password' %}</a></li>
@@ -49,7 +51,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div id="content" class="container">
     {% block content_title %}{% endblock %}
     {% block content %}{% endblock %}
     </div><!-- /container-->
