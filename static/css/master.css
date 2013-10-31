@@ -87,86 +87,10 @@ html, body{
 	min-height: 50%;
 }
 
-#navmenu {
-    width: 100%;
-    background: #1b1b1b;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#353535), to(#010101));
-    background: -webkit-linear-gradient(0% 0%, 0% 100%, from(#353535), to(#010101));
-    background: -moz-linear-gradient(center top, #353535, #010101);
-    background: linear-gradient(#353535, #010101);
-    box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.8);
-    height: 56px;
-    line-height: 56px;
-    border-top: 1px solid #4A4A4A;
-    border-bottom: 1px solid #000;
-}
-
-#navmenu-content {
-    width: 980px;
-    margin: auto;
-}
-
-.navmenu-left {
-    float: left;
-}
-
-.navmenu-right {
-    float: right;
-}
-
-#nav li{
-    float: left;
-    margin: 0 0 0 10px ;
-}
-
-#reg-nav {
-    width: 700px;
-    margin: 10px auto;
-}
-
 .sessiontime {
     text-align: center;
     float: left;
     width: 100px;
-}
-
-#footer{
-    background: url(../img/stripe.png) repeat-x center top;
-    margin: 40px 12px 0;
-    padding: 20px 0;
-}
-
-.white-box{
-    margin: 15px auto 20px;
-    padding: 12px 0;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-    background-color: #efebe8;
-    width: 506px;
-    -moz-box-shadow: inset 0 0 3px #999;
-    -webkit-box-shadow: inset 0 0 3px #999;
-    box-shadow:  inset 0 0 3px #999;
-    overflow: auto;
-}
-
-#details{
-    width: 140px;
-    margin: 0 0;
-    background-color: #fffeff;
-    padding: 6px;
-    text-align: left;
-    -webkit-border-radius: 7px; 
-    -moz-border-radius: 7px; 
-    border-radius: 7px;
-    -moz-box-shadow: 0 0 3px #999;
-    -webkit-box-shadow: 0 0 3px #999;
-    box-shadow: 0 0 3px #999;
-    overflow: hidden;
-}
-
-#details img{
-    margin: 0 0 10px;
 }
 
 /*	Type
@@ -216,17 +140,6 @@ h2.sessions:hover{
     color: #005580;
     cursor: hand;
     cursor: pointer;
-}
-
-.white-box h2{
-    width: 482px;
-    padding: 5px 12px 6px;
-    font-size: 1.9em;
-    font-weight: bold;
-    text-transform: none;
-    border-bottom: 1px solid #f1edeb;
-    color: #ab292a;
-    background-image: none;
 }
 
 h3{
@@ -333,55 +246,6 @@ h6{
 
 #progressbar li.active:before{
 	background: #3c6677;
-}
-
-/*	Nav
-................................... */
-
-ul#profile-nav{
-    margin: 0;
-    list-style: none;
-    height: 40px;
-    position: relative;
-    right: -450px;
-    top: -47px;
-    width: 490px;
-}
-
-ul#profile-nav li{
-    float: left;
-    text-align: center;
-}
-
-ul#profile-nav li.selected a{
-    color: #111;
-    padding: 8px 25px 8px;
-    text-decoration: none;
-    background-color: #f6f4f2;
-    -moz-border-radius-topleft: 8px;
-    -webkit-border-top-left-radius: 8px;
-    -moz-border-radius-topright: 8px;
-    -webkit-border-top-right-radius: 8px;
-    -moz-box-shadow: 0 -1px 1px #ccc;
-    -webkit-box-shadow: 0 -1px 1px #ccc;
-    box-shadow:  0 -1px 1px #ccc;
-    border: 1px solid #fff;
-    border-bottom: none;
-}
-
-ul#profile-nav li a{
-    text-decoration: none;
-    font-size: 0.7em;
-    display: block;
-    height: 20px;
-    line-height: 25px;
-    padding: 8px 25px 8px;
-    color: #999997;
-    text-align: center;
-}
-
-ul#profile-nav li a:hover{
-    text-decoration: underline;
 }
 
 /*  sessions
