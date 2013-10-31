@@ -50,8 +50,8 @@
 
 	function set_footer(session_button, classes_to_add)
 	{
-		modal_footer = $(session_button).parent();
-		modal_footer.attr('class', 'modal-footer ' + classes_to_add);
+		session_footer = $(session_button).parent();
+		session_footer.attr('class', 'session-footer ' + classes_to_add);
 	}
 
 	function resetSessionButtons()
