@@ -1,18 +1,8 @@
-{% extends 'userena/base_profile.html' %}
+{% extends 'userena/base_userena.html' %}
 {% load i18n %}
 
 {% block title %}{{ profile.user.username }}'s {% trans "schedule" %}.{% endblock %}
-{% block content_title %}<h2 class="content-title">{{ profile.user.username }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}</h2>{% endblock %}
-
-{% block scripts %}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#my_schedule").addClass("selected");
-    });
-  </script>
-{% endblock %}
-
-{% block inner_content %}
+{% block content %}
 
 <ul class ="sessions clearfix">
 {% if user.is_authenticated %}

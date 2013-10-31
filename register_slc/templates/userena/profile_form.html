@@ -1,64 +1,8 @@
-{% extends 'userena/base_profile.html' %}
-{% load i18n %}
+{% extends 'userena/base_userena.html' %}
+{% load i18n crispy_forms_tags %}
 
 {% block title %}{% trans "Account setup" %}{% endblock %}
 
-{% block content_title %}<h2 class="content-title">Account &raquo; {{ account.user.username }}</h2>{% endblock %}
-
-{% block scripts %}
-  <script type="text/javascript">
-    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-       if(!options.crossDomain) {
-         if(options.data) {
-           options.data += "&";
-         } else {$
-           options.data = "";
-         }$
-           options.data += "csrfmiddlewaretoken={{csrf_token}}";
-         }
-       });
-    $(document).ready(function() {
-      $("#edit_profile").addClass("selected");
-      $("#notready").click(function () {
-        alert('Please complete Profile and click "Save changes" to enable payment');
-      });
-    });
-  </script>
-{% endblock %}
-
-{% block inner_content %}
-
-   <form action="" enctype="multipart/form-data" method="post">
-       {% csrf_token %}
-        <fieldset>
-        <legend>{% trans "Register" %}</legend>
-        {{ form.as_p }}
-        </fieldset>
-        <input type="submit" value="{% trans 'Save changes' %}" />
-    </form>
-    <!-- Keep this to know how to pay
-    {% if profile.unpaid %}
-      {% if profile.readyForPayment %}
-          {% if profile.has_group %}
-            <center>
-              <a href="{% url 'group_payment' %}" class='btn btn-primary register'>Group Payment</a>
-            </center>
-          {% else %}
-            <form action='https://secure.students.ubc.ca/leadership/payment.cfm' method='post' name='frm'>
-              <input type='hidden' name='cf_field_6' value='{{ profile.is_ubc }}>'
-              <input type='hidden' name='cf_field_9' value='{{ user.email }}'>
-              <input type='hidden' name='cf_field_3' value='{{ user.first_name }}'>
-              <input type='hidden' name='cf_field_5' value='{{ user.last_name }}'>
-              <input type='hidden' name='cf_field_7' value="{{ profile.studentnum }}">
-              <input type='hidden' name='cf_field_8' value="{{ profile.phonenum }}">
-              <input type='submit' class='btn btn-primary register' name='submit' value='Pay Now'/>
-            </form>
-          {% endif %}
-      {% else %}
-          <center>
-            <a id='notready' class='btn btn-primary register'>Pay Now</a>
-          </center>
-      {% endif %}
-    {% endif %}
-    -->
+{% block content %}
+   {% crispy form %}
 {% endblock %}

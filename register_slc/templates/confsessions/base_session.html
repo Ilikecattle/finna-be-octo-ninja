@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container clearfix">
-	<ul id="progressbar" class="clearfix">
-		{% for sesstime in session_times %}
-			<li class="sessiontime {% if sesstime == session_time %} active {% endif %} {% if completed_session_times %} {% for cst in completed_session_times %} {% if cst == sesstime %} complete {% endif %} {% endfor %} {% endif %}">
-			<a href="/sessions/sessiontime/{{ sesstime.pk }}">{{ sesstime.name }}</a></li>
-		{% endfor %}
-			<li class="sessiontime">
-			<a href="{% url 'profiles_review' %}">Review</a></li>
-	</ul>
-	{% block sessions %}{% endblock %}
-</div>
+<ul id="progressbar" class="clearfix">
+{% for sesstime in session_times %}
+	<li class="sessiontime {% if sesstime == session_time %} active {% endif %} {% if completed_session_times %} {% for cst in completed_session_times %} {% if cst == sesstime %} complete {% endif %} {% endfor %} {% endif %}">
+		<a href="/sessions/sessiontime/{{ sesstime.pk }}">{{ sesstime.name }}</a>
+	</li>
+{% endfor %}
+	<li class="sessiontime">
+		<a href="{% url 'profiles_review' %}">Review</a>
+	</li>
+</ul>
+{% block sessions %}{% endblock %}
 {% endblock %}

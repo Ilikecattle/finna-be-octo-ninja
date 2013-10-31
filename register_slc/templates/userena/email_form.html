@@ -1,18 +1,7 @@
-{% extends 'userena/base_profile.html' %}
+{% extends 'userena/base_userena.html' %}
 {% load i18n %}
 
-{% block content_title %}<h2 class="content-title">Account &raquo; {{ account.user.username }}</h2>{% endblock %}
-
-{% block scripts %}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#change_email").addClass("selected");
-    });
-  </script>
-{% endblock %}
-
-{% block inner_content %}
-
+{% block content %}
 <form action="" method="post">
     {% csrf_token %}
     <fieldset>

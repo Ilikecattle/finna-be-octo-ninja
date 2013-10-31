@@ -1,0 +1,23 @@
+{% if profile.unpaid %}
+  {% if profile.readyForPayment %}
+	  {% if profile.has_group %}
+		<center>
+		  <a href="{% url 'group_payment' %}" class='btn btn-primary register'>Group Payment</a>
+		</center>
+	  {% else %}
+		<form action='https://secure.students.ubc.ca/leadership/payment.cfm' method='post' name='frm'>
+		  <input type='hidden' name='cf_field_6' value='{{ profile.is_ubc }}>'
+		  <input type='hidden' name='cf_field_9' value='{{ user.email }}'>
+		  <input type='hidden' name='cf_field_3' value='{{ user.first_name }}'>
+		  <input type='hidden' name='cf_field_5' value='{{ user.last_name }}'>
+		  <input type='hidden' name='cf_field_7' value="{{ profile.studentnum }}">
+		  <input type='hidden' name='cf_field_8' value="{{ profile.phonenum }}">
+		  <input type='submit' class='btn btn-primary register' name='submit' value='Pay Now'/>
+		</form>
+	  {% endif %}
+  {% else %}
+	  <center>
+		<a id='notready' class='btn btn-primary register'>Pay Now</a>
+	  </center>
+  {% endif %}
+{% endif %}

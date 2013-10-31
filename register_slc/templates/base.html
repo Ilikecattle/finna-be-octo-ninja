@@ -5,125 +5,53 @@
     <head>
     <title>{% block title %}Student Leadership Conference Registration{% endblock %}</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="description" content="Register for the Student Leadership Conference" />
     <meta name="keywords" content="slc, student leadership conference, registration" />
     <meta name="author" content="Adam Berg" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/master.css' %}" />
-    <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap-responsive.min.css' %}" />
+    <link rel="shortcut icon" type="image/ico" href="{% static 'img/favicon.ico' %}" />
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.tablesorter.js' %}" %}></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}" %}></script>
+    <script type="text/javascript" src="{% static 'js/jquery-1.10.2.min.js' %}" %}></script>
     {% block scripts %}{% endblock %}
-
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-36441810-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-
     </head>
+
     <body>
-        <div id="container">
-			<div id="UbcHeaderWrapper">
-			<!-- BEGIN: UBC CLF VISUAL IDENTITY HEADER -->
-			  <ul id="UbcHeader" class="UbcContainer">
-				<li>
-				  <a id="UbcLogo" href="http://www.ubc.ca/">The University of British Columbia</a>
-				</li>
-				<li class="UbcMindLink"><a href="http://www.aplaceofmind.ubc.ca/" id="UbcMindLink">a place of mind</a></li>
-				<li id="UbcHeaderLine"><a href="http://ubc.ca" id="UbcHeaderLink"><span>The University of British Columbia</span></a></li>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">          
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'sessions' %}">Register</a></li>
+            {% if user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Account' %} ({{ user.username }})
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'userena_profile_edit' user.username %}">{% trans 'Edit Profile' %}</a></li>
+                  <li><a href="{% url 'userena_email_change' user.username %}">{% trans 'Change Email' %}</a></li>
+                  <li><a href="{% url 'userena_password_change' user.username %}">{% trans 'Change Password' %}</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{% url 'userena_signout' %}">{% trans 'Log Out' %}</span></a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li><a href="{% url 'userena_signin' %}">{% trans 'Log In' %}</a></li>
+              <li><a href="{% url 'userena_signup' %}">{% trans 'Sign Up' %}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
 
-				<li id="UbcSubUnitLine"><a href="http://slc.sites.olt.ubc.ca/" id="UbcSubUnitLink"><span>Student Leadership
-			Conference</span></a></li>
-			  </ul>
-			</div>
-			<div id="body-container">
-				<div id="navigation">
-					<div id="menu-top-menu" class="page-nav pipes single-dropdown">
-						{% block nav %}
-						<ul id="menu-standard-menu" class="menu">
-							<li class="page-nav"><a href="{% url 'sessions' %}">{% trans 'Sessions' %}</a></li>
-							{% if user.is_authenticated %}
-							<li class="page-nav"><a href="{% url 'userena_profile_detail' user.username %}">{% trans 'Account' %} ({{ user.username }})</span></a></li>
-							<li class="page-nav"><a href="{% url 'userena_signout' %}">{% trans 'Log Out' %}</span></a></li>
-							{% else %}
-							<li class="page-nav"><a href="{% url 'userena_signin' %}">{% trans 'Log In' %}</a></li>
-							<li class="page-nav"><a href="{% url 'userena_signup' %}">{% trans 'Sign Up' %}</a></li>
-							{% endif %}
-						</ul>
-						{% endblock %}
-					</div>
-				</div>
-				<div class="header-widget utility">
-					<div id="text-5" class="widget widget_text widget-widget_text">
-						<div class="widget-inside">
-							<div class="textwidget"><br><br></div>
-						</div>
-					</div>
-				</div>
-
-				<div id="header">
-					slc-registration
-				</div><!-- /header-->
-
-				{% block content_title %}{% endblock %}
-
-				{% block content %}{% endblock %}
-
-				<div id="UbcBottomInfoWrapper" class="clearfix">
-					<div id="UbcBottomInfo" class="UbcContainer">
-					<div id="UbcBottomLeft">
-						<p><a href="http://www.ubc.ca/"><img src="http://slc.ubc.ca/wp-content/themes/clf-base/library/clf/img/footer/logo.gif" alt="a place of mind, The University of British Columbia"></a></p>
-					</div><!-- End UbcBottomLeft -->
-
-					<div id="UbcBottomCenter" class="vcard">
-						<a class="url fn n" href="www.involvement.ubc.ca">
-						<span class="org">Centre for Student Involvement</span>
-						</a>
-
-						<div class="adr">
-							<div class="street-address">
-							1002-1874 East Mall,
-							</div> 
-							<span class="locality">Vancouver</span>, 
-							<span class="region">BC</span>, 
-							<span class="postal-code">V6T 1Z1</span>, 
-							<span class="country-name">Canada</span>
-						</div>
-
-						Tel: <span class="tel">604-822-9805</span><br>
-						Email: <a class="email" href="mailto:get.involved@ubc.ca">get.involved@ubc.ca</a>
-					</div><!-- End UbcBottomCenter -->
-
-					<div id="UbcBottomRight" class="vcard">
-						<a class="url fn n" href="http://www.slc.ubc.ca">
-						<span class="org">Student Leadership Conference</span>
-						</a>
-
-						<div class="adr">
-							<div class="street-address">
-							1002-1874 East Mall<br>Brock Hall,
-							</div> 
-							<span class="locality">Vancouver</span>, 
-							<span class="region">BC</span>, 
-							<span class="postal-code">V6T 1Z1</span>, 
-
-							<span class="country-name">Canada</span>
-						</div>
-
-						Tel: <span class="tel">604-822-9805</span><br>
-						<div class="clf-unit-textarea">Please refer to our "contact us" page for more information</div>
-					</div><!-- End UbcBottomRight -->
-				</div>
-            </div><!-- /content-container-->
-        </div><!-- /container-->
+    <div class="container">
+    {% block content_title %}{% endblock %}
+    {% block content %}{% endblock %}
+    </div><!-- /container-->
     </body>
 </html>
