@@ -28,8 +28,9 @@ html, body{
     font-family: whitneyBold, helvetica, arial, Geneva, sans-serif;
 }
 
-#content {
-	padding-top: 40px;
+.navbar-default {
+	background-color: #f8f8f8;
+	border-color: #e7e7e7;
 }
 
 .promo-box {
