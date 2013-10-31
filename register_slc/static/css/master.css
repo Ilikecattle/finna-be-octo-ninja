@@ -33,6 +33,12 @@ html, body{
 	border-color: #e7e7e7;
 }
 
+#content {
+	position: absolute;
+	padding-top: 40px;
+	width: 100%;
+}
+
 .promo-box {
 	position: absolute;
 	background: #6aa37e;
