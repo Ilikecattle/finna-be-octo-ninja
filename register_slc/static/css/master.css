@@ -9,23 +9,8 @@ breadandpepper.com
 /*	Main elements
 ................................... */
 
-@font-face {
-  font-family: whitneyBook;
-  src: url(../Whitney-Book-Pro.otf);
-}
-
-@font-face {
-  font-family: whitneyBold;
-  src: url(../Whitney-Bold-Pro.otf);
-}
-
-@font-face {
-  font-family: fragmentCore;
-  src: url(../Fragmentcore.otf);
-}
-
 html, body{
-    font-family: whitneyBold, helvetica, arial, Geneva, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .navbar-default {
@@ -64,13 +49,11 @@ html, body{
 
 .promo-box h2 {
 	font-size: 1.6em;
-	font-family: fragmentCore;
 }
 
 .promo-box p {
 	color: white;
 	font-size: 1.6em;
-	font-family: fragmentCore;
 }
 
 #bg {
@@ -102,7 +85,7 @@ html, body{
 /*	Type
 ................................... */
 
-h1, h2, h3, h4, h5, h6 { font-family: whitneyBold, arial, "Times New Roman", Geneva, sans-serif; text-transform: uppercase; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Open Sans', arial, "Times New Roman", Geneva, sans-serif; text-transform: uppercase; }
 
 p{
     font-size: 0.9em;
