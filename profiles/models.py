@@ -25,11 +25,15 @@ class HearAbout(models.Model):
 
 class PaymentGroup(models.Model):
     name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=250)
     primary_group = models.BooleanField()
     def __unicode__(self):
         return self.name
 
+class PaymentGroupEmail(models.Model):
+    payment_group = models.ForeignKey(PaymentGroup)
+    email = models.EmailField(max_length=250)
+    def __unicode__(self):
+        return self.email
 
 class Profile(UserenaBaseProfile):
     """ Default profile """
