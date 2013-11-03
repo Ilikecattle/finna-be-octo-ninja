@@ -32,6 +32,13 @@ class PaymentGroup(models.Model):
 class PaymentGroupEmail(models.Model):
     payment_group = models.ForeignKey(PaymentGroup)
     email = models.EmailField(max_length=250)
+    
+    def save(self, *args, **kwargs):
+        super(PaymentGroupEmail, self).save(*args, **kwargs)
+        users = User.objects.filter(email=self.email)
+        for u in users:
+            u.get_profile().set_paid()
+    
     def __unicode__(self):
         return self.email
 
@@ -211,22 +218,19 @@ class Profile(UserenaBaseProfile):
             return 0
         return self.phone_num
 
+    def set_paid(self):
+        self.paid = True
+        self.register_saved_sessions()
+        self.save()
+
     def check_payment_groups(self):
         if self.has_group():
-            self.paid = True
-            self.save()
+            self.set_paid()
 
     def has_group(self):
         u = User.objects.get(pk=self.user.pk)
-        groups = PaymentGroup.objects.filter(email=u.email)
-        if groups.count() > 0:
-            return True
-        return False
-
-    def groups(self):
-        u = User.objects.get(pk=self.user.pk)
-        groups = PaymentGroup.objects.filter(email=u.email)
-        return groups
+        groups = PaymentGroupEmail.objects.filter(email=u.email)
+        return groups.count() > 0
 
     @property
     def age(self):
