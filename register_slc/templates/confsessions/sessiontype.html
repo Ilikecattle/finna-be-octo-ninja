@@ -139,7 +139,7 @@
 								<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
 							{% endif %}
 						{% else %}
-							<div href="{% url 'userena_signin' %}" class="button">Sign In</div>
+							<div class="button"><a href="{% url 'userena_signin' %}">Sign In</a></div>
 						{% endif %} 
 					</div>
 				</li>
