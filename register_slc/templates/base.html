@@ -23,10 +23,12 @@
     </head>
 
     <body>
-    <header class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
       <div class="container">          
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'sessions' %}">Register</a></li>
+            <li><a href="{% url 'sessions' %}">Register</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Account' %} ({{ user.username }})
@@ -49,7 +51,7 @@
           </ul>
         </div>
       </div>
-    </header>
+    </nav>
 
     <div id="content" class="container">
     {% block content_title %}{% endblock %}
