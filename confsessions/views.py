@@ -23,11 +23,7 @@ def sessiontype(request, session_type_pk):
 
 def get_context_for_session_time(request, session_time_pk):
     cur_session_time = SessionTime.objects.get(pk=session_time_pk)
-
-    if cur_session_time.has_multiple_session_types():
-        prev_session_time = cur_session_time
-    else:
-        prev_session_time = get_prev_session_time(cur_session_time)
+    prev_session_time = get_prev_session_time(cur_session_time)
 
     next_session_time = get_next_session_time(cur_session_time)
     session_times = get_session_times()
@@ -45,7 +41,11 @@ def get_context_for_session_time(request, session_time_pk):
 
 def get_context_for_session_type(request, session_type_pk):
     cur_session_type = SessionType.objects.get(pk=session_type_pk)
-    context = get_context_for_session_time(request, cur_session_type.session_time.pk)
+    cur_session_time = cur_session_type.session_time
+    context = get_context_for_session_time(request, cur_session_time.pk)
+    if cur_session_time.has_multiple_session_types():
+        prev_session_time = cur_session_time
+        context['prev_sessiontime'] = prev_session_time;
     context['sessiontype'] = cur_session_type
     return context
 
