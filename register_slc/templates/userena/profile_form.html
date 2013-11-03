@@ -8,11 +8,9 @@
 
 {% block content %}
 
-<form action="" enctype="multipart/form-data" method="post">
-  {% csrf_token %}
-  <fieldset>
-    <legend>{% trans "Edit Profile" %}</legend>
-    {% crispy form %}
-  </fieldset>
-</form>
+{% csrf_token %}
+<fieldset>
+	<legend>{% trans "Edit Profile" %}</legend>
+	{% crispy form %}
+</fieldset>
 {% endblock %}

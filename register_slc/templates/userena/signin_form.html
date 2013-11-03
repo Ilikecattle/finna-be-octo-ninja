@@ -1,25 +1,13 @@
-{% extends 'userena/base_signin.html' %}
-{% load i18n %}
+{% extends 'userena/base_userena.html' %}
+{% load i18n crispy_forms_tags %}
 
-{% block form %}
-<form action="" method="post">
-<div id='login-form-container'>
-	<div id='login-form'>
-			<h1 class="form_header">UBC SLC</h1>
-			<h2 class='subheading'>Sign up to register for the 2014 Student Leadership Conference</h2>
-			{% csrf_token %}
-			{{ form.non_field_errors }}
-			{% for field in form %}
-			{% if not field.is_hidden %}
-			<div class='form_row'>
-					{{ field }}
-					{{ field.errors }}
-			</div>
-			{% endif %}
-			{% endfor %}
-	<button class='button' type="submit" value="{% trans 'SignUp' %}">{% trans 'Login' %}</button>
-	<p class="login_link">Don't have an account? <a href="{% url 'userena.views.signup' %}"><strong>Sign up</strong></a></p>
-	</div>
-	</form>
+{% block title %}{% trans "Sign in" %}{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+<h1 class="text-center signin-title">{% trans 'Sign in' %}</h1>
+<div class="account-wall center-block">
+{% crispy form %}
 </div>
 {% endblock %}

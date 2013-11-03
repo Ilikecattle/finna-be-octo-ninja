@@ -149,7 +149,7 @@ LOGOUT_URL = '/accounts/signout/'
 USERENA_DISABLE_PROFILE_LIST = True
 USERENA_MUGSHOT_SIZE = 140
 
-CRISPY_TEMPLATE_PACK="bootstrap"
+CRISPY_TEMPLATE_PACK="bootstrap3"
 
 #Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

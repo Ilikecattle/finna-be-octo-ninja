@@ -1,9 +1,36 @@
-from crispy_forms.bootstrap import StrictButton
+from crispy_forms.bootstrap import StrictButton, PrependedText
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Fieldset, ButtonHolder, Submit
+from crispy_forms.layout import Layout, Field, Fieldset, ButtonHolder, Submit, MultiField
 
-from userena.forms import EditProfileForm
+from userena.forms import EditProfileForm, SignupFormOnlyEmail, AuthenticationForm
 from userena.utils import get_profile_model
+
+class SignInForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal form-signin'
+        self.helper.form_method = 'post'
+        self.helper.form_show_labels = False
+        self.helper.layout = Layout(
+            PrependedText('identification', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email"),
+            PrependedText('password', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Password"),
+            Submit('submit', 'Sign in', css_class='btn btn-lg btn-primary btn-block'),
+        )
+        super(SignInForm, self).__init__(*args, **kwargs)
+
+class SignupFormOnePassword(SignupFormOnlyEmail):
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal form-signin'
+        self.helper.form_method = 'post'
+        self.helper.form_show_labels = False
+        self.helper.layout = Layout(
+            PrependedText('email', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email"),
+            PrependedText('password1', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Create Password"),
+            PrependedText('password2', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Repeat Password"),
+            Submit('submit', 'Signup', css_class='btn btn-lg btn-primary btn-block'),
+        )
+        super(SignupFormOnePassword, self).__init__(*args, **kwargs)
 
 class EditProfileFormExtra(EditProfileForm):
     class Meta:
@@ -39,6 +66,6 @@ class EditProfileFormExtra(EditProfileForm):
             Field('diet'),
             Field('times_participation'),
             Field('hear'),
-            StrictButton('Sign in', css_class='btn-default'),
+            Submit('submit', 'Sign in', css_class='btn-default'),
         )
         super(EditProfileFormExtra, self).__init__(*args, **kwargs)

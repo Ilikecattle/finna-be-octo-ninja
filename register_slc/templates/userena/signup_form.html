@@ -1,0 +1,13 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+<h1 class="text-center signin-title">{% trans 'Sign up' %}</h1>
+<div class="account-wall center-block">
+{% crispy form %}
+</div>
+{% endblock %}
