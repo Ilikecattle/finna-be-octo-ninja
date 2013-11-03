@@ -119,44 +119,44 @@
 		<ul class ="sessions">
 		{% for session in sessiontype.session_set.all %}
 			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<li class="session">
-				<div class="session-header">
-					<h3>{{ session.name }}</h3>
-					<h4>{{ session.presenter}}</h4>
-				</div>
-				<div class="session-body">
-					<p id="tease_{{ session.pk }}">{{ session.teaser }} 
-						<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-					</p> 
-					<p id="desc_{{ session.pk }}">{{ session.description }}</p>
-				</div>
+				<li class="session">
+					<div class="session-header">
+						<h3>{{ session.name }}</h3>
+						<h4>{{ session.presenter}}</h4>
+					</div>
+					<div class="session-body">
+						<p id="tease_{{ session.pk }}">{{ session.teaser }} 
+							<div id="clickread_{{ session.pk }}">Click to read full description...</div>
+						</p> 
+						<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+					</div>
 
-				<div class="session-footer">
-					{% if user.is_authenticated %}
-						{% if user.get_profile.paid %}
-							<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Register</div>
+					<div class="session-footer">
+						{% if user.is_authenticated %}
+							{% if user.get_profile.paid %}
+								<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Register</div>
+							{% else %}
+								<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
+							{% endif %}
 						{% else %}
-							<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
-						{% endif %}
-					{% else %}
-						<div href="{% url 'userena_signin' %}" class="button">Sign In</div>
-					{% endif %} 
-				</div>
-			</li>
+							<div href="{% url 'userena_signin' %}" class="button">Sign In</div>
+						{% endif %} 
+					</div>
+				</li>
 			</div>
 		{% endfor %}
 		</ul>
 	</div>
-	
-	<div class="bottom-buttons">
-		{% if prev_sessiontime %}
-		<a href="/sessions/sessiontime/{{ prev_sessiontime.pk }}"><div class="button prev-button" >back</div></a>
-		{% endif %}
-		{% if next_sessiontime %}
-		<a href="/sessions/sessiontime/{{ next_sessiontime.pk }}"><div class="button next-button">next</div></a>
-		{% else %}
-		<a href="{% url 'profiles_review' %}"><div class="button next-button">next</div></a>
-		{% endif %}
-	</div>
+</div>
+
+<div class="bottom-buttons">
+	{% if prev_sessiontime %}
+	<a href="/sessions/sessiontime/{{ prev_sessiontime.pk }}"><div class="button prev-button" >back</div></a>
+	{% endif %}
+	{% if next_sessiontime %}
+	<a href="/sessions/sessiontime/{{ next_sessiontime.pk }}"><div class="button next-button">next</div></a>
+	{% else %}
+	<a href="{% url 'profiles_review' %}"><div class="button next-button">next</div></a>
+	{% endif %}
 </div>
 {% endblock %}
