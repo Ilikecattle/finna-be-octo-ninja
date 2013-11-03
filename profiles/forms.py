@@ -12,7 +12,7 @@ class SignInForm(AuthenticationForm):
         self.helper.form_method = 'post'
         self.helper.form_show_labels = False
         self.helper.layout = Layout(
-            PrependedText('identification', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email"),
+            PrependedText('identification', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email", autofocus='autofocus'),
             PrependedText('password', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Password"),
             Submit('submit', 'Sign in', css_class='btn btn-lg btn-primary btn-block'),
         )
@@ -25,7 +25,7 @@ class SignupFormOnePassword(SignupFormOnlyEmail):
         self.helper.form_method = 'post'
         self.helper.form_show_labels = False
         self.helper.layout = Layout(
-            PrependedText('email', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email"),
+            PrependedText('email', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email", autofocus='autofocus'),
             PrependedText('password1', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Create Password"),
             PrependedText('password2', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Repeat Password"),
             Submit('submit', 'Signup', css_class='btn btn-lg btn-primary btn-block'),
@@ -45,7 +45,7 @@ class EditProfileFormExtra(EditProfileForm):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
-            Field('first_name', placeholder="First Name"),
+            Field('first_name', placeholder="First Name", autofocus='autofocus'),
             Field('last_name', placeholder="Last Name"),
             Field('gender'),
             Field('birth_date'),
