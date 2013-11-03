@@ -1,5 +1,5 @@
 {% extends 'confsessions/base_session.html' %}
-{% load i18n %}
+{% load i18n staticfiles %}
 
 {% block title %}
 {% trans sessiontype.name %}.
@@ -54,39 +54,41 @@
 		session_footer.attr('class', 'session-footer ' + classes_to_add);
 	}
 
-	function resetSessionButtons()
+	function resetSessionButtons(firstLoad)
 	{
 		{% if user.is_authenticated %}
 			{% for sess in sessiontype.session_set.all %}
 				session_button = $('#btn_{{ sess.pk }}');
-				{% if user.get_profile.unpaid %}
-					set_save(session_button);
-				{% else %}
+				{% if user.get_profile.paid %}
 					set_register(session_button);
+				{% else %}
+					set_save(session_button);
 				{% endif %}
 				{% if not sess.has_spaces %}
 					set_full(session_button);
 				{% endif %}
 
 			{% endfor %}
-			{% if user.get_profile.unpaid %}
-				{% for sess in user.get_profile.saved_sessions.all %}
-					set_saved($('#btn_{{ sess.pk }}'));
-				{% endfor %}
-			{% else %}
-				{% for sess in user.get_profile.get_registered_sessions %}
-					set_registered($('#btn_{{ sess.pk }}'));
-				{% endfor %}
-			{% endif %}
+			if(firstLoad) {
+				{% if user.get_profile.paid %}
+					{% for sess in user.get_profile.get_registered_sessions %}
+						set_registered($('#btn_{{ sess.pk }}'));
+					{% endfor %}
+				{% else %}
+					{% for sess in user.get_profile.saved_sessions.all %}
+						set_saved($('#btn_{{ sess.pk }}'));
+					{% endfor %}
+				{% endif %}
+			}
 		{% endif %}
 	}
 
 	function sessionClicked(session_pk)
 	{
-		{% if user.get_profile.unpaid %}
-			urlToCall = "/profiles/save_session/" + session_pk + "/{{ user.pk }}/";
-		{% else %}
+		{% if user.get_profile.paid %}
 			urlToCall = "/sessions/register_session/" + session_pk +  "/{{ user.pk }}/"
+		{% else %}
+			urlToCall = "/accounts/save_session/" + session_pk + "/{{user.pk}}/";
 		{% endif %}
 
 		$.ajax({
@@ -95,17 +97,17 @@
 			success: function(response) {
 				resetSessionButtons();
 				session_button = $('#btn_' + session_pk);
-				{% if user.get_profile.unpaid %}
-					set_saved(session_button);
-				{% else %}
+				{% if user.get_profile.paid %}
 					set_registered(session_button);
+				{% else %}
+					set_saved(session_button);
 				{% endif %}
 			}
 		});
 	}
 
 	$(document).ready(function() {
-		resetSessionButtons();
+		resetSessionButtons(true);
 	});
 
 </script>
@@ -128,10 +130,10 @@
 
 			<div class="session-footer">
 				{% if user.is_authenticated %}
-					{% if user.get_profile.unpaid %}
-						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
-					{% else %}
+					{% if user.get_profile.paid %}
 						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Register</div>
+					{% else %}
+						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
 					{% endif %}
 				{% else %}
 					<div href="{% url 'userena_signin' %}" class="button">Sign In</div>

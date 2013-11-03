@@ -1,6 +1,8 @@
-from crispy_forms.bootstrap import StrictButton, PrependedText
+import logging
+
+from crispy_forms.bootstrap import PrependedText, FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Fieldset, ButtonHolder, Submit, MultiField
+from crispy_forms.layout import Layout, Field, Submit
 
 from userena.forms import EditProfileForm, SignupFormOnlyEmail, AuthenticationForm
 from userena.utils import get_profile_model
@@ -14,7 +16,9 @@ class SignInForm(AuthenticationForm):
         self.helper.layout = Layout(
             PrependedText('identification', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email", autofocus='autofocus'),
             PrependedText('password', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Password"),
-            Submit('submit', 'Sign in', css_class='btn btn-lg btn-primary btn-block'),
+            FormActions(
+                Submit('submit', 'Sign in', css_class='btn btn-lg btn-primary btn-block'),
+            )
         )
         super(SignInForm, self).__init__(*args, **kwargs)
 
@@ -28,14 +32,16 @@ class SignupFormOnePassword(SignupFormOnlyEmail):
             PrependedText('email', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email", autofocus='autofocus'),
             PrependedText('password1', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Create Password"),
             PrependedText('password2', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Repeat Password"),
-            Submit('submit', 'Signup', css_class='btn btn-lg btn-primary btn-block'),
+            FormActions(
+                Submit('submit', 'Signup', css_class='btn btn-lg btn-primary btn-block'),
+            )
         )
         super(SignupFormOnePassword, self).__init__(*args, **kwargs)
 
 class EditProfileFormExtra(EditProfileForm):
     class Meta:
         model = get_profile_model()
-        exclude = ['user', 'mugshot', 'privacy']
+        exclude = ['user', 'mugshot', 'privacy', 'paid', 'saved_sessions']
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -66,6 +72,16 @@ class EditProfileFormExtra(EditProfileForm):
             Field('diet'),
             Field('times_participation'),
             Field('hear'),
-            Submit('submit', 'Sign in', css_class='btn-default'),
+            FormActions(
+                Submit('submit', 'Submit', css_class='btn btn-lg btn-primary btn-block'),
+            )
         )
         super(EditProfileFormExtra, self).__init__(*args, **kwargs)
+    
+    def save(self, force_insert=False, force_update=False, commit=True):
+        profile = super(EditProfileFormExtra, self).save(commit=commit)
+        logger = logging.getLogger(__name__)
+        logger.error("MADE IT hERE")
+        profile.check_payment_groups()
+
+        return profile

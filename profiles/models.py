@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
 from confsessions.models import Session
+from confsessions.views import register_session
 
 from userena.models import UserenaBaseProfile
 from userena.models import UserenaSignup
@@ -126,10 +127,12 @@ class Profile(UserenaBaseProfile):
     lactose = models.BooleanField(_('are you lactose intolerant?'))
     diet = models.CharField(_('other dietary requirements:'), blank=True, null=True, max_length=25)
     times_participation = models.IntegerField(_('how many times have you participated in the SLC, including this year?'), blank=True, null=True)
-    #hear_about = models.CharField(_('how did you hear about the SLC?'), blank=True, null=True, max_length=25,
-    #        choices=HEAR_ABOUT_CHOICES)
     hear = models.ManyToManyField(HearAbout, blank=True, null=True)
-    saved_sessions = models.ManyToManyField(Session, editable=False)
+    saved_sessions = models.ManyToManyField(Session)
+    paid = models.BooleanField()
+
+    def get_saved_sessions(self):
+        return self.saved_sessions.order_by('sessiontype__session_time__time')
 
     def get_registered_sessions(self):
         return Session.objects.filter(participants__pk=self.user.pk).order_by('sessiontype__session_time__time')
@@ -139,6 +142,13 @@ class Profile(UserenaBaseProfile):
             for sess in sess_type.session_set.all():
                 self.saved_sessions.remove(sess)
         self.saved_sessions.add(session)
+
+    def register_saved_sessions(self):
+        for sess in self.saved_sessions.all():
+            sess.add_participant(self.user)
+            sess.save()
+        self.saved_sessions.clear()
+        self.save()
 
     def readyForPayment(self):
         '''Checks all compulsory fields are filled for payment'''
@@ -166,19 +176,6 @@ class Profile(UserenaBaseProfile):
 
     def email(self):
         return self.user.email
-
-    def paid(self):
-        return False
-        return UserenaSignup.objects.get(user=self.user).is_paid()
-
-    def unpaid(self):
-        '''Checks if user is unpaid'''
-        return True
-        u = User.objects.get(pk=self.user.pk)
-        user = UserenaSignup.objects.get(user=u)
-        if user.is_paid():
-            return False
-        return True
 
     def is_student(self):
         '''Return 1 if student, else 0'''
@@ -209,6 +206,11 @@ class Profile(UserenaBaseProfile):
         if len(self.phone_num) < 2:
             return 0
         return self.phone_num
+
+    def check_payment_groups(self):
+        if self.has_group():
+            self.paid = True
+            self.save()
 
     def has_group(self):
         u = User.objects.get(pk=self.user.pk)

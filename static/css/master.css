@@ -101,6 +101,26 @@ html, body{
     width: 100px;
 }
 
+footer {
+	padding-top: 40px;
+	padding-bottom: 30px;
+	margin-top: 100px;
+	color: #777;
+	border-top: 1px solid #E5E5E5;
+}
+
+footer .slc-social {
+	margin: 20px 0;
+}
+
+footer ul li {
+	padding: 10px;
+}
+
+footer ul:first-child {
+	padding-left: 0;
+}
+
 /*	Type
 ................................... */
 
@@ -276,12 +296,8 @@ h6{
 }
 
 .session {
-	position: relative;
-	width: 30.5%;
-	float: left;
 	text-align: center;
 	background-color: #FFF;
-	margin-left: 2%;
 	border: 1px solid #999;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);

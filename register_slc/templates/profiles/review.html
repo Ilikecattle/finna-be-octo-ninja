@@ -7,43 +7,45 @@
 
 {% block sessions %}
 {% if user.is_authenticated %}
-<ul class ="sessions clearfix">
-	{% if user.get_profile.unpaid %}
-		{% for session in profile.saved_sessions.all %}
-			<h1>{{session.get_time}}</h1>
-			<li class="modal one-column">
-			<div class="modal-header">
+<div class="row">
+<div class="col-md-12">
+<ul class ="sessions">
+	{% if user.get_profile.paid %}
+		{% for session in user.get_profile.get_registered_sessions %}
+			<h1 class="text-center">{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
+			<li class="session">
+			<div class="session-header">
 				<h3>{{ session.name }}</h3>
 				<h4>{{ session.presenter}}</h4>
 			</div>
-			<div class="modal-body">
+			<div class="session-body">
 				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
 					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
 				</p> 
 				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
 			</div>
 
-			<div class="modal-footer">
+			<div class="session-footer">
 				<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
 			</div>
 		</li>
 		{% endfor %}
 	{% else %}
-		{% for session in user.get_profile.get_registered_sessions %}
-			<h1 class="sessiontime-header">{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
-			<li class="modal one-column">
-			<div class="modal-header">
+		{% for session in user.get_profile.get_saved_sessions %}
+			<h1 class="text-center">{{session.get_time}}</h1>
+			<li class="session">
+			<div class="session-header">
 				<h3>{{ session.name }}</h3>
 				<h4>{{ session.presenter}}</h4>
 			</div>
-			<div class="modal-body">
+			<div class="session-body">
 				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
 					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
 				</p> 
 				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
 			</div>
 
-			<div class="modal-footer">
+			<div class="session-footer">
 				<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
 			</div>
 		</li>
@@ -51,9 +53,12 @@
 	{% endif %}
 
 </ul>
-{% if not user.get_profile.unpaid %}
-	<div class='button pay_now'>Pay Now</div>
+{% if not user.get_profile.paid %}
+	<button type="button" class='btn btn-primary btn-lg center-block'><a href="{% url 'payment' user.get_profile.pk %}">Pay Now</a></div>
 {% endif %}
+
+</div>
+</div>
 
 <div class="bottom-buttons clearfix">
 	{% if prev_sessiontime %}
