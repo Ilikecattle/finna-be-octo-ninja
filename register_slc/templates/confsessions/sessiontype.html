@@ -114,34 +114,39 @@
 {% endblock %}
 
 {% block sessions %}
-	<ul class ="sessions">
-	{% for session in sessiontype.session_set.all %}
-		<div class="session">
-			<div class="session-header">
-				<h3>{{ session.name }}</h3>
-				<h4>{{ session.presenter}}</h4>
-			</div>
-			<div class="session-body">
-				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
-					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-				</p> 
-				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
-			</div>
+<div class ="row">
+	<div class="col-lg-10 col-lg-offset-1 col-md-12">
+		<ul class ="sessions">
+		{% for session in sessiontype.session_set.all %}
+			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+			<li class="session">
+				<div class="session-header">
+					<h3>{{ session.name }}</h3>
+					<h4>{{ session.presenter}}</h4>
+				</div>
+				<div class="session-body">
+					<p id="tease_{{ session.pk }}">{{ session.teaser }} 
+						<div id="clickread_{{ session.pk }}">Click to read full description...</div>
+					</p> 
+					<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+				</div>
 
-			<div class="session-footer">
-				{% if user.is_authenticated %}
-					{% if user.get_profile.paid %}
-						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Register</div>
+				<div class="session-footer">
+					{% if user.is_authenticated %}
+						{% if user.get_profile.paid %}
+							<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Register</div>
+						{% else %}
+							<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
+						{% endif %}
 					{% else %}
-						<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
-					{% endif %}
-				{% else %}
-					<div href="{% url 'userena_signin' %}" class="button">Sign In</div>
-				{% endif %} 
+						<div href="{% url 'userena_signin' %}" class="button">Sign In</div>
+					{% endif %} 
+				</div>
+			</li>
 			</div>
-		</div>
-	{% endfor %}
-	</ul>
+		{% endfor %}
+		</ul>
+	</div>
 	
 	<div class="bottom-buttons">
 		{% if prev_sessiontime %}

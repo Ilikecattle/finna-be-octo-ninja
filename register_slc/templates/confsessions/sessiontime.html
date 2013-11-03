@@ -6,19 +6,25 @@
 {% endblock %}
 
 {% block sessions %}
-	<ul class ="sessions">
-	{% for session_type in session_types %}
-		<div class="session">
-			<div class="session-header">
-				<h3>{{ session_type.name }}</h3>
-			</div>
-			<div class="session-body">
-				There would be a description here!
-			</div>
-			<a href="/sessions/sessiontype/{{ session_type.pk }}" class="session-footer">Select</a>
+	<div class ="row">
+		<div class="col-lg-10 col-lg-offset-1">
+			<ul class ="sessions">
+			{% for session_type in session_types %}
+				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+					<li class ="session">
+						<div class="session-header">
+							<h3>{{ session_type.name }}</h3>
+						</div>
+						<div class="session-body">
+							There would be a description here!
+						</div>
+						<a href="/sessions/sessiontype/{{ session_type.pk }}" class="session-footer">Select</a>
+					</li>
+				</div>
+			{% endfor %}
+			</ul>
 		</div>
-	{% endfor %}
-	</ul>
+	</div>
 
 	<div class="bottom-buttons">
 		{% if prev_sessiontime %}
