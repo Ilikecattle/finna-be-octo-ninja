@@ -22,14 +22,17 @@ def review(request):
     }
     return render(request, 'profiles/review.html', context)
 
-def payment(request, profile_pk):
-    '''Change payment'''
-    profile = Profile.objects.get(pk=profile_pk)
-    profile.paid = True
-    profile.register_saved_sessions()
-    profile.save()
-    return redirect('/accounts/paymentsuccess')
-
 def payment_success(request):
     '''Redirect to payment success'''
-    return render(request, 'profiles/payment_success.html')
+    user = request.user
+    if user.is_authenticated():
+        user.get_profile().set_paid()
+        return render(request, 'profiles/payment_success.html')
+    else:
+        return HttpResponse('Hacker')
+
+def unpay(request):
+    user = request.user
+    user.get_profile().paid = False
+    user.get_profile().save()
+    return HttpResponse('Success')

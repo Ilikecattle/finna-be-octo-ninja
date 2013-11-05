@@ -58,7 +58,7 @@ html, body{
 
 .slc-logo {
 	height: 150px;
-	background: url('/static/img/wordmark-conf-k-noback.jpg') no-repeat;
+	background: url('/static/img/slc-logo.png') no-repeat;
 	background-size: contain;
 }
 
@@ -76,8 +76,8 @@ html, body{
 }
 
 .promo-box p {
-	color: white;
 	font-size: 1.6em;
+	font-weight: bold;
 }
 
 #bg {
@@ -134,13 +134,8 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Open Sans', arial, "Times New Roman", Gen
 p{
     font-size: 0.9em;
     line-height: 1.5em;
-    color: #444;
+    color: black;
     margin: 0 0 0.9em 0;
-}
-
-.white-box p{
-    margin: 0 12px 5px;
-    color: #000;
 }
 
 h1{
