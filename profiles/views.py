@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from confsessions.models import Session, SessionTime
 from confsessions.views import get_completed_session_times
 from profiles.models import Profile
@@ -22,6 +23,7 @@ def review(request):
     }
     return render(request, 'profiles/review.html', context)
 
+@csrf_exempt
 def payment_success(request):
     '''Redirect to payment success'''
     user = request.user
