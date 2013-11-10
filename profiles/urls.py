@@ -5,9 +5,20 @@ from profiles.forms import EditProfileFormExtra, SignupFormCrispy, SignInForm
 from profiles import views
 
 urlpatterns = patterns('',
-    url(r'^signup/$', 'userena.views.signup', { 'signup_form' : SignupFormCrispy }, name='userena_signup'),
-    url(r'^signin/$', 'userena.views.signin', { 'auth_form' : SignInForm }, name='userena_signin'),
-    url(r'^(?P<username>[\.\w-]+)/edit/$', 'userena.views.profile_edit', {'edit_profile_form' : EditProfileFormExtra}, name='edit-profile'),
+    url(r'^signup/$', 'userena.views.signup',
+        { 'signup_form' : SignupFormCrispy },
+        name='userena_signup'),
+    url(r'^signin/$', 'userena.views.signin',
+        { 'auth_form' : SignInForm },
+        name='userena_signin'),
+    url(r'^(?P<username>[\.\w-]+)/edit/$', 'userena.views.profile_edit',
+        {'success_url' : '/sessions/', 'edit_profile_form' : EditProfileFormExtra},
+        name='edit-profile'),
+    url(r'^(?P<username>(?!signout|signup|signin)[\.\w-]+)/$',
+        views.signin_success, name='signin_success'),
+    url(r'^(?P<username>[\.\w-]+)/schedule$',
+       views.view_schedule,
+       name='view_schedule'),
 
     # Payment
     url(r'^paymentsuccess/$', views.payment_success, name='payment_success'),
