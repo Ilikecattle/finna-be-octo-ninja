@@ -52,14 +52,12 @@ class EditProfileFormExtra(EditProfileForm):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
-            Field('first_name', placeholder="First Name", autofocus='autofocus'),
-            Field('last_name', placeholder="Last Name"),
-            Field('gender'),
-            Field('birth_date'),
-            Field('affiliation'),
+            Field('first_name', placeholder="First Name", autofocus='autofocus', required=True),
+            Field('last_name', placeholder="Last Name", required=True),
+            Field('affiliation', required=True),
             Field('affil_other'),
             Field('student_num'),
-            Field('phone_num'),
+            Field('phone_num', required=True),
             Field('year_of_study'),
             Field('faculty'),
             Field('other_faculty'),
@@ -81,8 +79,6 @@ class EditProfileFormExtra(EditProfileForm):
     
     def save(self, force_insert=False, force_update=False, commit=True):
         profile = super(EditProfileFormExtra, self).save(commit=commit)
-        logger = logging.getLogger(__name__)
-        logger.error("MADE IT hERE")
         profile.check_payment_groups()
 
         return profile
