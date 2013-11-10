@@ -13,6 +13,11 @@ html, body{
     font-family: 'Open Sans', sans-serif;
 }
 
+.review .session {
+    width: 98%;
+    max-width: 500px;
+}
+
 .navbar-default {
 	background-color: #f8f8f8;
 	border-color: #e7e7e7;
