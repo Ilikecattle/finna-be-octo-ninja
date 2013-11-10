@@ -1,75 +1,60 @@
 {% extends 'confsessions/base_session.html' %}
 {% load i18n %}
 
-{% block title %}
-{{ user }}
-{% endblock %}
+{% block title %}{% trans "Review" %}{% endblock %}
 
 {% block sessions %}
+<div class='review'>
 {% if user.is_authenticated %}
-<div class="row">
-<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-<ul class ="sessions">
-	{% if user.get_profile.paid %}
-		{% for session in user.get_profile.get_registered_sessions %}
-			<h1 class="text-center">{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
-			<li class="session">
-			<div class="session-header">
-				<h3>{{ session.name }}</h3>
-				<h4>{{ session.presenter}}</h4>
+	{% if profile.paid %}
+		{% for session in profile.get_registered_sessions %}
+			<div class="sessiontime-header">
+				<h1>{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
 			</div>
-			<div class="session-body">
-				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
-					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-				</p> 
-				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
-			</div>
+			<div class="session center-block">
+				<div class="session-header">
+					<h3>{{ session.name }}</h3>
+					<h4>{{ session.presenter}}</h4>
+				</div>
+				<div class="session-body">
+					<p id="tease_{{ session.pk }}">{{ session.teaser }} 
+						<div id="clickread_{{ session.pk }}">Click to read full description...</div>
+					</p> 
+					<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+				</div>
 
-			<div class="session-footer">
-				<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+				<div class="session-footer">
+					<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+				</div>
 			</div>
-		</li>
 		{% endfor %}
 	{% else %}
-		{% for session in user.get_profile.get_saved_sessions %}
-			<h1 class="text-center">{{session.get_time}}</h1>
-			<li class="session">
-			<div class="session-header">
-				<h3>{{ session.name }}</h3>
-				<h4>{{ session.presenter}}</h4>
+		{% for session in profile.get_saved_sessions.all %}
+			<div class="sessiontime-header">
+				<h1>{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
 			</div>
-			<div class="session-body">
-				<p id="tease_{{ session.pk }}">{{ session.teaser }} 
-					<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-				</p> 
-				<p id="desc_{{ session.pk }}">{{ session.description }}</p>
-			</div>
+			<div class="session center-block">
+				<div class="session-header">
+					<h3>{{ session.name }}</h3>
+					<h4>{{ session.presenter}}</h4>
+				</div>
+				<div class="session-body">
+					<p id="tease_{{ session.pk }}">{{ session.teaser }} 
+						<div id="clickread_{{ session.pk }}">Click to read full description...</div>
+					</p> 
+					<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+				</div>
 
-			<div class="session-footer">
-				<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+				<div class="session-footer">
+					<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+				</div>
 			</div>
-		</li>
 		{% endfor %}
 	{% endif %}
-
-</ul>
-{% if profile.unpaid %}
-  {% if profile.readyForPayment %}
-	  {% if profile.has_group %}
-		<center>
-		  <a href="{% url 'group_payment' %}" class='btn btn-primary register'>Group Payment</a>
-		</center>
-	  {% else %}
-		
-	  {% endif %}
-  {% else %}
-	  <center>
-		<a id='notready' class='btn btn-primary register'>Pay Now</a>
-	  </center>
-  {% endif %}
 {% endif %}
+</div>
 
-{% if not user.get_profile.paid %}
+{% if not profile.paid %}
 	<form action='https://secure.students.ubc.ca/leadership/payment.cfm' method='post' name='frm'>
 		<input type='hidden' name='cf_field_6' value='{{ user.get_profile.is_ubc }}'>
 		<input type='hidden' name='cf_field_9' value='{{ user.email }}'>
@@ -82,8 +67,6 @@
 {% else %}
 	<p class="text-center">You have paid!</p>
 {% endif %}
-</div>
-</div>
 
 <div class="bottom-buttons clearfix">
 	{% if prev_sessiontime %}
@@ -94,5 +77,4 @@
 	{% endif %}
 </div>
 
-{% endif %}
 {% endblock %}

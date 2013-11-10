@@ -6,7 +6,7 @@
 
 <div class='review'>
 {% if user.is_authenticated %}
-	{% if user.get_profile.paid %}
+	{% if profile.paid %}
 		{% for session in profile.get_registered_sessions %}
 			<div class="sessiontime-header">
 				<h1>{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
@@ -30,8 +30,10 @@
 		{% endfor %}
 	{% else %}
 		{% for session in profile.get_saved_sessions.all %}
-			<h1>{{session.get_time}}</h1>
-			<div class="session">
+			<div class="sessiontime-header">
+				<h1>{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h1>
+			</div>
+			<div class="session center-block">
 				<div class="session-header">
 					<h3>{{ session.name }}</h3>
 					<h4>{{ session.presenter}}</h4>

@@ -5,6 +5,14 @@ from profiles.forms import EditProfileFormExtra, SignupFormCrispy, SignInForm
 from profiles import views
 
 urlpatterns = patterns('',
+    # Payment
+    url(r'^paymentsuccess/$', views.payment_success, name='payment_success'),
+    url(r'^unpay/$', views.unpay, name='unpay'),
+    
+    url(r'^save_session/(\d*)/(\d*)/$', views.save_session, name='save_session'),
+    
+    url(r'^review/$', views.review, name='profiles_review'),
+    
     url(r'^signup/$', 'userena.views.signup',
         { 'signup_form' : SignupFormCrispy },
         name='userena_signup'),
@@ -19,14 +27,6 @@ urlpatterns = patterns('',
     url(r'^(?P<username>[\.\w-]+)/schedule$',
        views.view_schedule,
        name='view_schedule'),
-
-    # Payment
-    url(r'^paymentsuccess/$', views.payment_success, name='payment_success'),
-    url(r'^unpay/$', views.unpay, name='unpay'),
-
-    url(r'^save_session/(\d*)/(\d*)/$', views.save_session, name='save_session'),
-
-    url(r'^review/$', views.review, name='profiles_review'),
 
     url(r'^', include('userena.urls')),
     )
