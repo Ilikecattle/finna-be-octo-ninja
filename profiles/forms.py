@@ -72,7 +72,7 @@ class EditProfileFormExtra(EditProfileForm):
             Field('times_participation'),
             Field('hear'),
             FormActions(
-                Submit('submit', 'Submit', css_class='btn btn-lg btn-primary btn-block'),
+                Submit('submit', 'Submit', css_class='btn btn-lg btn-primary center-block'),
             )
         )
         super(EditProfileFormExtra, self).__init__(*args, **kwargs)
