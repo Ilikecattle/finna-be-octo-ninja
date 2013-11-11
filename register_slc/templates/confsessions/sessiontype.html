@@ -20,38 +20,33 @@
 
 	function set_full(session_button)
 	{
-		set_footer(session_button, 'full');
-		$(session_button).text("Full");
+		set_footer(session_button, 'full', "Full");
 	}
 
 	function set_save(session_button)
 	{
-		set_footer(session_button, 'register');
-		$(session_button).text("Save");
+		set_footer(session_button, 'register', "Save");
 	}
 
 	function set_register(session_button)
 	{
-		set_footer(session_button, 'register');
-		$(session_button).text("Register");
+		set_footer(session_button, 'register', "Register");
 	}
 
 	function set_registered(session_button)
 	{
-		set_footer(session_button, 'registered');
-		$(session_button).text("Registered");
+		set_footer(session_button, 'registered', "Registered");
 	}
 
 	function set_saved(session_button)
 	{
-		set_footer(session_button, 'registered');
-		$(session_button).text("Saved");
+		set_footer(session_button, 'registered', "Saved");
 	}
 
-	function set_footer(session_button, classes_to_add)
+	function set_footer(session_button, classes_to_add, text)
 	{
-		session_footer = $(session_button).parent();
-		session_footer.attr('class', 'session-footer ' + classes_to_add);
+		session_button.attr('class', 'session-footer ' + classes_to_add);
+		session_button.text(text);
 	}
 
 	function resetSessionButtons(firstLoad)
@@ -125,21 +120,23 @@
 						<h4>{{ session.presenter}}</h4>
 					</div>
 					<div class="session-body">
+						{% if session.teaser %}
 						<p id="tease_{{ session.pk }}">{{ session.teaser }} 
 							<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-						</p> 
+						</p>
+						{% endif %}
 						<p id="desc_{{ session.pk }}">{{ session.description }}</p>
 					</div>
 
-					<div class="session-footer">
+					<div id='btn_{{ session.pk }}' class="session-footer" onclick="sessionClicked({{ session.pk }})">
 						{% if user.is_authenticated %}
 							{% if user.get_profile.paid %}
-								<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Register</div>
+								Register
 							{% else %}
-								<div id='btn_{{ session.pk }}' onclick="sessionClicked({{ session.pk }})">Save</div>
+								Save
 							{% endif %}
 						{% else %}
-							<div class="button"><a href="{% url 'userena_signin' %}">Sign In</a></div>
+							Sign In<a href="{% url 'userena_signin' %}"><span class='link-spanner'></span></a>
 						{% endif %} 
 					</div>
 				</li>
