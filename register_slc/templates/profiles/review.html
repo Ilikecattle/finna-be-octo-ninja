@@ -24,7 +24,8 @@
 				</div>
 
 				<div class="session-footer">
-					<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+					Change
+					<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}"><span class='link-spanner'></span></a>
 				</div>
 			</div>
 		{% endfor %}
@@ -46,7 +47,8 @@
 				</div>
 
 				<div class="session-footer">
-					<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}" class='button'>Change</a>
+					Change
+					<a id='btn_{{ session.pk }}' href="{% url 'sessiontime' session.sessiontype.session_time.pk %}"><span class='link-spanner'></span></a>
 				</div>
 			</div>
 		{% endfor %}
