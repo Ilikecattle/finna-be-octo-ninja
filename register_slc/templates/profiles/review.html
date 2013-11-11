@@ -17,10 +17,13 @@
 					<h4>{{ session.presenter}}</h4>
 				</div>
 				<div class="session-body">
-					<p id="tease_{{ session.pk }}">{{ session.teaser }} 
-						<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-					</p> 
-					<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+					{% if session.teaser %}
+					<p class="teaser">{{ session.teaser }}</p>
+					{% endif %}
+					<p class="description">{{ session.description }}</p>
+					{% if session.teaser %}
+					<button type="button" class="tease_btn btn btn-default btn-xs center-block">...</button>
+					{% endif %}
 				</div>
 
 				<div class="session-footer">
@@ -40,10 +43,13 @@
 					<h4>{{ session.presenter}}</h4>
 				</div>
 				<div class="session-body">
-					<p id="tease_{{ session.pk }}">{{ session.teaser }} 
-						<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-					</p> 
-					<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+					{% if session.teaser %}
+					<p class="teaser">{{ session.teaser }}</p>
+					{% endif %}
+					<p class="description">{{ session.description }}</p>
+					{% if session.teaser %}
+					<button type="button" class="tease_btn btn btn-default btn-xs center-block">...</button>
+					{% endif %}
 				</div>
 
 				<div class="session-footer">

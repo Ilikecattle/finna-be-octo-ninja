@@ -1,5 +1,5 @@
 {% extends 'confsessions/base_session.html' %}
-{% load i18n staticfiles %}
+{% load i18n static %}
 
 {% block title %}
 {% trans sessiontype.name %}
@@ -109,7 +109,6 @@
 			$(this).prev().prev('.teaser').toggleClass('hide');
 		});
 	});
-
 </script>
 {% endblock %}
 
