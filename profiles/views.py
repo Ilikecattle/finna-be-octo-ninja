@@ -26,6 +26,7 @@ def review(request):
         'completed_session_times' : get_completed_session_times(request.user), \
         'prev_sessiontime' : session_times[0], \
         'profile' : request.user.get_profile, \
+        'is_review' : True, \
     }
     return render(request, 'profiles/review.html', context)
 
