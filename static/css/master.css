@@ -248,7 +248,8 @@ h6{
 	/*connector not needed before the first step*/
 	content: none; 
 }
-#progressbar li.complete:before{
+#progressbar li .complete {
+	color: green;
 }
 
 #progressbar li.active:before{
