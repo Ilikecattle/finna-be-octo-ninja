@@ -315,6 +315,10 @@ h6{
 	background: #6aa37e;
 }
 
+.more {
+	background-color: #AAA;
+}
+
 .bottom-buttons {
     width: 200px;
     margin: 20px auto;

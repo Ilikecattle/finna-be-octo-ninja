@@ -103,6 +103,11 @@
 
 	$(document).ready(function() {
 		resetSessionButtons(true);
+		$('.description').toggleClass('hide');
+		$(".tease_btn").on('click', function() {
+			$(this).prev('.description').toggleClass('hide');
+			$(this).prev().prev('.teaser').toggleClass('hide');
+		});
 	});
 
 </script>
@@ -121,11 +126,12 @@
 					</div>
 					<div class="session-body">
 						{% if session.teaser %}
-						<p id="tease_{{ session.pk }}">{{ session.teaser }} 
-							<div id="clickread_{{ session.pk }}">Click to read full description...</div>
-						</p>
+						<p class="teaser">{{ session.teaser }}</p>
 						{% endif %}
-						<p id="desc_{{ session.pk }}">{{ session.description }}</p>
+						<p class="description">{{ session.description }}</p>
+						{% if session.teaser %}
+						<button type="button" class="tease_btn btn btn-default btn-xs center-block">...</button>
+						{% endif %}
 					</div>
 
 					<div id='btn_{{ session.pk }}' class="session-footer" onclick="sessionClicked({{ session.pk }})">
