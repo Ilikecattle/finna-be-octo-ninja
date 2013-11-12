@@ -4,7 +4,7 @@ from django import forms
 
 from crispy_forms.bootstrap import PrependedText, FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Submit
+from crispy_forms.layout import Layout, Field, Submit, Fieldset
 
 from userena.forms import EditProfileForm, SignupForm, AuthenticationForm
 from userena.utils import get_profile_model
@@ -65,11 +65,9 @@ class EditProfileFormExtra(EditProfileForm):
             Field('year_of_study'),
             Field('faculty'),
             Field('major'),
-            Field('vegan'),
-            Field('vegetarian'),
-            Field('diet'),
             Field('times_participation'),
             Field('hear'),
+            Fieldset('Dietary Restrictions', 'vegan', 'vegetarian', 'diet'),
             FormActions(
                 Submit('submit', 'Submit', css_class='btn btn-lg btn-primary center-block'),
             )
