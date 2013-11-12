@@ -103,19 +103,22 @@
 
 	function performSearch() {
 		var searchedText = $('#search').val();
-		$('.session').hide();
-		var selector = '.session:contains(' + searchedText + ')';
-		$(selector).each(function(index) {
-			$(this).show();
-		});
+		var regExp = new RegExp(searchedText, "igm");
+		$('.session-container').hide();
+		$('.session-container').filter(function() {
+			return (this.textContent || this.innerText).match(regExp);
+		}).show();
 	}
 
 	$(document).ready(function() {
 		resetSessionButtons(true);
 		$('.close').click(function() {
-			$(this).parentsUntil('.sessions').hide();
+			$(this).parents('.session-container').hide();
 		});
 		$('#search').keyup(performSearch);
+		$('#show-hidden').click(function() {
+			$('.session').parent(".session-container").show();
+		});
 	});
 </script>
 {% endblock %}
@@ -128,11 +131,13 @@
 		<span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-search"></span></span>
 	</div>
 </div>
+<div class="container">
+	<button id="show-hidden" class="btn btn-default center-block">Show hidden sessions</button>
+</div>
 
 <div class ="row sessions">
-	<div class="col-lg-12 col-md-12">
 	{% for session in sessiontype.session_set.all %}
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="session-container col-lg-3 col-md-4 col-sm-6 col-xs-12">
 			<div class="session">
 				<div class="session-header">
 					<button type="button" class="close" aria-hidden="true">&times;</button>
@@ -173,6 +178,5 @@
 		{% endif %}
 		<div></div>
 	{% endfor %}
-	</div>
 </div>
 {% endblock %}
