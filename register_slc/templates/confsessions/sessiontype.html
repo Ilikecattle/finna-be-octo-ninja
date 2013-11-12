@@ -111,52 +111,50 @@
 {% endblock %}
 
 {% block sessions %}
-<div class ="row">
+<div class ="row sessions">
 	<div class="col-lg-12 col-md-12">
-		<div class ="sessions">
-		{% for session in sessiontype.session_set.all %}
-			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-				<div class="session">
-					<div class="session-header">
-						<button type="button" class="close" aria-hidden="true">&times;</button>
-						<h3>{{ session.name }}</h3>
-						<h4>{{ session.presenter}}</h4>
-					</div>
-					<div class="session-body">
-						{% if session.teaser %}
-						<p class="teaser">{{ session.teaser }}</p>
-						<p class="description">{{ session.description }}</p>
-						<button type="button" class="tease_btn btn btn-default btn-xs center-block">...</button>
-						{% else %}
-						<p class="description hide">{{ session.description }}</p>
-						{% endif %}
-					</div>
+	{% for session in sessiontype.session_set.all %}
+		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+			<div class="session">
+				<div class="session-header">
+					<button type="button" class="close" aria-hidden="true">&times;</button>
+					<h3>{{ session.name }}</h3>
+					<h4>{{ session.presenter}}</h4>
+				</div>
+				<div class="session-body">
+					{% if session.teaser %}
+					<p class="teaser">{{ session.teaser }}</p>
+					<p class="description">{{ session.description }}</p>
+					<button type="button" class="tease_btn btn btn-default btn-xs center-block">...</button>
+					{% else %}
+					<p class="description hide">{{ session.description }}</p>
+					{% endif %}
+				</div>
 
-					<div id='btn_{{ session.pk }}' class="session-footer" onclick="sessionClicked({{ session.pk }})">
-						{% if user.is_authenticated %}
-							{% if user.get_profile.paid %}
-								Register
-							{% else %}
-								Save
-							{% endif %}
+				<div id='btn_{{ session.pk }}' class="session-footer" onclick="sessionClicked({{ session.pk }})">
+					{% if user.is_authenticated %}
+						{% if user.get_profile.paid %}
+							Register
 						{% else %}
-							Sign In<a href="{% url 'userena_signin' %}"><span class='link-spanner'></span></a>
-						{% endif %} 
-					</div>
+							Save
+						{% endif %}
+					{% else %}
+						Sign In<a href="{% url 'userena_signin' %}"><span class='link-spanner'></span></a>
+					{% endif %} 
 				</div>
 			</div>
-			{% if forloop.counter|divisibleby:2 %}
-				<div class="clearfix visible-sm"></div>
-			{% endif %}
-			{% if forloop.counter|divisibleby:3 %}
-				<div class="clearfix visible-md"></div>
-			{% endif %}
-			{% if forloop.counter|divisibleby:4 %}
-				<div class="clearfix visible-lg"></div>
-			{% endif %}
-			<div></div>
-		{% endfor %}
 		</div>
+		{% if forloop.counter|divisibleby:2 %}
+			<div class="clearfix visible-sm"></div>
+		{% endif %}
+		{% if forloop.counter|divisibleby:3 %}
+			<div class="clearfix visible-md"></div>
+		{% endif %}
+		{% if forloop.counter|divisibleby:4 %}
+			<div class="clearfix visible-lg"></div>
+		{% endif %}
+		<div></div>
+	{% endfor %}
 	</div>
 </div>
 {% endblock %}

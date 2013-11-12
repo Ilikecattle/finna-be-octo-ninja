@@ -5,6 +5,11 @@ html, body{
     font-family: 'Open Sans', sans-serif;
 }
 
+body {
+	margin-left: 0;
+	margin-right: 0;
+}
+
 .review .session {
     width: 98%;
     max-width: 500px;
@@ -221,7 +226,8 @@ h6{
 ................................... */
 
 .sessions {
-	
+	margin-right: 0;
+	margin-left: 0;
 }
 
 .sessiontime-header {

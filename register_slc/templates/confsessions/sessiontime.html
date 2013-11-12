@@ -6,26 +6,24 @@
 {% endblock %}
 
 {% block sessions %}
-<div class ="row">
+<div class ="row sessions">
 	<div class="col-lg-10 col-lg-offset-1">
-		<ul class ="sessions">
-		{% for session_type in session_types %}
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<li class ="session">
-					<div class="session-header">
-						<h3>{{ session_type.name }}</h3>
-					</div>
-					<div class="session-body">
-						There would be a description here!
-					</div>
-					<div class="session-footer">
-						Select
-						<a href="/sessions/sessiontype/{{ session_type.pk }}"><span class='link-spanner'></span></a>
-					</div>
-				</li>
+	{% for session_type in session_types %}
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+			<div class ="session">
+				<div class="session-header">
+					<h3>{{ session_type.name }}</h3>
+				</div>
+				<div class="session-body">
+					There would be a description here!
+				</div>
+				<div class="session-footer">
+					Select
+					<a href="/sessions/sessiontype/{{ session_type.pk }}"><span class='link-spanner'></span></a>
+				</div>
 			</div>
-		{% endfor %}
-		</ul>
+		</div>
+	{% endfor %}
 	</div>
 </div>
 
