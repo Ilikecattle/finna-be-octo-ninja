@@ -15,7 +15,7 @@ class SignInForm(AuthenticationForm):
         self.helper.form_show_labels = False
         self.helper.layout = Layout(
             PrependedText('identification', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Username or Email", autofocus='autofocus'),
-            PrependedText('password', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Password"),
+            PrependedText('password', '<span class="glyphicon glyphicon-lock"></span>', placeholder="Password"),
             FormActions(
                 Submit('submit', 'Sign in', css_class='btn btn-lg btn-primary btn-block'),
             )
@@ -30,9 +30,9 @@ class SignupFormCrispy(SignupForm):
         self.helper.form_show_labels = False
         self.helper.layout = Layout(
             PrependedText('username', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Username", autofocus='autofocus'),
-            PrependedText('email', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email"),
-            PrependedText('password1', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Create Password"),
-            PrependedText('password2', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Repeat Password"),
+            PrependedText('email', '<span class="glyphicon glyphicon-user"></span>', placeholder="Email"),
+            PrependedText('password1', '<span class="glyphicon glyphicon-lock"></span>', placeholder="Create Password"),
+            PrependedText('password2', '<span class="glyphicon glyphicon-lock"></span>', placeholder="Repeat Password"),
             FormActions(
                 Submit('submit', 'Sign up', css_class='btn btn-lg btn-primary btn-block'),
             )
