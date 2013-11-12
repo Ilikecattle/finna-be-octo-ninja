@@ -125,9 +125,7 @@ class Profile(UserenaBaseProfile):
             choices=YEAR_CHOICES, default='U1')
     faculty = models.CharField(_('faculty'),blank=True, null=True, max_length=50,
             choices = FACULTY_CHOICES)
-    other_faculty = models.CharField(_('other (if Faculty not listed)'), blank=True, null=True, max_length=50)
     major = models.CharField(_('major/Specialization'), blank=True, null=True, max_length=50)
-    graduating = models.BooleanField(_('are you graduating this year?'))
     vegan = models.BooleanField(_('are you vegan?'))
     vegetarian = models.BooleanField(_('are you vegetarian?'))
     diet = models.CharField(_('other dietary requirements:'), blank=True, null=True, max_length=25)
@@ -225,18 +223,3 @@ class Profile(UserenaBaseProfile):
         u = User.objects.get(pk=self.user.pk)
         groups = PaymentGroupEmail.objects.filter(email=u.email)
         return groups.count() > 0
-
-    @property
-    def age(self):
-        if not self.birth_date: return False
-        else:
-            today = datetime.date.today()
-            # Raised when birth date is February 29 and the current year is not a
-            # leap year.
-            try:
-                birthday = self.birth_date.replace(year=today.year)
-            except ValueError:
-                day = today.day - 1 if today.day != 1 else today.day + 2
-                birthday = self.birth_date.replace(year=today.year, day=day)
-            if birthday > today: return today.year - self.birth_date.year - 1
-            else: return today.year - self.birth_date.year
