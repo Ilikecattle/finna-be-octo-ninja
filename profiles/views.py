@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from confsessions.models import Session, SessionTime
@@ -39,12 +39,13 @@ def signin_success(request, username):
 @csrf_exempt
 def payment_success(request):
     '''Redirect to payment success'''
-    user = request.user
-    if user.is_authenticated():
-        user.get_profile().set_paid()
+    if request.POST.get('payment', 0):
+        email = request.POST.get('cf_field_9', '')
+        user = User.objects.get(email=email)
+        profile = user.get_profile()
+        profile.set_paid()
         return render(request, 'profiles/payment_success.html')
-    else:
-        return HttpResponse('Hacker')
+    raise Http404
 
 def unpay(request):
     user = request.user
