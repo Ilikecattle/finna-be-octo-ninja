@@ -127,8 +127,9 @@
 						<p class="teaser">{{ session.teaser }}</p>
 						<p class="description">{{ session.description }}</p>
 						<button type="button" class="tease_btn btn btn-default btn-xs center-block">...</button>
-						{% endif %}
+						{% else %}
 						<p class="description hide">{{ session.description }}</p>
+						{% endif %}
 					</div>
 
 					<div id='btn_{{ session.pk }}' class="session-footer" onclick="sessionClicked({{ session.pk }})">
