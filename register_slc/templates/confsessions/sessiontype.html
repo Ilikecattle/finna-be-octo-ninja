@@ -101,16 +101,34 @@
 		});
 	}
 
+	function performSearch() {
+		var searchedText = $('#search').val();
+		$('.session').hide();
+		var selector = '.session:contains(' + searchedText + ')';
+		$(selector).each(function(index) {
+			$(this).show();
+		});
+	}
+
 	$(document).ready(function() {
 		resetSessionButtons(true);
 		$('.close').click(function() {
 			$(this).parentsUntil('.sessions').hide();
 		});
+		$('#search').keyup(performSearch);
 	});
 </script>
 {% endblock %}
 
 {% block sessions %}
+
+<div class="container form-group">
+	<div class="input-group">
+		<input id="search" type="text" class="form-control" placeholder="Search">
+		<span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-search"></span></span>
+	</div>
+</div>
+
 <div class ="row sessions">
 	<div class="col-lg-12 col-md-12">
 	{% for session in sessiontype.session_set.all %}
