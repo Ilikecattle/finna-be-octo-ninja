@@ -137,8 +137,12 @@ footer ul:first-child {
 
 h1, h2, h3, h4, h5, h6 { font-family: 'Open Sans', arial, "Times New Roman", Geneva, sans-serif; }
 
+p {
+	line-height: 1.3em;
+}
+
 h1 {
-	font-size: 3em;
+    font-size: 3em;
 }
 
 h3{
