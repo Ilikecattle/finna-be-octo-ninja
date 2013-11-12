@@ -137,43 +137,8 @@ footer ul:first-child {
 
 h1, h2, h3, h4, h5, h6 { font-family: 'Open Sans', arial, "Times New Roman", Geneva, sans-serif; }
 
-p{
-    font-size: 0.9em;
-    line-height: 1.5em;
-    color: black;
-    margin: 0 0 0.9em 0;
-}
-
-h1{
-    margin: 5px 25px;
-    color: #6aa37e;
-    font-size: 2.2em;
-}
-
-h2.content-title{
-    font-size: 1.5em;
-    margin: 10px;
-    padding: 15px 15px 12px;	
-    background: #e7e2de no-repeat 90px 30px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-     -moz-box-shadow: inset 0 0 3px #999;
-    -webkit-box-shadow: inset 0 0 3px #999;
-    box-shadow: inset 0 0 3px #999;
-}
-
-h2.intro{
-    font-size: 1.8em;
-    margin: 10px 20px 9px 380px;
-    padding: 0 0 5px;
-    background: url(../img/stripe.png) repeat-x 0 bottom;
-}
-
-h2.sessions:hover{
-    color: #005580;
-    cursor: hand;
-    cursor: pointer;
+h1 {
+	font-size: 3em;
 }
 
 h3{
@@ -306,10 +271,6 @@ h6{
 	cursor: pointer;
 }
 
-.session-footer:hover {
-	color: #002145;
-}
-
 .session-footer.full {
 	background: #eff2a9;
 }
@@ -320,21 +281,4 @@ h6{
 
 .session-footer.registered {
 	background: #6aa37e;
-}
-
-.more {
-	background-color: #AAA;
-}
-
-.bottom-buttons {
-    width: inherit;
-    display: inline-block;
-}
-
-.prev-button {
-    float: left;
-}
-
-.next-button {
-    float: right;
 }
