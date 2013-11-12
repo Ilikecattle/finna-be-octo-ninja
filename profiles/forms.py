@@ -1,11 +1,15 @@
 import logging
 
+from django import forms
+
 from crispy_forms.bootstrap import PrependedText, FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
 
 from userena.forms import EditProfileForm, SignupForm, AuthenticationForm
 from userena.utils import get_profile_model
+
+from profiles.models import *
 
 class SignInForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -71,6 +75,13 @@ class EditProfileFormExtra(EditProfileForm):
             )
         )
         super(EditProfileFormExtra, self).__init__(*args, **kwargs)
+    
+    def clean(self):
+        cleaned_data = super(EditProfileFormExtra, self).clean()
+        if cleaned_data.get('affiliation') in (UBC_STUDENT, UBC_STAFF, UBC_ALUMNI, UBC_FACULTY):
+            if len(cleaned_data.get('student_num', "")) != 8:
+                raise forms.ValidationError("Please enter a valid student number")
+        return cleaned_data
     
     def save(self, force_insert=False, force_update=False, commit=True):
         profile = super(EditProfileFormExtra, self).save(commit=commit)
