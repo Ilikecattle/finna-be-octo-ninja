@@ -76,13 +76,4 @@
 	<p class="text-center">You have paid!</p>
 {% endif %}
 
-<div class="bottom-buttons clearfix">
-	{% if prev_sessiontime %}
-	<a href="/sessions/sessiontime/{{ prev_sessiontime.pk }}"><div class="button prev-button" >back</div></a>
-	{% endif %}
-	{% if next_sessiontime %}
-	<a href="/sessions/sessiontime/{{ next_sessiontime.pk }}"><div class="button next-button">next</div></a>
-	{% endif %}
-</div>
-
 {% endblock %}

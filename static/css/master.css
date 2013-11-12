@@ -321,8 +321,8 @@ h6{
 }
 
 .bottom-buttons {
-    width: 200px;
-    margin: 20px auto;
+    width: inherit;
+    display: inline-block;
 }
 
 .prev-button {
