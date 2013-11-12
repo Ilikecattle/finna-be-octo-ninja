@@ -9,10 +9,13 @@ class SessionTime(models.Model):
     class Meta:
         ordering = ('time',)
     
-    def is_user_registered(self,User):
+    def is_user_registered(self,user):
+        if not user.is_authenticated():
+            return False
+
         for sess_type in self.sessiontype_set.all():
             for sess in sess_type.session_set.all():
-                if sess.participants.filter(pk=User.pk):
+                if sess.participants.filter(pk=user.pk):
                     return True
         return False
     
