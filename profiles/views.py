@@ -24,7 +24,7 @@ def review(request):
     context = { \
         'session_times' : session_times, \
         'completed_session_times' : get_completed_session_times(request.user), \
-        'prev_sessiontime' : session_times[0], \
+        'prev_sessiontime' : session_times[session_times.count() - 1], \
         'profile' : request.user.get_profile, \
         'is_review' : True, \
     }
