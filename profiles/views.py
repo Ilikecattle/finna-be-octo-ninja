@@ -35,7 +35,7 @@ def signin_success(request, username):
     if profile.paid:
         if profile.is_fully_registered():
             return redirect('/accounts/' + username + '/schedule');
-    elif profile.readyForPayment():
+    elif profile.is_ready_for_registration():
         return redirect('/sessions/')
     else:
         return redirect('/accounts/' + username + '/edit')

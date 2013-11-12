@@ -72,8 +72,14 @@
 		<input type='hidden' name='cf_field_7' value="{{ user.get_profile.studentnum }}">
 		<input type='hidden' name='cf_field_8' value="{{ user.get_profile.phonenum }}">
 		<div class="input-group center-block">
+		{% if not profile.is_ready_for_payment %}
+			<p class="text-center">{% trans 'You need to complete all steps before you can pay' %}</p>
+			<input type="submit" name="submit" value="Pay Now" class='btn btn-primary btn-lg disabled center-block'>
+		{% else %}
 			<input type="submit" name="submit" value="Pay Now" class='btn btn-primary btn-lg center-block'>
+		{% endif %}
 		</div>
+		
 	</form>
 </div>
 {% elif profile.has_group %}

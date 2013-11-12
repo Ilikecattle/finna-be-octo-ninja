@@ -156,16 +156,17 @@ class Profile(UserenaBaseProfile):
         self.saved_sessions.clear()
         self.save()
 
-    def readyForPayment(self):
+    def is_ready_for_registration(self):
         '''Checks all compulsory fields are filled for payment'''
-        if len(self.user.first_name) < 2:
-            return False 
-        if len(self.user.last_name) < 2:
+        if len(self.user.first_name) < 2 or len(self.user.last_name) < 2:
             return False 
         if self.affiliation == UBC_STUDENT:
             if len(self.student_num) < 8:
                 return False
         return True
+
+    def is_ready_for_payment(self):
+        return self.get_saved_sessions().count() == SessionTime.objects.all().count()
 
     def get_user(self):
         return UserenaSignup.objects.get(user=self.user)

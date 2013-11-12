@@ -5,7 +5,7 @@ from confsessions.models import SessionTime, SessionType, Session
 from django.contrib.auth.models import User
 
 def allow_registration(request):
-    return request.user.is_authenticated() and request.user.get_profile().readyForPayment()
+    return request.user.is_authenticated() and request.user.get_profile().is_ready_for_registration()
 
 def redirect_to_edit_profile(request):
     return redirect('/accounts/' + request.user.username + '/edit')
