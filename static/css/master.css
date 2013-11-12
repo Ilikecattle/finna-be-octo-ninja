@@ -273,7 +273,6 @@ h6{
 	*zoom: 1;
 	background: #3c6677;
 	text-decoration: none;
-	cursor: pointer;
 }
 
 .session-footer.full {
@@ -281,7 +280,7 @@ h6{
 }
 
 .session-footer.register {
-	
+	cursor: pointer;
 }
 
 .session-footer.registered {

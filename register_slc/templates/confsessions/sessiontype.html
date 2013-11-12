@@ -80,6 +80,10 @@
 
 	function sessionClicked(session_pk)
 	{
+		if(!$('#btn_' + session_pk).hasClass('register')) {
+			return;
+		}
+
 		{% if user.get_profile.paid %}
 			urlToCall = "/sessions/register_session/" + session_pk +  "/{{ user.pk }}/"
 		{% else %}
