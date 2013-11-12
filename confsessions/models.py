@@ -28,6 +28,7 @@ class SessionTime(models.Model):
 class SessionType(models.Model):
     session_time = models.ForeignKey(SessionTime, blank=True, null=True)
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=2000)
     def __unicode__(self):
         return self.name
 
