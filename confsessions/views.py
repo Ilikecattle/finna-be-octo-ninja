@@ -58,6 +58,8 @@ def register_session(request, session_pk, user_pk):
     return HttpResponse('Success')
 
 def get_completed_session_times(user):
+    if not user.is_authenticated():
+        return None
     session_time_list = get_session_times()
     for sess_time in session_time_list:
         if not sess_time.is_user_registered(user):
