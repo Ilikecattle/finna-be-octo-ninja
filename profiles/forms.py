@@ -34,7 +34,7 @@ class SignupFormCrispy(SignupForm):
             PrependedText('password1', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Create Password"),
             PrependedText('password2', '<span class="glyphicon glyphicon-lock"></span>', active=True, placeholder="Repeat Password"),
             FormActions(
-                Submit('submit', 'Signup', css_class='btn btn-lg btn-primary btn-block'),
+                Submit('submit', 'Sign up', css_class='btn btn-lg btn-primary btn-block'),
             )
         )
         super(SignupFormCrispy, self).__init__(*args, **kwargs)
