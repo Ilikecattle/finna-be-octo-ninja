@@ -177,6 +177,8 @@ h6{
 	margin: 30px 0;
 	overflow: hidden;
 	counter-reset: step;
+	padding: 0;
+    list-style-type: none;
 }
 #progressbar li {
 	counter-increment: step;
