@@ -76,8 +76,10 @@
 		</div>
 	</form>
 </div>
+{% elif profile.has_group %}
+	<p class="text-center">You have been sponsored</p>
 {% else %}
-	<p class="text-center">You have paid!</p>
+	<p class="text-center">You have successfully paid</p>
 {% endif %}
 
 {% endblock %}
