@@ -31,7 +31,11 @@ def review(request):
     return render(request, 'profiles/review.html', context)
 
 def signin_success(request, username):
-    if request.user.get_profile().readyForPayment():
+    profile = request.user.get_profile()
+    if profile.paid:
+        if profile.is_fully_registered():
+            return redirect('/accounts/' + username + '/schedule');
+    elif profile.readyForPayment():
         return redirect('/sessions/')
     else:
         return redirect('/accounts/' + username + '/edit')

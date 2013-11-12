@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
-from confsessions.models import Session
+from confsessions.models import Session, SessionTime
 from confsessions.views import register_session
 
 from userena.models import UserenaBaseProfile
@@ -133,6 +133,9 @@ class Profile(UserenaBaseProfile):
     hear = models.ManyToManyField(HearAbout, verbose_name=_('How did you head about the Student Leadership Conference?'), blank=True, null=True)
     saved_sessions = models.ManyToManyField(Session)
     paid = models.BooleanField()
+
+    def is_fully_registered(self):
+        return self.get_registered_sessions().count() == SessionTime.objects.all().count()
 
     def get_saved_sessions(self):
         return self.saved_sessions.order_by('sessiontype__session_time__time')
