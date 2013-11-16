@@ -1,0 +1,16 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Signup almost done!" %}{% endblock %}
+
+{% block content_title %}<h2>{% trans "Thanks for signing up!" %}</h2>{% endblock %}
+
+{% block content %}
+
+{% if userena_activation_required %}
+<p>{% blocktrans %}We've sent you an e-mail with an activation link.{% endblocktrans %}</p>
+<p>{% blocktrans %}Go find it so you can get started!{% endblocktrans %}</p>
+{% else  %}
+<p>{% blocktrans %}You can now use the supplied credentials to signin.{% endblocktrans %}</p>
+{% endif %}
+{% endblock %}
