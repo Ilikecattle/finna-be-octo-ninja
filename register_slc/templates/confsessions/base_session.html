@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<ul id="progressbar">
+<ul id="progressbar" class="hidden-xs">
 {% for sesstime in session_times %}
 	<li class="sessiontime {% if sesstime == session_time %} active {% endif %} ">
 		{% if completed_session_times %} 
@@ -20,6 +20,7 @@
 	</li>
 	{% endif %}
 </ul>
+<h1 class='text-center'>{{ session_time }} {% if session_time.has_multiple_session_types and sessiontype %}- {{ sessiontype }} {% endif %}</h1>
 {% block sessions %}{% endblock %}
 
 <div class="text-center">
