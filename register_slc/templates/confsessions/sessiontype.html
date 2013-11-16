@@ -117,12 +117,16 @@
 	$(document).ready(function() {
 		resetSessionButtons(true);
 		$('.close').click(function() {
+			$('#show-hidden').show();
 			$(this).parents('.session-container').hide();
 		});
 		$('#search').keyup(performSearch);
 		$('#show-hidden').click(function() {
+			$("#show-hidden").hide();
 			$('.session').parent(".session-container").show();
+			performSearch();
 		});
+		$("#show-hidden").hide();
 	});
 </script>
 {% endblock %}
@@ -146,7 +150,7 @@
 		<div class="session-container col-lg-3 col-md-4 col-sm-6 col-xs-12">
 			<div class="session">
 				<div class="session-header">
-					<button type="button" class="close" aria-hidden="true">&times;</button>
+					<button type="button" class="close" aria-hidden="true">hide</button>
 					<h3>{{ session.name }}</h3>
 					<h4>{{ session.presenter}}</h4>
 				</div>
