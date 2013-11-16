@@ -105,6 +105,10 @@ class Profile(UserenaBaseProfile):
         ('Classroom Announcements','Classroom Announcements'),
         )
 
+    TIMES_PARTICIPATED_CHOICES = (
+        zip(range(1,10), range(1, 10))
+    )
+
 
     user = models.OneToOneField(User,
                                 unique=True,
@@ -126,10 +130,12 @@ class Profile(UserenaBaseProfile):
     faculty = models.CharField(_('faculty'),blank=True, null=True, max_length=50,
             choices = FACULTY_CHOICES)
     major = models.CharField(_('major/Specialization'), blank=True, null=True, max_length=50)
-    vegan = models.BooleanField(_('are you vegan?'))
-    vegetarian = models.BooleanField(_('are you vegetarian?'))
+    vegan = models.BooleanField(_('vegan'))
+    vegetarian = models.BooleanField(_('vegetarian'))
+    gluten_free = models.BooleanField(_('gluten free'))
+    lactose_intolerant = models.BooleanField(_('lactose intolerant'))
     diet = models.CharField(_('other dietary requirements:'), blank=True, null=True, max_length=25)
-    times_participation = models.IntegerField(_('how many times have you participated in the SLC, including this year?'), blank=True, null=True)
+    times_participation = models.IntegerField(_('how many times have you participated in the SLC, including this year?'), blank=True, null=True, choices=TIMES_PARTICIPATED_CHOICES)
     hear = models.ManyToManyField(HearAbout, verbose_name=_('How did you hear about the Student Leadership Conference?'), blank=True, null=True)
     saved_sessions = models.ManyToManyField(Session)
     paid = models.BooleanField()

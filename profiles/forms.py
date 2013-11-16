@@ -2,7 +2,7 @@ import logging
 
 from django import forms
 
-from crispy_forms.bootstrap import PrependedText, FormActions
+from crispy_forms.bootstrap import PrependedText, FormActions, InlineCheckboxes
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit, Fieldset
 
@@ -67,7 +67,7 @@ class EditProfileFormExtra(EditProfileForm):
             Field('major'),
             Field('times_participation'),
             Field('hear'),
-            Fieldset('Dietary Restrictions', 'vegan', 'vegetarian', 'diet'),
+            Fieldset('Dietary Restrictions', 'vegan', 'vegetarian', 'gluten_free', 'lactose_intolerant', 'diet'),
             FormActions(
                 Submit('submit', 'Submit', css_class='btn btn-lg btn-primary center-block'),
             )
