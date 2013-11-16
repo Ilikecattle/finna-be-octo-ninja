@@ -1,12 +1,13 @@
 import logging
 
 from django import forms
+from django.contrib.auth import forms as auth_forms
 
 from crispy_forms.bootstrap import PrependedText, FormActions, InlineCheckboxes
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Submit, Fieldset
+from crispy_forms.layout import Layout, Field, Submit, Fieldset, Div
 
-from userena.forms import EditProfileForm, SignupForm, AuthenticationForm
+from userena.forms import *
 from userena.utils import get_profile_model
 
 from profiles.models import *
@@ -16,9 +17,8 @@ class SignInForm(AuthenticationForm):
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal form-signin'
         self.helper.form_method = 'post'
-        self.helper.form_show_labels = False
         self.helper.layout = Layout(
-            PrependedText('identification', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Username or Email", autofocus='autofocus'),
+            PrependedText('identification', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Email or username", autofocus='autofocus'),
             PrependedText('password', '<span class="glyphicon glyphicon-lock"></span>', placeholder="Password"),
             FormActions(
                 Submit('submit', 'Sign in', css_class='btn btn-lg btn-primary btn-block'),
@@ -31,7 +31,6 @@ class SignupFormCrispy(SignupForm):
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal form-signin'
         self.helper.form_method = 'post'
-        self.helper.form_show_labels = False
         self.helper.layout = Layout(
             PrependedText('username', '<span class="glyphicon glyphicon-user"></span>', active=True, placeholder="Username", autofocus='autofocus'),
             PrependedText('email', '<span class="glyphicon glyphicon-user"></span>', placeholder="Email"),
