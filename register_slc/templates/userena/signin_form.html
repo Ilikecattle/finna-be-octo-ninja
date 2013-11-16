@@ -9,5 +9,6 @@
 <h1 class="text-center signin-title">{% trans 'Sign in' %}</h1>
 <div class="account-wall center-block">
 {% crispy form %}
+<p class="forgot-password text-center"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
 </div>
 {% endblock %}
