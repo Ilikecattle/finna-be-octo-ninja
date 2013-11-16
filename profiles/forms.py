@@ -56,7 +56,7 @@ class EditProfileFormExtra(EditProfileForm):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
-            Field('first_name', placeholder="First Name", autofocus='autofocus', required=True),
+            Field('first_name', placeholder="This goes on your nametag", autofocus='autofocus', required=True),
             Field('last_name', placeholder="Last Name", required=True),
             Field('affiliation', required=True),
             Field('affil_other'),
