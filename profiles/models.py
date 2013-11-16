@@ -130,7 +130,7 @@ class Profile(UserenaBaseProfile):
     vegetarian = models.BooleanField(_('are you vegetarian?'))
     diet = models.CharField(_('other dietary requirements:'), blank=True, null=True, max_length=25)
     times_participation = models.IntegerField(_('how many times have you participated in the SLC, including this year?'), blank=True, null=True)
-    hear = models.ManyToManyField(HearAbout, verbose_name=_('How did you head about the Student Leadership Conference?'), blank=True, null=True)
+    hear = models.ManyToManyField(HearAbout, verbose_name=_('How did you hear about the Student Leadership Conference?'), blank=True, null=True)
     saved_sessions = models.ManyToManyField(Session)
     paid = models.BooleanField()
 
