@@ -62,10 +62,3 @@ class Session(models.Model):
 
     def __unicode__(self):
         return self.name
-
-'''class MySessions(models.Model):
-    session = models.ForeignKey(Session)
-    participant = models.ManyToManyField(User)
-    def __unicode__(self):
-        return self.session
-        '''

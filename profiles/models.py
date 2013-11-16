@@ -44,11 +44,6 @@ class PaymentGroupEmail(models.Model):
 
 class Profile(UserenaBaseProfile):
     """ Default profile """
-    GENDER_CHOICES = (
-        (1, _('Male')),
-        (0, _('Female')),
-        (-1, _('Prefer not to identify')),
-    )
 
     AFFIL_CHOICES = (
         (UBC_STUDENT, 'UBC Student'),
@@ -115,19 +110,14 @@ class Profile(UserenaBaseProfile):
                                 verbose_name=_('user'),
                                 related_name='profile') 
 
-    gender = models.PositiveSmallIntegerField(_('gender'),
-                                              choices=GENDER_CHOICES,
-                                              blank=True,
-                                              null=True)
-    birth_date = models.DateField(_('birth date (yyyy-mm-dd)'), blank=True, null=True)
-    affiliation = models.CharField(_('affiliation'), blank=True, null=True, max_length=25,
+    affiliation = models.CharField(_('affiliation'), null=True, max_length=25,
             choices=AFFIL_CHOICES, default=UBC_STUDENT)
     affil_other = models.CharField(_('other (if Other BC University or Other)'), blank=True, null=True, max_length=50)
     student_num = models.CharField(_('student number'), blank=True, null=True, max_length=8)
-    phone_num = models.CharField(_('phone number'), blank=True, null=True, max_length=15)
-    year_of_study = models.CharField(_('year of study'), blank=True, null=True, max_length=2,
-            choices=YEAR_CHOICES, default='U1')
-    faculty = models.CharField(_('faculty'),blank=True, null=True, max_length=50,
+    phone_num = models.CharField(_('phone number'), null=True, max_length=15)
+    year_of_study = models.CharField(_('year of study'), null=True, max_length=2,
+            choices=YEAR_CHOICES)
+    faculty = models.CharField(_('faculty'), null=True, max_length=50,
             choices = FACULTY_CHOICES)
     major = models.CharField(_('major/Specialization'), blank=True, null=True, max_length=50)
     vegan = models.BooleanField(_('vegan'))
@@ -135,8 +125,8 @@ class Profile(UserenaBaseProfile):
     gluten_free = models.BooleanField(_('gluten free'))
     lactose_intolerant = models.BooleanField(_('lactose intolerant'))
     diet = models.CharField(_('other dietary requirements:'), blank=True, null=True, max_length=25)
-    times_participation = models.IntegerField(_('how many times have you participated in the SLC, including this year?'), blank=True, null=True, choices=TIMES_PARTICIPATED_CHOICES)
-    hear = models.ManyToManyField(HearAbout, verbose_name=_('How did you hear about the Student Leadership Conference?'), blank=True, null=True)
+    times_participation = models.IntegerField(_('how many times have you participated in the SLC, including this year?'), null=True, choices=TIMES_PARTICIPATED_CHOICES)
+    hear = models.ManyToManyField(HearAbout, verbose_name=_('How did you hear about the Student Leadership Conference?'), null=True)
     saved_sessions = models.ManyToManyField(Session)
     paid = models.BooleanField()
 

@@ -49,6 +49,9 @@ class EditProfileFormExtra(EditProfileForm):
         exclude = ['user', 'mugshot', 'privacy', 'paid', 'saved_sessions']
 
     def __init__(self, *args, **kwargs):
+        super(EditProfileFormExtra, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'post'
@@ -56,12 +59,12 @@ class EditProfileFormExtra(EditProfileForm):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
-            Field('first_name', placeholder="This goes on your nametag", autofocus='autofocus', required=True),
-            Field('last_name', placeholder="Last Name", required=True),
-            Field('affiliation', required=True),
+            Field('first_name', placeholder="This goes on your nametag", autofocus='autofocus'),
+            Field('last_name', placeholder="Last Name"),
+            Field('affiliation'),
             Field('affil_other'),
-            Field('student_num'),
-            Field('phone_num', required=True),
+            Field('student_num', placeholder="Required if you are a UBC student"),
+            Field('phone_num'),
             Field('year_of_study'),
             Field('faculty'),
             Field('major'),
@@ -72,11 +75,11 @@ class EditProfileFormExtra(EditProfileForm):
                 Submit('submit', 'Submit', css_class='btn btn-lg btn-primary center-block'),
             )
         )
-        super(EditProfileFormExtra, self).__init__(*args, **kwargs)
+        
     
     def clean(self):
         cleaned_data = super(EditProfileFormExtra, self).clean()
-        if cleaned_data.get('affiliation') in (UBC_STUDENT, UBC_STAFF, UBC_ALUMNI, UBC_FACULTY):
+        if cleaned_data.get('affiliation') == UBC_STUDENT:
             if len(cleaned_data.get('student_num', "")) != 8:
                 raise forms.ValidationError("Please enter a valid student number")
         return cleaned_data
