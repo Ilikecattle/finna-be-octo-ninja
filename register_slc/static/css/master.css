@@ -277,6 +277,8 @@ h6{
 	*zoom: 1;
 	background: #3c6677;
 	text-decoration: none;
+	color: white;
+	font-weight: bold;
 }
 
 .session-footer.full {
