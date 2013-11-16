@@ -4,13 +4,13 @@
 
 {% block title %}{% trans "Account setup" %}{% endblock %}
 
-{% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+{% block content_title %}<h2>{% trans "About You" %}</h2>{% endblock %}
 
 {% block content %}
 
 {% csrf_token %}
 <fieldset>
-	<legend>{% trans "Edit Profile" %}</legend>
+	<p>Before we let you register, we need to know a little bit about you.</p>
 	{% crispy form %}
 </fieldset>
 {% endblock %}
