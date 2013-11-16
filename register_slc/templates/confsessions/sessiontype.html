@@ -129,6 +129,7 @@
 
 {% block sessions %}
 
+{% if sessiontype.use_search_bar %}
 <div class="container form-group">
 	<div class="input-group">
 		<input id="search" type="text" class="form-control" placeholder="Search">
@@ -138,6 +139,7 @@
 <div class="container">
 	<button id="show-hidden" class="btn btn-default center-block">Show hidden sessions</button>
 </div>
+{% endif %}
 
 <div class ="row sessions">
 	{% for session in sessiontype.session_set.all %}

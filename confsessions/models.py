@@ -29,18 +29,19 @@ class SessionType(models.Model):
     session_time = models.ForeignKey(SessionTime, blank=True, null=True)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=2000)
+    use_search_bar = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
 
 class Session(models.Model):
     sessiontype = models.ForeignKey(SessionType)
     name = models.CharField(max_length=200)
-    presenter = models.CharField(max_length=200)
-    location = models.CharField(max_length=200)
-    capacity = models.IntegerField()
-    teaser = models.CharField(max_length=2000)
-    description = models.CharField(max_length=5000)
-    participants = models.ManyToManyField(User)
+    presenter = models.CharField(max_length=200, blank=True)
+    location = models.CharField(max_length=200, blank=True)
+    capacity = models.IntegerField(blank=True)
+    teaser = models.CharField(max_length=2000, blank=True)
+    description = models.CharField(max_length=5000, blank=True)
+    participants = models.ManyToManyField(User, blank=True)
     def add_participant(self,User):
         for sess_type in self.sessiontype.session_time.sessiontype_set.all():
             for sess in sess_type.session_set.all():
