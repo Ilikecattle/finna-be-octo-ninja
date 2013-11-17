@@ -61,9 +61,3 @@ def payment_success(request):
         profile.set_paid()
         return render(request, 'profiles/payment_success.html')
     raise Http404
-
-def unpay(request):
-    user = request.user
-    user.get_profile().paid = False
-    user.get_profile().save()
-    return HttpResponse('Success')

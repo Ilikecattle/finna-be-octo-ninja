@@ -9,7 +9,6 @@ urlpatterns = patterns('',
 
     # Payment
     url(r'^paymentsuccess/$', views.payment_success, name='payment_success'),
-    url(r'^unpay/$', views.unpay, name='unpay'),
     
     url(r'^save_session/(\d*)/(\d*)/$', views.save_session, name='save_session'),
     
