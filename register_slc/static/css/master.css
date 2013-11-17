@@ -22,6 +22,7 @@ body {
 }
 
 .header-date {
+	color: white;
 	line-height: 110px;
 	font-size: 2em;
 	font-weight: bold;
