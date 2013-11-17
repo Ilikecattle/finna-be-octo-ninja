@@ -76,10 +76,11 @@ def get_completed_session_times(user):
     if not user.is_authenticated():
         return None
     session_time_list = get_session_times()
+    completed_sessions = []
     for sess_time in session_time_list:
-        if not sess_time.is_user_registered(user):
-            session_time_list.remove(sess_time)
-    return session_time_list
+        if user.get_profile().is_registered_or_saved_for_sess_time(sess_time):
+            completed_sessions.append(sess_time)
+    return completed_sessions
 
 def get_session_times():
     return list(SessionTime.objects.all())

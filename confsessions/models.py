@@ -15,7 +15,7 @@ class SessionTime(models.Model):
 
         for sess_type in self.sessiontype_set.all():
             for sess in sess_type.session_set.all():
-                if sess.participants.filter(pk=user.pk):
+                if user in sess.participants.all():
                     return True
         return False
     

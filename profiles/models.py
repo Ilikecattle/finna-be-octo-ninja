@@ -130,6 +130,15 @@ class Profile(UserenaBaseProfile):
     saved_sessions = models.ManyToManyField(Session)
     paid = models.BooleanField()
 
+    def is_registered_or_saved_for_sess_time(self, sess_time):
+        if self.paid:
+            return sess_time.is_user_registered(self.user)
+        
+        for session in self.saved_sessions.all():
+            if session.sessiontype.session_time == sess_time:
+                return False
+        return False
+
     def is_fully_registered(self):
         return self.get_registered_sessions().count() == SessionTime.objects.all().count()
 

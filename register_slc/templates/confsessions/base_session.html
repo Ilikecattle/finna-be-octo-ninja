@@ -5,11 +5,9 @@
 {% for sesstime in session_times %}
 	<li class="sessiontime {% if sesstime == session_time %} active {% endif %} ">
 		{% if completed_session_times %} 
-			{% for cst in completed_session_times %} 
-				{% if cst == sesstime %}
+			{% if sesstime in completed_session_times %} 
 					<div class="complete glyphicon glyphicon-ok"></div>
-				{% endif %} 
-			{% endfor %} 
+			{% endif %} 
 		{% endif %}
 		<a href="/sessions/sessiontime/{{ sesstime.pk }}"><span class='link-spanner'></span>{{ sesstime.name }}</a>
 	</li>
