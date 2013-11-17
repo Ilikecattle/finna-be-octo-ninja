@@ -5,6 +5,8 @@ from profiles.forms import EditProfileFormExtra, SignupFormCrispy, SignInForm
 from profiles import views
 
 urlpatterns = patterns('',
+    url(r'^register/complete$', views.registration_complete, name='registraton_complete'),
+
     # Payment
     url(r'^paymentsuccess/$', views.payment_success, name='payment_success'),
     url(r'^unpay/$', views.unpay, name='unpay'),
@@ -24,9 +26,6 @@ urlpatterns = patterns('',
         name='edit-profile'),
     url(r'^(?P<username>(?!signout|signup|signin)[\.\w-]+)/$',
         views.signin_success, name='signin_success'),
-    url(r'^(?P<username>[\.\w-]+)/schedule$',
-       views.view_schedule,
-       name='view_schedule'),
 
     url(r'^', include('userena.urls')),
     )

@@ -43,11 +43,15 @@
 
     <nav class="navbar navbar-default" role="navigation">
       <div class="container">
-          {% if not user.is_authenticated %}
+          
           <ul class="nav navbar-nav navbar-left">
+              {% if user.is_authenticated %}
+              <li><a href="/sessions">{% trans 'Register Here' %}</a></li>
+              {% else %}
               <li><a href="/sessions">{% trans 'Browse Sessions' %}</a></li>
+              {% endif %}
           </ul>
-          {% endif %}
+          
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <li class="dropdown">
@@ -55,8 +59,6 @@
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="{% url 'view_schedule' user.username %}">{% trans 'My Schedule' %}</a></li>
-                  <li class="divider"></li>
                   <li><a href="{% url 'userena_email_change' user.username %}">{% trans 'Change Email' %}</a></li>
                   <li><a href="{% url 'userena_password_change' user.username %}">{% trans 'Change Password' %}</a></li>
                   <li class="divider"></li>

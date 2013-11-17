@@ -129,6 +129,7 @@ class Profile(UserenaBaseProfile):
     hear = models.ManyToManyField(HearAbout, verbose_name=_('How did you hear about the Student Leadership Conference?'), null=True)
     saved_sessions = models.ManyToManyField(Session)
     paid = models.BooleanField()
+    submitted_registration = models.BooleanField()
 
     def is_registered_or_saved_for_sess_time(self, sess_time):
         if self.paid:
@@ -138,9 +139,6 @@ class Profile(UserenaBaseProfile):
             if session.sessiontype.session_time == sess_time:
                 return False
         return False
-
-    def is_fully_registered(self):
-        return self.get_registered_sessions().count() == SessionTime.objects.all().count()
 
     def get_saved_sessions(self):
         return self.saved_sessions.order_by('sessiontype__session_time__time')
@@ -227,6 +225,14 @@ class Profile(UserenaBaseProfile):
     def check_payment_groups(self):
         if self.has_group():
             self.set_paid()
+
+    def get_payment_groups(self):
+        emails = PaymentGroupEmail.objects.filter(email=self.user.email)
+        result = []
+        for email in emails:
+            result.append(email.payment_group)
+        
+        return ' & '.join([str(i) for i in result])
 
     def has_group(self):
         u = User.objects.get(pk=self.user.pk)

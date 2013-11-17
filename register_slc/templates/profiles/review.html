@@ -81,13 +81,31 @@
 			<input type="submit" name="submit" value="Pay Now" class='btn btn-primary btn-lg center-block'>
 		{% endif %}
 		</div>
-		
 	</form>
 </div>
-{% elif profile.has_group %}
-	<p class="text-center">You have been sponsored</p>
+{% elif profile.has_group and not profile.submitted_registration %}
+	<p class="text-center">You have been sponsored by {{ payment_groups }}</p>
+	<div class="text-center">
+		<div class="btn-group">
+			<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ prev_sessiontime.pk }}'>back</a>
+		</div>
+		<div class="btn-group">
+			<a class="btn btn-primary btn-lg" href="{% url 'registraton_complete' %}">{% trans "Submit" %}</a>
+		</div>
+	</div>
 {% else %}
-	<p class="text-center">You have successfully paid</p>
+	<p class="text-center">You have successfully registered for the conference.</p>
+	<div class="text-center">
+		<div class="btn-group">
+			<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ prev_sessiontime.pk }}'>back</a>
+		</div>
+		<div class="btn-group">
+			<button disabled="disabled" class='btn btn-primary btn-lg center-block'>{% trans "Submit" %}</button>
+		</div>
+	</div>
+
 {% endif %}
+
+{% block bottom_buttons %}{% endblock %}
 
 {% endblock %}

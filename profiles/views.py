@@ -14,11 +14,6 @@ def save_session(request, session_pk, user_pk):
     user.save()
     return HttpResponse('Success')
 
-def view_schedule(request, username):
-    extra_context = dict()
-    extra_context['profile'] = request.user.get_profile()
-    return render(request, 'profiles/view_schedule.html', extra_context)
-
 def review(request):
     session_times = SessionTime.objects.all()
     context = { \
@@ -28,12 +23,13 @@ def review(request):
         'profile' : request.user.get_profile, \
         'is_review' : True, \
     }
+    context['payment_groups'] = request.user.get_profile().get_payment_groups()
     return render(request, 'profiles/review.html', context)
 
 def signin_success(request, username):
     profile = request.user.get_profile()
     if profile.paid:
-        if profile.is_fully_registered():
+        if profile.submitted_registration:
             return redirect('/accounts/' + username + '/schedule');
         else:
             return redirect('/sessions/')
@@ -41,6 +37,14 @@ def signin_success(request, username):
         return redirect('/sessions/')
     else:
         return redirect('/accounts/' + username + '/edit')
+
+def registration_complete(request):
+    if not request.user.is_authenticated():
+        raise Http404
+    profile = request.user.get_profile()
+    profile.submitted_registration = True
+    profile.save()
+    return render(request, 'profiles/payment_success.html')
 
 @csrf_exempt
 def payment_success(request):

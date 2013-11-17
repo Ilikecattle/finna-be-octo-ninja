@@ -21,6 +21,7 @@
 <h1 class='text-center'>{{ session_time }} {% if session_time.has_multiple_session_types and sessiontype %}- {{ sessiontype }} {% endif %}</h1>
 {% block sessions %}{% endblock %}
 
+{% block bottom_buttons %}
 <div class="text-center">
 	<div class="btn-group">
 		{% if prev_sessiontime %}
@@ -33,5 +34,6 @@
 		{% endif %}
 	</div>
 </div>
+{% endblock %}
 
 {% endblock %}
