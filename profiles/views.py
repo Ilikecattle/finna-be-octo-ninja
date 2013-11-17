@@ -47,8 +47,7 @@ def registration_complete(request):
     if not profile.paid or profile.submitted_registration:
         raise Http404
 
-    profile.submitted_registration = True
-    profile.save()
+    profile.submit_registration()
     profile.send_registration_confirmation_email()
     return render(request, 'profiles/payment_success.html')
 

@@ -221,7 +221,6 @@ class Profile(UserenaBaseProfile):
 
     def set_paid(self):
         self.paid = True
-        self.register_saved_sessions()
         self.save()
 
     def check_payment_groups(self):
@@ -240,7 +239,12 @@ class Profile(UserenaBaseProfile):
         u = User.objects.get(pk=self.user.pk)
         groups = PaymentGroupEmail.objects.filter(email=u.email)
         return groups.count() > 0
-    
+
+    def submit_registration(self):
+        self.submitted_registration = True
+        self.register_saved_sessions()
+        self.save()
+
     def send_registration_confirmation_email(self):
         send_mail('2014 UBC Student Leadership Conference Registration Confirmation',
             'Congrats, you have successfully registered for the 2014 UBC Student Leadership Conference',
