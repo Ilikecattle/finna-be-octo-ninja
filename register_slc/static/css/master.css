@@ -10,6 +10,24 @@ body {
 	margin-right: 0;
 }
 
+.header {
+	width: 100%;
+	height: 120px;
+	background: url('../img/slc-logo.png') 20% 0 no-repeat;
+	background-color: #6aa37e;
+	background-size: contain;
+	padding-left: 20%;
+	border: solid #6aa37e 5px;
+}
+
+.header-date {
+	line-height: 95px;
+	font-size: 2em;
+	font-weight: bold;
+	float:right;
+	padding-right: 20%;
+}
+
 .review .session {
     width: 98%;
     max-width: 500px;
