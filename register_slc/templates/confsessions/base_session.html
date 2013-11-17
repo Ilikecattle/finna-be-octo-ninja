@@ -22,16 +22,18 @@
 {% block sessions %}{% endblock %}
 
 {% block bottom_buttons %}
-<div class="text-center">
-	<div class="btn-group">
-		{% if prev_sessiontime %}
-		<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ prev_sessiontime.pk }}'>back</a>
-		{% endif %}
-		{% if next_sessiontime %}
-		<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ next_sessiontime.pk }}'>next</a>
-		{% elif not is_review %}
-		<a class="btn btn-default btn-lg" href="{% url 'profiles_review' %}">next</a>
-		{% endif %}
+<div class="bottom-button-wrapper">
+	<div class="text-center bottom-buttons">
+		<div class="btn-group">
+			{% if prev_sessiontime %}
+			<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ prev_sessiontime.pk }}'>back</a>
+			{% endif %}
+			{% if next_sessiontime %}
+			<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ next_sessiontime.pk }}'>next</a>
+			{% elif not is_review %}
+			<a class="btn btn-default btn-lg" href="{% url 'profiles_review' %}">next</a>
+			{% endif %}
+		</div>
 	</div>
 </div>
 {% endblock %}

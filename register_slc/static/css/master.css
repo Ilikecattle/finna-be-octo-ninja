@@ -120,12 +120,8 @@ body {
 }
 
 footer {
-	position: relative;
-	bottom: 0;
 	width: 100%;
-	padding-top: 40px;
 	padding-bottom: 30px;
-	margin-top: 100px;
 	color: #777;
 	border-top: 1px solid #E5E5E5;
 	background-color: white;
@@ -317,4 +313,13 @@ h6{
 
 .session-footer.registered {
 	background: #6aa37e;
+}
+
+.bottom-buttons {
+	width: 100%;
+	background-color: white;
+	position: fixed;
+	bottom: 0;
+	padding: 10px 0;
+	border-top: 1px solid #E5E5E5;
 }
