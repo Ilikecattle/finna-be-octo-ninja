@@ -39,11 +39,12 @@ def signin_success(request, username):
         return redirect('/accounts/' + username + '/edit')
 
 def registration_complete(request):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated() or request.user.get_profile().submitted_registration:
         raise Http404
     profile = request.user.get_profile()
     profile.submitted_registration = True
     profile.save()
+    profile.send_registration_confirmation_email()
     return render(request, 'profiles/payment_success.html')
 
 @csrf_exempt

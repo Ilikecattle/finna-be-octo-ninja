@@ -54,7 +54,7 @@
 		{% if user.is_authenticated %}
 			{% for sess in sessiontype.session_set.all %}
 				session_button = $('#btn_{{ sess.pk }}');
-				{% if user.get_profile.paid %}
+				{% if user.get_profile.submitted_registration %}
 					set_register(session_button);
 				{% else %}
 					set_save(session_button);
@@ -65,7 +65,7 @@
 
 			{% endfor %}
 			if(firstLoad) {
-				{% if user.get_profile.paid %}
+				{% if user.get_profile.submitted_registration %}
 					{% for sess in user.get_profile.get_registered_sessions %}
 						set_registered($('#btn_{{ sess.pk }}'));
 					{% endfor %}
@@ -84,7 +84,7 @@
 			return;
 		}
 
-		{% if user.get_profile.paid %}
+		{% if user.get_profile.submitted_registration %}
 			urlToCall = "/sessions/register_session/" + session_pk +  "/{{ user.pk }}/"
 		{% else %}
 			urlToCall = "/accounts/save_session/" + session_pk + "/{{user.pk}}/";
@@ -96,7 +96,7 @@
 			success: function(response) {
 				resetSessionButtons();
 				session_button = $('#btn_' + session_pk);
-				{% if user.get_profile.paid %}
+				{% if user.get_profile.submitted_registration %}
 					set_registered(session_button);
 				{% else %}
 					set_saved(session_button);

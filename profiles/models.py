@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -238,3 +240,10 @@ class Profile(UserenaBaseProfile):
         u = User.objects.get(pk=self.user.pk)
         groups = PaymentGroupEmail.objects.filter(email=u.email)
         return groups.count() > 0
+    
+    def send_registration_confirmation_email(self):
+        send_mail('2014 UBC Student Leadership Conference Registration Confirmation',
+            'Congrats, you have successfully registered for the 2014 UBC Student Leadership Conference',
+            settings.DEFAULT_FROM_EMAIL, 
+            [self.user.email], 
+            fail_silently=False)
