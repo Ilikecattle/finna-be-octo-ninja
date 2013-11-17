@@ -134,12 +134,12 @@ class Profile(UserenaBaseProfile):
     submitted_registration = models.BooleanField()
 
     def is_registered_or_saved_for_sess_time(self, sess_time):
-        if self.paid:
+        if self.submitted_registration:
             return sess_time.is_user_registered(self.user)
         
         for session in self.saved_sessions.all():
             if session.sessiontype.session_time == sess_time:
-                return False
+                return True
         return False
 
     def get_saved_sessions(self):
