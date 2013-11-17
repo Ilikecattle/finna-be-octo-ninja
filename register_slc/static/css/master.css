@@ -148,10 +148,13 @@ footer {
 
 footer .slc-social {
 	margin: 20px 0;
+	list-style: none;
 }
 
 footer ul li {
 	padding: 10px;
+	width: 100%;
+	display: inline-block;
 }
 
 footer ul:first-child {
@@ -278,9 +281,11 @@ h6{
 }
 
 .session-header h3 {
-	padding-bottom: 4px;
 	color: black;
 	font-weight: bold;
+	padding-bottom: 0;
+	margin-bottom: 0;
+	margin-top: 0;
 }
 
 .session {
