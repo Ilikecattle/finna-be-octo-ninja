@@ -39,9 +39,9 @@ class PaymentGroupEmail(models.Model):
         super(PaymentGroupEmail, self).save(*args, **kwargs)
         users = User.objects.filter(email=self.email)
         for u in users:
-			if u.is_authenticated():
+            if u.is_authenticated():
                 u.get_profile().set_paid()
-    
+
     def __unicode__(self):
         return self.email
 
