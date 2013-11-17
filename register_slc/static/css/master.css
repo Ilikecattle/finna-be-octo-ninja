@@ -289,6 +289,12 @@ h6{
 	text-align: left;
 }
 
+.description img {
+	width: 50%;
+	display: block;
+	margin: 10px auto;
+}
+
 .session-footer {
 	position: relative;
 	display: block;
