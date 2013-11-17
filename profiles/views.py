@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from confsessions.models import Session, SessionTime
 from confsessions.views import get_completed_session_times
-from profiles.models import Profile
+from profiles.models import Profile, PaymentGroupEmail, PaymentGroup
 
 from django.contrib.auth.models import User
 
@@ -57,6 +57,9 @@ def payment_success(request):
     if request.POST.get('payment', 0):
         email = request.POST.get('cf_field_9', '')
         user = User.objects.get(email=email)
+        payment_group = PaymentGroup.objects.get_or_create(name="Credit Card Payments", primary_group=False)[0]
+        payment_group_email = PaymentGroupEmail.objects.get_or_create(email=email, payment_group=payment_group)
+        payment_group.save()
         profile = user.get_profile()
         profile.set_paid()
         return render(request, 'profiles/payment_success.html')
