@@ -140,10 +140,10 @@
 		<span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-search"></span></span>
 	</div>
 </div>
+{% endif %}
 <div class="container">
 	<button id="show-hidden" class="btn btn-default center-block">Show hidden sessions</button>
 </div>
-{% endif %}
 
 <div class ="row sessions">
 	{% for session in sessiontype.session_set.all %}
