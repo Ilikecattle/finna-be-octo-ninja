@@ -5,20 +5,20 @@ from confsessions.models import SessionTime, SessionType, Session
 from django.contrib.auth.models import User
 
 def allow_registration(request):
-    return request.user.is_authenticated() and request.user.get_profile().is_ready_for_registration()
+    return request.user.get_profile().is_ready_for_registration()
 
 def redirect_to_edit_profile(request):
     return redirect('/accounts/' + request.user.username + '/edit')
 
 def index(request):
-    if not allow_registration(request):
+    if request.user.is_authenticated() and not allow_registration(request):
         return redirect_to_edit_profile(request)
 
     sessiontimes = get_session_times()
     return redirect('/sessions/sessiontime/' + str(sessiontimes[0].pk))
 
 def sessiontime(request, session_time_pk):
-    if not allow_registration(request):
+    if request.user.is_authenticated() and not allow_registration(request):
         return redirect_to_edit_profile(request)
 
     session_time = SessionTime.objects.get(pk=session_time_pk)
@@ -31,7 +31,8 @@ def sessiontime(request, session_time_pk):
         return redirect('/sessions/sessiontype/' + str(session_types[0].pk))
 
 def sessiontype(request, session_type_pk):
-    if not allow_registration(request):
+    
+    if request.user.is_authenticated() and not allow_registration(request):
         return redirect_to_edit_profile(request)
 
     return render(request, 'confsessions/sessiontype.html', get_context_for_session_type(request, session_type_pk))

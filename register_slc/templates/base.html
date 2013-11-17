@@ -43,9 +43,11 @@
 
     <nav class="navbar" role="navigation">
       <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'sessions' %}">UBC SLC Registration</a>
-          </div>
+          {% if not user.is_authenticated %}
+          <ul class="nav navbar-nav navbar-left">
+              <li><a href="/sessions">{% trans 'Browse Sessions' %}</a></li>
+          </ul>
+          {% endif %}
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <li class="dropdown">
@@ -55,7 +57,6 @@
                 <ul class="dropdown-menu">
                   <li><a href="{% url 'view_schedule' user.username %}">{% trans 'My Schedule' %}</a></li>
                   <li class="divider"></li>
-                  <li><a href="{% url 'userena_profile_edit' user.username %}">{% trans 'Edit Profile' %}</a></li>
                   <li><a href="{% url 'userena_email_change' user.username %}">{% trans 'Change Email' %}</a></li>
                   <li><a href="{% url 'userena_password_change' user.username %}">{% trans 'Change Password' %}</a></li>
                   <li class="divider"></li>
