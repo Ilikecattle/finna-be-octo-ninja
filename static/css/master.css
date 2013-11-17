@@ -268,6 +268,7 @@ h6{
 
 .sessiontime-header {
 	text-align: center;
+	border-top: 1px solid #E5E5E5;
 }
 
 .session-header {

@@ -4,7 +4,9 @@
 {% block title %}{% trans "Review" %}{% endblock %}
 
 {% block sessions %}
+<h1 class='text-center'>Review</h1>
 <div class='review'>
+<h3 class="text-center">{% trans "Here's what you signed up for. Take one more look before completing your registration." %}</h3>
 {% if user.is_authenticated %}
 	{% if profile.paid %}
 		{% for session in profile.get_registered_sessions %}
