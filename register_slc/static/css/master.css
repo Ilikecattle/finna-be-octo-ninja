@@ -17,17 +17,14 @@ body {
 	background: url('../img/slc-logo.png') 20% 0 no-repeat;
 	background-color: #6aa37e;
 	background-size: contain;
-	padding-left: 20%;
 	border: solid #6aa37e 5px;
 }
 
 .header-date {
-	color: white;
-	line-height: 110px;
-	font-size: 2em;
-	font-weight: bold;
-	float:right;
-	padding-right: 20%;
+	display: inline-block;
+	height: 100%;
+	background: url('../img/slc-date.png') 80% 50% no-repeat;
+	background-size: auto;
 }
 
 .review .session {
