@@ -6,7 +6,6 @@
 {% block sessions %}
 <h1 class='text-center'>Review</h1>
 <div class='review'>
-<h3 class="text-center">{% trans "Here's what you signed up for. Take one more look before completing your registration." %}</h3>
 {% if user.is_authenticated %}
 	{% if profile.submitted_registration %}
 		{% for session in profile.get_registered_sessions %}
@@ -35,6 +34,7 @@
 			</div>
 		{% endfor %}
 	{% else %}
+		<h3 class="text-center">{% trans "Here's what you signed up for. Take one more look before completing your registration." %}</h3>
 		{% for session in profile.get_saved_sessions.all %}
 			<div class="sessiontime-header">
 				<h2>{{session.get_time}} - {{ session.sessiontype.session_time.name }}</h2>
