@@ -30,7 +30,7 @@ def signin_success(request, username):
     profile = request.user.get_profile()
     if profile.paid:
         if profile.submitted_registration:
-            return redirect('/accounts/' + username + '/schedule');
+            return redirect('/accounts/review');
         else:
             return redirect('/sessions/')
     elif profile.is_ready_for_registration():
