@@ -41,7 +41,7 @@
         <div class="header-date">January 11 2014</div>
     </div>
 
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar" role="navigation">
       <div class="container">
           <div class="navbar-header">
             <a class="navbar-brand" href="{% url 'sessions' %}">UBC SLC Registration</a>
@@ -75,6 +75,7 @@
     {% block content_title %}{% endblock %}
     {% block content %}{% endblock %}
     {% endblock %}
+    {% block footer %}
     <footer>
       <div class="container">
         <ul class="list-inline slc-social">
@@ -86,6 +87,7 @@
         </div>
       </div>
     </footer>
+    {% endblock %}
     </body>
 </html>
 {% endautoescape %}

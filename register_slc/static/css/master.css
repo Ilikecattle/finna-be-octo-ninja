@@ -8,6 +8,7 @@ html, body{
 body {
 	margin-left: 0;
 	margin-right: 0;
+	color: black;
 }
 
 .header {
@@ -21,7 +22,7 @@ body {
 }
 
 .header-date {
-	line-height: 95px;
+	line-height: 110px;
 	font-size: 2em;
 	font-weight: bold;
 	float:right;
@@ -33,9 +34,9 @@ body {
     max-width: 500px;
 }
 
-.navbar-default {
-	background-color: #f8f8f8;
-	border-color: #e7e7e7;
+.navbar {
+	background-color: #EFF2A9;
+	border-radius: 0
 }
 
 .form-signin
@@ -54,13 +55,18 @@ body {
 
 .account-wall
 {
-	max-width: 400px;
-    margin-top: 20px;
-    padding: 0px 0px 20px 0px;
+    margin-top: 50px;
+    max-width: 400px;
     background-color: #f7f7f7;
-    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.forgot-password {
+    padding-bottom: 15px;
+}
+
+.signin-title {
+	margin: 0;
+	padding: 10px 0;
 }
 
 .promo-box {
@@ -128,11 +134,15 @@ body {
 }
 
 footer {
+	position: relative;
+	bottom: 0;
+	width: 100%;
 	padding-top: 40px;
 	padding-bottom: 30px;
 	margin-top: 100px;
 	color: #777;
 	border-top: 1px solid #E5E5E5;
+	background-color: white;
 }
 
 footer .slc-social {

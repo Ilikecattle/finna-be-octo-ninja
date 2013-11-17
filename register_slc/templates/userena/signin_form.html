@@ -1,14 +1,18 @@
 {% extends 'userena/base_userena.html' %}
-{% load i18n crispy_forms_tags %}
+{% load i18n crispy_forms_tags static %}
 
 {% block title %}{% trans "Sign in" %}{% endblock %}
 
 {% block content %}
 
 {% csrf_token %}
-<h1 class="text-center signin-title">{% trans 'Hi.' %}</h1>
+<div id="bg">
+	<img src="{% static 'img/background.jpg' %}" alt="">
+</div>
 <div class="account-wall center-block">
+<h1 class="text-center signin-title">{% trans 'Hi.' %}</h1>
 {% crispy form %}
 <p class="forgot-password text-center"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
 </div>
 {% endblock %}
+{% block footer %}{% endblock %}
