@@ -90,22 +90,10 @@ body {
 	background-size: contain;
 }
 
-.promo-box h1, .promo-box h2 {
-	margin: 0;
-	color: white;
-}
-
-.promo-box h1 {
-	font-size: 3em;
-}
-
-.promo-box h2 {
-	font-size: 1.6em;
-}
-
 .promo-box p {
 	font-size: 1.6em;
 	font-weight: bold;
+	color: white;
 }
 
 #bg {
