@@ -247,8 +247,9 @@ class Profile(UserenaBaseProfile):
         self.save()
 
     def send_registration_confirmation_email(self):
-        send_mail('2014 UBC Student Leadership Conference Registration Confirmation',
-            'Congrats, you have successfully registered for the 2014 UBC Student Leadership Conference',
-            settings.DEFAULT_FROM_EMAIL, 
-            [self.user.email], 
-            fail_silently=False)
+        return None
+        #send_mail('2014 UBC Student Leadership Conference Registration Confirmation',
+        #    'Congrats, you have successfully registered for the 2014 UBC Student Leadership Conference',
+        #    settings.DEFAULT_FROM_EMAIL, 
+        #    [self.user.email], 
+        #    fail_silently=False)
