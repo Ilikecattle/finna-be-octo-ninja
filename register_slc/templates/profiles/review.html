@@ -20,10 +20,10 @@
 				<div class="session-body">
 					{% if session.teaser %}
 					<p class="teaser">{{ session.teaser }}</p>
-					{% endif %}
 					<p class="description">{{ session.description }}</p>
-					{% if session.teaser %}
 					<button type="button" class="tease_btn btn btn-default btn-s center-block"><span class="caret"></span></button>
+					{% else %}
+					<p class="description hide">{{ session.description }}</p>
 					{% endif %}
 				</div>
 
