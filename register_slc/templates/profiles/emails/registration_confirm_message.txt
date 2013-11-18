@@ -1,0 +1,11 @@
+{% load i18n %}{% autoescape off %}{% load url from future %}
+{% if not without_usernames %}{% blocktrans with user.username as username %}Hi {{ username }},{% endblocktrans %}
+{% endif %}
+{% trans "Yay! You've successfully completed your registration for the 2014 UBC Student Leadership Conference. We'll be in touch a few days before the conference with a copy of your schedule." %}
+
+{% trans "In the meantime, you can review it here: " %}{{ protocol }}://{{ site.domain }}{% url 'profiles_review' %}
+
+{% trans "See you on January 11th," %}
+
+SLC
+{% endautoescape %}

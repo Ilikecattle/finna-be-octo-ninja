@@ -1,0 +1,3 @@
+{% load i18n %}{% autoescape off %}
+{% blocktrans with site.name as site %}Registration Confirmation - 2014 UBC Studentent Leadership Conference{% endblocktrans %}
+{% endautoescape %}
