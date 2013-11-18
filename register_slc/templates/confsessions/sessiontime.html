@@ -7,9 +7,8 @@
 
 {% block sessions %}
 <div class ="row sessions">
-	<div class="col-lg-10 col-lg-offset-1">
 	{% for session_type in session_types %}
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 			<div class ="session">
 				<div class="session-header">
 					<h3>{{ session_type.name }}</h3>
@@ -23,8 +22,16 @@
 				</div>
 			</div>
 		</div>
+		{% if forloop.counter|divisibleby:2 %}
+			<div class="clearfix visible-sm"></div>
+		{% endif %}
+		{% if forloop.counter|divisibleby:3 %}
+			<div class="clearfix visible-md"></div>
+		{% endif %}
+		{% if forloop.counter|divisibleby:4 %}
+			<div class="clearfix visible-lg"></div>
+		{% endif %}
 	{% endfor %}
-	</div>
 </div>
 
 {% endblock %}
