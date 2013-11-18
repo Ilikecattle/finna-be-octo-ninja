@@ -1,4 +1,5 @@
 from django.http import HttpResponse, Http404
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from confsessions.models import Session, SessionTime
@@ -15,6 +16,9 @@ def save_session(request, session_pk, user_pk):
     return HttpResponse('Success')
 
 def review(request):
+    if not request.user.is_authenticated():
+        return redirect(reverse('userena_signin'))
+
     session_times = SessionTime.objects.all()
     context = { \
         'session_times' : session_times, \
