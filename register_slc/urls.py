@@ -2,9 +2,11 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
+from django.core.urlresolvers import reverse_lazy
 
 from django.contrib import admin
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -12,7 +14,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^sessions/', include('confsessions.urls')),
     (r'^accounts/', include('profiles.urls')),
-    url(r'^$', TemplateView.as_view(template_name='static/index.html')),
+    (r'^$', RedirectView.as_view(url=reverse_lazy('userena_signup'))),
     (r'^i18n/', include('django.conf.urls.i18n')),
 )
 
