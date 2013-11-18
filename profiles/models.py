@@ -3,12 +3,17 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
+from django.template.loader import render_to_string
 
 from confsessions.models import Session, SessionTime
 from confsessions.views import register_session
 
+from userena import settings as userena_settings
 from userena.models import UserenaBaseProfile
 from userena.models import UserenaSignup
+from userena.mail import send_mail
+from userena.utils import get_protocol
 import datetime
 
 NOT_UBC = 'NotUBC'
@@ -247,9 +252,23 @@ class Profile(UserenaBaseProfile):
         self.save()
 
     def send_registration_confirmation_email(self):
-        return None
-        #send_mail('2014 UBC Student Leadership Conference Registration Confirmation',
-        #    'Congrats, you have successfully registered for the 2014 UBC Student Leadership Conference',
-        #    settings.DEFAULT_FROM_EMAIL, 
-        #    [self.user.email], 
-        #    fail_silently=False)
+        context = {'user': self.user,
+                  'without_usernames': userena_settings.USERENA_WITHOUT_USERNAMES,
+                  'protocol': get_protocol(),
+                  'site': Site.objects.get_current()}
+
+        subject = render_to_string('profiles/emails/registration_confirm_subject.txt',
+                                       context)
+        subject = ''.join(subject.splitlines())
+
+        if (not userena_settings.USERENA_HTML_EMAIL or not message_old_html or
+            userena_settings.USERENA_USE_PLAIN_TEMPLATE):
+            message = render_to_string('profiles/emails/registration_confirm_message.txt',
+                                       context)
+
+        if self.user.email:
+            send_mail(subject,
+                      message,
+                      None,
+                      settings.DEFAULT_FROM_EMAIL,
+                    [self.user.email])
