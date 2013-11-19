@@ -8,6 +8,7 @@ class SessionAdmin(CSVAdmin):
     ordering = ['name']
     list_filter = ['sessiontype']
     extra_csv_fields = ['teaser', 'description']
+    filter_horizontal = ['participants', ]
 
 class SessionTypeAdmin(CSVAdmin):
     list_display = ['name', 'session_time']
