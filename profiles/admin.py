@@ -23,10 +23,11 @@ class PaymentGroupEmailAdmin(CSVAdmin):
     list_filter = ['payment_group__name']
 
 class PaymentGroupAdmin(CSVAdmin):
-    list_display = ['name']
+    list_display = ['name', 'primary_group']
     search_fields = ['name']
     list_filter = ['name']
     inlines = [ PaymentGroupEmailInline ]
+    list_editable = ['primary_group']
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(HearAbout)
