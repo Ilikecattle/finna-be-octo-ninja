@@ -13,6 +13,9 @@ class ProfileAdmin(CSVAdmin):
     search_fields = ['user__first_name', 'user__last_name', 'user__email']
     filter_horizontal = ['saved_sessions']
 
+class PaymentGroupEmailInline(admin.TabularInline):
+    model = PaymentGroupEmail
+
 class PaymentGroupEmailAdmin(CSVAdmin):
     list_display = ['payment_group', 'email']
     search_fields = ['payment_group', 'email']
@@ -22,6 +25,7 @@ class PaymentGroupAdmin(CSVAdmin):
     list_display = ['name']
     search_fields = ['name']
     list_filter = ['name']
+    inlines = [ PaymentGroupEmailInline ]
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(HearAbout)
