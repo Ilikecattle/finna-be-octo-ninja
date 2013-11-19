@@ -15,6 +15,7 @@ class SessionTypeAdmin(CSVAdmin):
     search_fields = ['name']
     ordering = ['name']
     list_filter = ['session_time']
+    list_display_links = ['session_time']
 
 class SessionTimeAdmin(CSVAdmin):
     list_display = ['name', 'time']
