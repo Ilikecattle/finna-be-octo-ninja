@@ -8,9 +8,10 @@ from profiles.models import HearAbout, PaymentGroup, PaymentGroupEmail, Profile
 admin.site.unregister(get_profile_model())
 
 class ProfileAdmin(CSVAdmin):
-    list_display = ['user', 'first_name', 'last_name', 'email', 'paid']
+    list_display = ['user', 'first_name', 'last_name', 'email', 'paid', 'submitted_registration']
     list_display_links = ['user']
     search_fields = ['user__first_name', 'user__last_name', 'user__email']
+    filter_horizontal = ['saved_sessions']
 
 class PaymentGroupEmailAdmin(CSVAdmin):
     list_display = ['payment_group', 'email']
