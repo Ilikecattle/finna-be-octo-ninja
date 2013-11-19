@@ -1,5 +1,5 @@
 {% extends 'userena/base_userena.html' %}
-{% load i18n crispy_forms_tags %}
+{% load i18n %}
 {% load url from future %}
 
 {% block content_title %}<h2>{% blocktrans with user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
@@ -9,8 +9,8 @@
   {% csrf_token %}
   <fieldset>
     <legend>{% trans "Change email address" %}</legend>
-    {% crispy form %}
+    {{ form.as_p }}
   </fieldset>
-  <input class='btn btn-lg btn-primary center-block' type="submit" value="{% trans 'Change email' %}" />
+  <input class='btn btn-primary' type="submit" value="{% trans "Change email" %}" />
 </form>
 {% endblock %}
