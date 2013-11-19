@@ -9,6 +9,7 @@ class SessionAdmin(CSVAdmin):
     list_filter = ['sessiontype']
     extra_csv_fields = ['teaser', 'description']
     filter_horizontal = ['participants', ]
+    list_display_links = ['sessiontype']
 
 class SessionTypeAdmin(CSVAdmin):
     list_display = ['name', 'session_time']
