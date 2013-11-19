@@ -3,7 +3,7 @@ from csvexport.admin import CSVAdmin
 from confsessions.models import SessionTime, SessionType, Session
 
 class SessionAdmin(CSVAdmin):
-    list_display = ['name', 'sessiontype', 'presenter', 'location', 'capacity']
+    list_display = ['name', 'sessiontype', 'presenter', 'location', 'registered_delegates', 'capacity']
     search_fields = ['name', 'presenter', 'location']
     ordering = ['name']
     list_filter = ['sessiontype']
