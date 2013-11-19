@@ -12,6 +12,7 @@ class ProfileAdmin(CSVAdmin):
     list_display_links = ['user']
     search_fields = ['user__first_name', 'user__last_name', 'user__email']
     filter_horizontal = ['saved_sessions']
+    readonly_fields = ['get_registered_sessions']
 
 class PaymentGroupEmailInline(admin.TabularInline):
     model = PaymentGroupEmail
