@@ -1,0 +1,9 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Inactive Account" %}{% endblock %}
+{% block content_title %}<h2>{% trans "Your account hasn't been activated yet!" %}</h2>{% endblock %}
+{% block content %}
+<p>{% trans "Please check your email for an account activation link." %}</p>
+<p>{% trans "If you cannot find this activation email, please contact webmaster@slc.ubc.ca" %}</p>
+{% endblock %}
