@@ -20,7 +20,7 @@ class PaymentGroupEmailInline(admin.TabularInline):
 
 class PaymentGroupEmailAdmin(CSVAdmin):
     list_display = ['payment_group', 'email']
-    search_fields = ['payment_group', 'email']
+    search_fields = ['email']
     list_filter = ['payment_group__name']
 
 class PaymentGroupAdmin(CSVAdmin):
