@@ -84,7 +84,7 @@ class EditProfileFormExtra(EditProfileForm):
         return cleaned_data
     
     def save(self, force_insert=False, force_update=False, commit=True):
-        profile.check_payment_groups()
         profile = super(EditProfileFormExtra, self).save(commit=commit)
+        profile.check_payment_groups()
 
         return profile
