@@ -230,10 +230,13 @@ class Profile(UserenaBaseProfile):
         self.save()
 
     def check_payment_groups(self):
+        if self.paid:
+            return
         if self.has_group():
             self.set_paid()
 
     def get_payment_groups(self):
+        self.check_payment_groups()
         emails = PaymentGroupEmail.objects.filter(email=self.user.email)
         result = []
         for email in emails:
@@ -242,8 +245,7 @@ class Profile(UserenaBaseProfile):
         return ' & '.join([str(i) for i in result])
 
     def has_group(self):
-        u = User.objects.get(pk=self.user.pk)
-        groups = PaymentGroupEmail.objects.filter(email=u.email)
+        groups = PaymentGroupEmail.objects.filter(email=self.user.email)
         return groups.count() > 0
 
     def submit_registration(self):
