@@ -19,6 +19,9 @@ class SessionTime(models.Model):
                     return True
         return False
     
+    def get_time(self):
+        return self.time.strftime('%l:%M %p')
+    
     def has_multiple_session_types(self):
         return self.sessiontype_set.all().count() > 1
 
@@ -30,6 +33,10 @@ class SessionType(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=2000)
     use_search_bar = models.BooleanField(default=False)
+    
+    def get_time(self):
+        return self.session_time.get_time()
+    
     def __unicode__(self):
         return self.name
 
@@ -59,7 +66,7 @@ class Session(models.Model):
         return str(self.participants.count())
 
     def get_time(self):
-        return self.sessiontype.session_time.time.strftime('%l:%M %p')
+        return self.sessiontype.get_time()
 
     def __unicode__(self):
         return self.name
