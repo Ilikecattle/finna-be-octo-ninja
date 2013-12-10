@@ -18,7 +18,9 @@
 	</li>
 	{% endif %}
 </ul>
+{% if session_time %}
 <h1 class='text-center'>{{session_time.get_time}} - {{ session_time }} {% if session_time.has_multiple_session_types and sessiontype %}- {{ sessiontype }} {% endif %}</h1>
+{% endif %}
 {% block sessions %}{% endblock %}
 
 {% block bottom_buttons %}
