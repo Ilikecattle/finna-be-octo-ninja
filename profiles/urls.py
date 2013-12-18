@@ -7,6 +7,8 @@ from profiles import views
 urlpatterns = patterns('',
     url(r'^register/complete$', views.registration_complete, name='registraton_complete'),
 
+    url(r'^delegatelist/$', views.delegate_list, name='delegate_list'),
+
     # Payment
     url(r'^paymentsuccess/$', views.payment_success, name='payment_success'),
     

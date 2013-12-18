@@ -1,3 +1,4 @@
+import csv
 from django.http import HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
@@ -54,6 +55,130 @@ def registration_complete(request):
     profile.submit_registration()
     profile.send_registration_confirmation_email()
     return render(request, 'profiles/payment_success.html')
+
+def delegate_list(request):
+    if not request.user.is_authenticated():
+        raise Http404
+
+    profile = request.user.get_profile()
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="delegates.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow([
+    'Username',
+    'First Name', 
+    'Last Name',
+    'Email',
+    'Date Joined',
+    'Affiliation', 
+    'Affil other', 
+    'Student Number',
+    'Phone Number',
+    'Year of Study',
+    'Faculty',
+    'Major',
+    'Vegan?',
+    'Vegetarian?',
+    'Gluten free?',
+    'Lactose Intolerant',
+    'Diet',
+    'Hear About',
+    'Times Participated',
+    'Paid',
+    'Submitted Registration',
+    'Opening',
+    'Opening Time',
+    'Opening Presenter',
+    'Opening Location',
+    'Featured Presenter 1',
+    'Featured Presenter 1 Time',
+    'Featured Presenter 1 Presenter',
+    'Featured Presenter 1 Location',
+    'Session 1',
+    'Session 1 Time',
+    'Session 1 Presenter',
+    'Session 1 Location',
+    'Lunch',
+    'Lunch Time',
+    'Lunch Presenter',
+    'Lunch Location',
+    'Session 2',
+    'Session 2 Time',
+    'Session 2 Presenter',
+    'Session 2 Location',
+    'Featured Presenter 2',
+    'Featured Presenter 2 Time',
+    'Featured Presenter 2 Presenter',
+    'Featured Presenter 2 Location',
+    'Closing',
+    'Closing Time',
+    'Closing Presenter',
+    'Closing Location',
+    ])
+    profiles = Profile.objects.all()
+    for profile in profiles:
+        opening = profile.get_registered_session(0)
+        fp1 = profile.get_registered_session(1)
+        sess1 = profile.get_registered_session(2)
+        lunch =profile.get_registered_session(3)
+        sess2 =profile.get_registered_session(4)
+        fp2 =profile.get_registered_session(5)
+        closing =profile.get_registered_session(6)
+        writer.writerow([
+        profile.user.username,
+        profile.user.first_name, 
+        profile.user.last_name, 
+        profile.user.email,
+        profile.user.date_joined,
+        profile.affiliation,
+        profile.affil_other,
+        profile.student_num,
+        profile.phone_num,
+        profile.year_of_study,
+        profile.faculty,
+        profile.major,
+        profile.vegan,
+        profile.vegetarian,
+        profile.gluten_free,
+        profile.lactose_intolerant,
+        profile.diet,
+        profile.get_hear_abouts(),
+        profile.times_participation,
+        profile.paid,
+        profile.submitted_registration,
+        opening,
+        opening.get_time(),
+        opening.presenter,
+        opening.location,
+        fp1,
+        fp2.get_time(),
+        fp1.presenter,
+        fp1.location,
+        sess1,
+        sess1.get_time(),
+        sess1.presenter,
+        sess1.location,
+        lunch,
+        lunch.get_time(),
+        lunch.presenter,
+        lunch.location,
+        sess2,
+        sess2.get_time(),
+        sess2.presenter,
+        sess2.location,
+        fp2,
+        fp2.get_time(),
+        fp2.presenter,
+        fp2.location,
+        closing,
+        closing.get_time(),
+        closing.presenter,
+        closing.location,
+        ])
+
+    return response
 
 @csrf_exempt
 def payment_success(request):
