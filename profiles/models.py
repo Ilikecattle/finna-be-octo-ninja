@@ -211,7 +211,7 @@ class Profile(UserenaBaseProfile):
         '''Return if has slc email address'''
         if self.user.email.endswith('slc.ubc.ca'):
             return True
-        return self.user.email 
+        return False
 
     def studentnum(self):
         '''Return 0 if not a student else student num'''
