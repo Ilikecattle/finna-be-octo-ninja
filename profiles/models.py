@@ -151,6 +151,9 @@ class Profile(UserenaBaseProfile):
     def get_saved_sessions(self):
         return self.saved_sessions.order_by('sessiontype__session_time__time')
 
+    def get_registered_session(self, session_time_index):
+        return self.get_registered_sessions()[session_time_index]
+
     def get_registered_sessions(self):
         return Session.objects.filter(participants__pk=self.user.pk).order_by('sessiontype__session_time__time')
 
@@ -235,13 +238,19 @@ class Profile(UserenaBaseProfile):
         if self.has_group():
             self.set_paid()
 
+    def get_hear_abouts(self):
+        result = []
+        for h in self.hear.all():
+            result.append(str(h))
+        return ', '.join([i for i in result])
+
     def get_payment_groups(self):
         self.check_payment_groups()
         emails = PaymentGroupEmail.objects.filter(email=self.user.email)
         result = []
         for email in emails:
             result.append(email.payment_group)
-        
+
         return ' & '.join([str(i) for i in result])
 
     def has_group(self):
