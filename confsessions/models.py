@@ -35,7 +35,9 @@ class SessionType(models.Model):
     use_search_bar = models.BooleanField(default=False)
     
     def get_time(self):
-        return self.session_time.get_time()
+        if hasattr(self, 'session_time') and self.session_time is not None:
+            return self.session_time.get_time()
+        return "No Time"
     
     def __unicode__(self):
         return self.name
@@ -66,7 +68,9 @@ class Session(models.Model):
         return str(self.participants.count())
 
     def get_time(self):
-        return self.sessiontype.get_time()
+        if hasattr(self, 'sessiontype'):
+            return self.sessiontype.get_time()
+        return "No Time"
 
     def __unicode__(self):
         return self.name

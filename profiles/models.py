@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 
-from confsessions.models import Session, SessionTime
+from confsessions.models import Session, SessionTime, SessionType
 from confsessions.views import register_session
 
 from userena import settings as userena_settings
@@ -152,7 +152,11 @@ class Profile(UserenaBaseProfile):
         return self.saved_sessions.order_by('sessiontype__session_time__time')
 
     def get_registered_session(self, session_time_index):
-        return self.get_registered_sessions()[session_time_index]
+        sessions = self.get_registered_sessions()
+        if session_time_index < sessions.count():
+            return sessions[session_time_index]
+        else:
+            return Session(name="No Session Found", sessiontype=SessionType(name="No Session Type", description="No desc"))
 
     def get_registered_sessions(self):
         return Session.objects.filter(participants__pk=self.user.pk).order_by('sessiontype__session_time__time')
