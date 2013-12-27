@@ -56,11 +56,7 @@ class Session(models.Model):
         self.participants.add(User)
 
     def has_spaces(self):
-        spaces = self.capacity - self.participants.count()
-        if spaces <=0:
-            return False
-        else: 
-            return True
+        return self.capacity - self.participants.count() > 0
     
     def registered_delegates(self):
         return str(self.participants.count())
