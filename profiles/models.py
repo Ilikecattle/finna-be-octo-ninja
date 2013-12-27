@@ -183,8 +183,21 @@ class Profile(UserenaBaseProfile):
                 return False
         return True
 
+    def has_full_saved_session(self):
+        for sess in self.saved_sessions.all():
+            if not sess.has_spaces():
+                return True
+        return False
+
+    def get_full_saved_sessions(self): 
+        full_saved_sessions = []
+        for sess in self.saved_sessions.all():
+            if not sess.has_spaces():
+                full_saved_sessions.append(sess.name)
+        return ' & '.join([str(i) for i in full_saved_sessions])
+
     def is_ready_for_payment(self):
-        return self.get_saved_sessions().count() == SessionTime.objects.all().count()
+        return not self.has_full_saved_session() and self.get_saved_sessions().count() == SessionTime.objects.all().count()
 
     def get_user(self):
         return UserenaSignup.objects.get(user=self.user)
