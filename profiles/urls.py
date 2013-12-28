@@ -5,7 +5,7 @@ from profiles.forms import EditProfileFormExtra, SignupFormCrispy, SignInForm
 from profiles import views
 
 urlpatterns = patterns('',
-    url(r'^register/complete$', views.registration_complete, name='registraton_complete'),
+    url(r'^register/complete/$', views.registration_complete, name='registraton_complete'),
 
     url(r'^delegatelist/$', views.delegate_list, name='delegate_list'),
 

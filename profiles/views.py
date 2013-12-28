@@ -193,5 +193,5 @@ def payment_success(request):
         payment_group.save()
         profile = user.get_profile()
         profile.set_paid()
-        return render(request, 'profiles/payment_success.html')
+        return redirect('/accounts/register/complete/')
     raise Http404
