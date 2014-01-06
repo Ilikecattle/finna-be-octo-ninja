@@ -75,7 +75,11 @@
 		<input type='hidden' name='cf_field_8' value="{{ user.get_profile.phonenum }}">
 		<div class="input-group center-block">
 		{% if not profile.is_ready_for_payment %}
-			<p class="text-center">{% trans 'You need to complete all steps before you can pay' %}</p>
+			{% if profile.get_full_saved_sessions %}
+				<p class="text-center">The following sessions are full: {{ profile.get_full_saved_sessions }} Please select new session[s] to attend.</p>
+			{% else %}
+				<p class="text-center">{% trans 'Your schedule isn't quite complete. You need to complete all steps before you can pay' %}</p>
+			{% endif %}
 			<div class="text-center">
 				<div class="btn-group">
 					<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ prev_sessiontime.pk }}'>back</a>
@@ -101,7 +105,7 @@
 	<p class="text-center">You've been sponsored by {{ payment_groups }}.</p>
 	{% if not profile.is_ready_for_payment %}
 		{% if profile.get_full_saved_sessions %}
-			<p class="text-center">The folowing sessions are full: {{ profile.get_full_saved_sessions }} Please select new session[s] to attend.</p>
+			<p class="text-center">The following sessions are full: {{ profile.get_full_saved_sessions }} Please select new session[s] to attend.</p>
 		{% else %}
 		<p class="text-center">{% trans "Your schedule isn't quite complete." %}</p>
 		{% endif %}
