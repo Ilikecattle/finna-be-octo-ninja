@@ -19,7 +19,6 @@ class SessionAdmin(CSVAdmin):
     extra_csv_fields = ['teaser', 'description']
     filter_horizontal = ['participants', ]
     list_display_links = ['name', 'sessiontype']
-    readonly_fields = ['participants']
     form = SessionAdminForm
 
 class SessionTypeAdminForm(forms.ModelForm):
