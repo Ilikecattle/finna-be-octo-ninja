@@ -30,7 +30,7 @@
 
 	function set_register(session_button)
 	{
-		set_footer(session_button, 'register', "Register");
+		set_footer(session_button, 'full', "Registration is closed");
 	}
 
 	function set_registered(session_button)
@@ -85,7 +85,7 @@
 		}
 
 		{% if user.get_profile.submitted_registration %}
-			urlToCall = "/sessions/register_session/" + session_pk +  "/{{ user.pk }}/"
+			urlToCall = "";//"/sessions/register_session/" + session_pk +  "/{{ user.pk }}/"
 		{% else %}
 			urlToCall = "/accounts/save_session/" + session_pk + "/{{user.pk}}/";
 		{% endif %}
@@ -97,7 +97,7 @@
 				resetSessionButtons();
 				session_button = $('#btn_' + session_pk);
 				{% if user.get_profile.submitted_registration %}
-					set_registered(session_button);
+					//set_registered(session_button);
 				{% else %}
 					set_saved(session_button);
 				{% endif %}
