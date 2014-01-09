@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^sessions/', include('confsessions.urls')),
     (r'^accounts/', include('profiles.urls')),
-    (r'^$', RedirectView.as_view(url=reverse_lazy('userena_signup'))),
+    (r'^$', TemplateView.as_view(template_name='static/index.html')),
     (r'^i18n/', include('django.conf.urls.i18n')),
 )
 
