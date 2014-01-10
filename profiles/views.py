@@ -37,11 +37,8 @@ def signin_success(request, username):
         if profile.submitted_registration:
             return redirect('/accounts/review');
         else:
-            return redirect('/sessions/')
-    elif profile.is_ready_for_registration():
-        return redirect('/sessions/')
-    else:
-        return redirect('/accounts/' + username + '/edit')
+            return redirect('/')
+    return redirect('/')
 
 def registration_complete(request):
     if not request.user.is_authenticated():
