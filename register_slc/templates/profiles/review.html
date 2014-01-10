@@ -66,13 +66,7 @@
 
 {% if not profile.paid %}
 
-<div class="text-center">
-	<div class="btn-group">
-		<a class="btn btn-default btn-lg" href='/sessions/sessiontime/{{ prev_sessiontime.pk }}'>back</a>
-	</div>
-</div>
-
-<!--<div class="container form-group">
+<div class="container form-group">
 	<form action='https://secure.students.ubc.ca/leadership/payment.cfm' method='post' name='frm'>
 		<input type='hidden' name='cf_field_6' value='{{ user.get_profile.is_ubc }}'>
 		<input type='hidden' name='cf_field_9' value='{{ user.email }}'>
@@ -107,7 +101,7 @@
 		{% endif %}
 		</div>
 	</form>
-</div>-->
+</div>
 {% elif profile.has_group and not profile.submitted_registration %}
 	<p class="text-center">You've been sponsored by {{ payment_groups }}.</p>
 	{% if not profile.is_ready_for_payment %}
