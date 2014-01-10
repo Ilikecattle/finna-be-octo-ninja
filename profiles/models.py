@@ -139,6 +139,13 @@ class Profile(UserenaBaseProfile):
     paid = models.BooleanField()
     submitted_registration = models.BooleanField()
 
+    def save(self, *args, **kwargs):
+        if self.submitted_registration:
+            for sess in self.saved_sessions.all():
+                sess.add_participant(self.user)
+                sess.save()
+        super(Profile, self).save(*args, **kwargs)
+
     def is_registered_or_saved_for_sess_time(self, sess_time):
         if self.submitted_registration:
             return sess_time.is_user_registered(self.user)
