@@ -1,3 +1,5 @@
+import csv
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -100,3 +102,34 @@ def get_next_session_time(cur_sess_time):
     if cur_index >= len(session_times) - 1:
         return
     return session_times[cur_index+1]
+    
+def delegate_list(request):
+    if not request.user.is_authenticated():
+        raise Http404
+
+    profile = request.user.get_profile()
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="sessions.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow([
+        'Name',
+        'Session Type',
+        'Session Presenter',
+        'Location',
+        'Registered Delegates',
+        'Capacity',
+    ])
+    sessions = Session.objects.all()
+    for session in sessions:
+        writer.writerow([
+            session.name,
+            session.sessiontype,
+            session.presenter,
+            session.location,
+            session.registered_delegates(),
+            session.capacity,
+        ])
+
+    return response

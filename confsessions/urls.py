@@ -11,4 +11,5 @@ urlpatterns = patterns('',
         url(r'^sessiontime/(\d*)', views.sessiontime, name='sessiontime'),
         url(r'^sessiontype/(\d*)', views.sessiontype, name='sessiontype'),
         url(r'^register_session/(\d*)/(\d*)/$', views.register_session, name='register_session'),
+        url(r'^sessionlist/$', views.delegate_list, name='sessionlist'),
         )
